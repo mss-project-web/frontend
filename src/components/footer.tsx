@@ -13,8 +13,8 @@ export default function Footer() {
           <div className="space-y-4 text-center md:text-left">
             <div className="w-36 h-14 relative mx-auto md:mx-0">
               <Image
-                src="/LOGO-MSS_white.png"
-                alt="ชมรมหลังเดิม MSS"
+                src="/LOGO/LOGO-MSS_white.png"
+                alt="LOGO-MSS"
                 fill
                 className="object-contain"
                 priority
