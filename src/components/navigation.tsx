@@ -6,12 +6,13 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, Phone, Mail, Facebook, Instagram, Youtube } from "lucide-react"
-import { navItems } from "@/app/data/nav-items"
+import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check , Hash } from "lucide-react"
+import { navItems } from "@/data/nav-items"
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const [isCopied, setIsCopied] = useState(false) // State for copy icon toggle
   const pathname = usePathname()
 
   useEffect(() => {
@@ -19,6 +20,20 @@ export default function Navigation() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    if (isCopied) {
+      const timer = setTimeout(() => setIsCopied(false), 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [isCopied])
+
+  const copyAccountNumber = () => {
+    navigator.clipboard.writeText("1234567890").then(
+      () => setIsCopied(true),
+      () => console.error("Failed to copy account number")
+    )
+  }
 
   return (
     <>
@@ -31,7 +46,16 @@ export default function Navigation() {
                 <Phone className="w-4 h-4" />
                 <span>065-394-5821 (อมีร)</span>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 md:hidden">
+                <Hash className="w-4 h-4" />
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="text-white hover:text-blue-200 transition"
+                >
+                  สนับสนุนการทำงานของชมรม
+                </button>
+              </div>
+              <div className="hidden md:flex items-center space-x-2">
                 <Mail className="w-4 h-4" />
                 <span>msspsuhatyai@gmail.com</span>
               </div>
@@ -68,7 +92,7 @@ export default function Navigation() {
             <Link href="/" className="inline-block group">
               <div className="w-32 h-12 relative group-hover:scale-105 transition-transform duration-300">
                 <Image
-                  src="/LOGO-MSS.png"
+                  src="/LOGO/LOGO-MSS.png"
                   alt="ชมรมหลังเดิม MSS"
                   fill
                   className="object-contain"
@@ -164,7 +188,7 @@ export default function Navigation() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-sm w-full p-6 relative animate-fade-in-up">
+          <div className="modal-content bg-white rounded-xl shadow-xl max-w-sm w-full p-6 relative animate-fade-in-up">
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition text-xl"
@@ -173,9 +197,9 @@ export default function Navigation() {
               ✕
             </button>
 
-            <h2 className="text-xl font-semibold text-center text-blue-800 mb-4">
+            <div className="text-xl font-semibold text-center text-blue-800 mb-4">
               สนับสนุนการทำงานของชมรม
-            </h2>
+            </div>
 
             <div className="flex flex-col items-center space-y-4">
               <Image
@@ -189,9 +213,18 @@ export default function Navigation() {
                 <p className="text-sm text-gray-700">
                   ชื่อบัญชี: <span className="font-semibold">ชมรมมุสลิมศึกษา ม.อ.</span>
                 </p>
-                <p className="text-sm text-gray-700">
-                  เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">123-4-56789-0</span>
-                </p>
+                <div className="flex items-center justify-center space-x-2">
+                  <p className="text-sm text-gray-700">
+                    เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">123-4-56789-0</span>
+                  </p>
+                  <button
+                    onClick={copyAccountNumber}
+                    className="text-blue-600 hover:text-blue-800 transition"
+                    aria-label="คัดลอกเลขบัญชี"
+                  >
+                    {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  </button>
+                </div>
                 <p className="text-xs text-gray-500">
                   * รองรับสแกนผ่านแอปธนาคารทุกประเภท
                 </p>
