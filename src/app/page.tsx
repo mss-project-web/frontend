@@ -9,6 +9,7 @@ import { AnimatedCounterPage } from "@/components/home/AnimatedCounter";
 import { NewsAndEvents } from "@/components/home/News";
 import { EventHome } from "@/components/home/EventHome";
 import { PresidentContens } from "@/components/home/PresidentContens";
+import { JoinUsSection } from "../components/home/JoinUsSection";
 
 export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
@@ -99,6 +100,9 @@ export default function HomePage() {
         </h2>
         <PresidentContens />
       </div>
+
+      {/* JoinUsSection */}
+        <JoinUsSection/>
     </main>
   );
 }
