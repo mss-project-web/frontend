@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // Components
 import { ThreeDMarquee } from "../components/home/ThreeDMarquee";
 import { AnimatedCounterPage } from "@/components/home/AnimatedCounter";
+import { NewsAndEvents } from "@/components/home/News";
 
 export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
@@ -78,6 +79,13 @@ export default function HomePage() {
         <WavePattern />
         <div className="relative z-10 mx-auto max-w-screen-xl px-4">
           <AnimatedCounterPage />
+        </div>
+      </div>
+
+      {/* NewsAndEvents */}
+      <div className="relative overflow-hidden">
+        <div className="relative z-10 mx-auto max-w-screen-xl px-4">
+          <NewsAndEvents />
         </div>
       </div>
     </main>
