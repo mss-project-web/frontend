@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ThreeDMarquee } from "../components/home/ThreeDMarquee";
 import { AnimatedCounterPage } from "@/components/home/AnimatedCounter";
 import { NewsAndEvents } from "@/components/home/News";
+import { EventHome } from "@/components/home/EventHome";
 
 export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
@@ -86,6 +87,7 @@ export default function HomePage() {
       <div className="relative overflow-hidden">
         <div className="relative z-10 mx-auto max-w-screen-xl px-4">
           <NewsAndEvents />
+          <EventHome />
         </div>
       </div>
     </main>
