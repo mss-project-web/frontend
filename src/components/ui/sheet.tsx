@@ -3,6 +3,7 @@
 import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { XIcon } from "lucide-react"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 
 import { cn } from "@/lib/utils"
 
@@ -10,21 +11,15 @@ function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
 }
 
-function SheetTrigger({
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
+function SheetTrigger({ ...props }: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />
 }
 
-function SheetClose({
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Close>) {
+function SheetClose({ ...props }: React.ComponentProps<typeof SheetPrimitive.Close>) {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />
 }
 
-function SheetPortal({
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Portal>) {
+function SheetPortal({ ...props }: React.ComponentProps<typeof SheetPrimitive.Portal>) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />
 }
 
@@ -46,13 +41,13 @@ function SheetOverlay({
 
 function SheetContent({
   className,
-  overlayClassName, // ✅ เพิ่มตรงนี้
+  overlayClassName,
   children,
   side = "right",
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
-  overlayClassName?: string 
+  overlayClassName?: string
 }) {
   return (
     <SheetPortal>
@@ -73,7 +68,16 @@ function SheetContent({
         )}
         {...props}
       >
+        {/* ✅ เพิ่ม Title และ Description ซ่อนไว้เพื่อให้ผ่าน a11y */}
+        <SheetTitle>
+          <VisuallyHidden>Sheet Panel</VisuallyHidden>
+        </SheetTitle>
+        <SheetDescription>
+          <VisuallyHidden>Interactive panel with navigation or settings</VisuallyHidden>
+        </SheetDescription>
+
         {children}
+
         <SheetPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none">
           <XIcon className="size-4" />
           <span className="sr-only">Close</span>
@@ -82,7 +86,6 @@ function SheetContent({
     </SheetPortal>
   )
 }
-
 
 function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (

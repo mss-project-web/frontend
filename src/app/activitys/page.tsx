@@ -150,7 +150,7 @@ export default function ActivitysPage() {
                       />
                       <CardContent className="p-6 flex-grow flex flex-col">
                         <div className="flex items-center space-x-4 mb-4">
-                          <h3 className="text-xl font-semibold text-gray-800">{event.name}</h3>
+                          <div className="text-xl font-semibold text-gray-800">{event.name}</div>
                         </div>
                         <div className="space-y-2">
                           <div className="flex items-center text-sm text-gray-600">

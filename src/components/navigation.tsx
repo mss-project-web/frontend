@@ -6,7 +6,7 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check , Hash } from "lucide-react"
+import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
 import { navItems } from "@/data/nav-items"
 
 export default function Navigation() {
@@ -80,11 +80,10 @@ export default function Navigation() {
 
       {/* Main Navigation */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-blue-200"
-            : "bg-white border-b border-gray-100"
-        }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-blue-200"
+          : "bg-white border-b border-gray-100"
+          }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
@@ -107,9 +106,8 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative font-medium transition-colors duration-300 hover:text-blue-600 ${
-                    pathname === item.href ? "text-blue-600" : "text-gray-700"
-                  }`}
+                  className={`relative font-medium transition-colors duration-300 hover:text-blue-600 ${pathname === item.href ? "text-blue-600" : "text-gray-700"
+                    }`}
                 >
                   {item.label}
                   {pathname === item.href && (
@@ -145,12 +143,14 @@ export default function Navigation() {
                   <div className="w-32 h-16 relative">
                     <Image
                       src="/LOGO-MSS.png"
-                      alt="ชมรมหลังเดิม MSS"
                       fill
+                      sizes="(max-width: 768px) 100vw, 200px"
+                      alt="logo"
                       className="object-contain"
                       priority
                     />
                   </div>
+
                   <p className="mt-1 text-center text-blue-700 font-semibold text-sm italic">
                     หวังดีดี จากบ้านหลังเดิม
                   </p>
@@ -162,11 +162,10 @@ export default function Navigation() {
                       <Link
                         key={item.href}
                         href={item.href}
-                        className={`block px-2 py-1 rounded-md text-lg font-semibold transition-colors duration-300 ${
-                          isActive
-                            ? "bg-blue-600 text-white shadow-md"
-                            : "text-gray-700 hover:bg-blue-100 hover:text-blue-600"
-                        }`}
+                        className={`block px-2 py-1 rounded-md text-lg font-semibold transition-colors duration-300 ${isActive
+                          ? "bg-blue-600 text-white shadow-md"
+                          : "text-gray-700 hover:bg-blue-100 hover:text-blue-600"
+                          }`}
                       >
                         {item.label}
                       </Link>

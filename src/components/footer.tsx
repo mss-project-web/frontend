@@ -16,6 +16,7 @@ export default function Footer() {
                 src="/LOGO/LOGO-MSS_white.png"
                 alt="LOGO-MSS"
                 fill
+                
                 className="object-contain"
                 priority
               />
