@@ -8,6 +8,7 @@ import { ThreeDMarquee } from "../components/home/ThreeDMarquee";
 import { AnimatedCounterPage } from "@/components/home/AnimatedCounter";
 import { NewsAndEvents } from "@/components/home/News";
 import { EventHome } from "@/components/home/EventHome";
+import { PresidentContens } from "@/components/home/PresidentContens";
 
 export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
@@ -89,6 +90,14 @@ export default function HomePage() {
           <NewsAndEvents />
           <EventHome />
         </div>
+      </div>
+
+      {/* PresidentContens */}
+      <div className="mx-auto max-w-screen-xl px-4 py-8">
+        <h2 className="text-2xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
+          จากใจพี่...ถึงน้อง
+        </h2>
+        <PresidentContens />
       </div>
     </main>
   );
