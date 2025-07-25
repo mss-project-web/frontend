@@ -2,21 +2,18 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ExternalLink, MapPin, Clock, Users, Wifi, Car, ChevronRight } from 'lucide-react';
+import { ExternalLink, Clock } from 'lucide-react';
 import { Sun, Moon, Sunrise, Sunset } from 'lucide-react';
 import dynamic from "next/dynamic";
 
 // components
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PrayerRoomDisplay } from '@/components/prayer-rooms/PrayerRoomCard';
-import { PrayerRoomDetailModal } from '@/components/prayer-rooms/PrayerRoomDetailModal';
 
 //API & interface
 import { getTodayPrayerTimes } from "@/lib/getPrayerTimes";
 import { PrayerRoom, Prayer } from '@/types/prayer';
-
-//MockData
-import { prayerRoomsData } from '@/data/prayerRoomsData';
+import { usePrayerRooms } from '@/lib/hooks/usePrayerRooms';
 
 export default function PrayerRoomsPage() {
   const [selectedRoom, setSelectedRoom] = useState<number | null>(null);
@@ -26,7 +23,7 @@ export default function PrayerRoomsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [nextPrayer, setNextPrayer] = useState<{ name: string; time: string; remaining: string } | null>(null);
   const [isPrayerModalOpen, setIsPrayerModalOpen] = useState(false);
-  const prayerRooms: PrayerRoom[] = prayerRoomsData;
+  const { prayerRooms } = usePrayerRooms();
 
   const handleMarkerClick = useCallback((roomId: number) => {
     setSelectedRoom(roomId);
@@ -39,10 +36,9 @@ export default function PrayerRoomsPage() {
   }, []);
 
   const selectedRoomData: PrayerRoom | null = selectedRoom
-    ? prayerRooms.find((room) => room.id === selectedRoom) ?? null
+    ? prayerRooms.find((room) => room._id === selectedRoom?.toString()) ?? null
     : null;
 
-  // Calculate next prayer time
   const calculateNextPrayer = useCallback((prayerTimes: Prayer[]) => {
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
@@ -115,7 +111,7 @@ export default function PrayerRoomsPage() {
 
   const PrayerRoomMap = dynamic(
     () =>
-      import("@/components/prayer-rooms/PrayerRoomMap").then((mod) => mod.PrayerRoomMap),
+      import("@/components/prayer-rooms/PrayerRoomMap").then((mod) => mod.default),
     {
       ssr: false,
       loading: () => (
@@ -309,12 +305,6 @@ export default function PrayerRoomsPage() {
             </Card>
           </div>
         </div>
-
-        <PrayerRoomDetailModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          room={selectedRoomData}
-        />
       </section>
 
       {/* Prayer Rooms List */}

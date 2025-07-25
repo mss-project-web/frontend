@@ -10,6 +10,7 @@ import { NewsAndEvents } from "@/components/home/News";
 import { EventHome } from "@/components/home/EventHome";
 import { PresidentContens } from "@/components/home/PresidentContens";
 import { JoinUsSection } from "../components/home/JoinUsSection";
+import { MorphingText } from "@/components/ui/morphing-text";
 
 export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
@@ -43,8 +44,15 @@ export default function HomePage() {
     </div>
   );
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % texts.length);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <main className="relative min-h-screen font-sans overflow-hidden">
+    <main className="relative min-h-screen font-sans overflow-hidden bg-white">
       {/* BG */}
       <div className="relative">
         <ThreeDMarquee images={images} imageWidth={20} imageHeight={35} />
@@ -55,24 +63,10 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -40, scale: 1.05 }}
             transition={{ duration: 1.5 }}
-            className="
-            absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-            pointer-events-none z-10
-            text-white font-black
-            text-4xl sm:text-6xl lg:text-7xl
-            tracking-wide
-            select-none
-            drop-shadow-[0_4px_10px_rgba(0,0,0,0.85)]
-            px-6 py-3
-            bg-black bg-opacity-60
-            rounded-lg
-            max-w-[95vw]
-            whitespace-nowrap
-            overflow-visible
-            text-center
-          "
+            className="absolute inset-0 flex items-center justify-center text-4xl sm:text-5xl md:text-6xl font-bold text-sky-400 z-10 text-center px-4 md:px-8 lg:px-16 xl:px-24 2xl:px-32 pointer-events-none
+    "
           >
-            {texts[index]}
+            <MorphingText texts={texts} />;
           </motion.div>
         </AnimatePresence>
       </div>
@@ -102,7 +96,7 @@ export default function HomePage() {
       </div>
 
       {/* JoinUsSection */}
-        <JoinUsSection/>
+      <JoinUsSection />
     </main>
   );
 }

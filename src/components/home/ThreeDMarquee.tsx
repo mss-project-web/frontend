@@ -41,7 +41,7 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
 return (
       <section
       className={
-        'mx-auto block h-[700px] overflow-hidden rounded-none max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 dark:from-blue-950 dark:via-blue-900 dark:to-slate-900 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/50 border border-blue-200/30 dark:border-blue-800/30 ' +
+        'mx-auto block h-[700px] overflow-hidden rounded-none max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/50 border border-blue-200/30 dark:border-blue-800/30 ' +
         className
       }
     >
@@ -80,8 +80,8 @@ return (
                         width={970}
                         height={700}
                         className={
-                          'aspect-[970/700] rounded-xl object-cover ring-2 ring-blue-300/40 dark:ring-blue-600/40 shadow-xl shadow-blue-300/20 dark:shadow-blue-800/30 hover:shadow-3xl hover:shadow-blue-400/40 dark:hover:shadow-blue-700/50 transition-all duration-500 backdrop-blur-sm border border-blue-200/20 dark:border-blue-700/20 hover:border-blue-300/60 dark:hover:border-blue-500/60 ' +
-                          (isClickable ? 'cursor-pointer hover:ring-blue-400/60 dark:hover:ring-blue-500/60' : '')
+                          'aspect-[970/700] rounded-xl object-cover ring-2 ring-blue-300/40 shadow-xl shadow-blue-300/20 hover:shadow-3xl hover:shadow-blue-400/40 transition-all duration-500 backdrop-blur-sm border border-blue-200/20 hover:border-blue-300/60' +
+                          (isClickable ? 'cursor-pointer hover:ring-blue-400/60' : '')
                         }
                         onClick={() => handleImageClick(image, globalIndex)}
                       />

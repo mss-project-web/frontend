@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet" // Import SheetClose
 import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
 import { navItems } from "@/data/nav-items"
 
@@ -13,6 +13,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [isCopied, setIsCopied] = useState(false) // State for copy icon toggle
+  const [isSheetOpen, setIsSheetOpen] = useState(false); // State for Sheet (mobile menu)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -27,6 +28,17 @@ export default function Navigation() {
       return () => clearTimeout(timer)
     }
   }, [isCopied])
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [showModal])
 
   const copyAccountNumber = () => {
     navigator.clipboard.writeText("1234567890").then(
@@ -49,7 +61,10 @@ export default function Navigation() {
               <div className="flex items-center space-x-2 md:hidden">
                 <Hash className="w-4 h-4" />
                 <button
-                  onClick={() => setShowModal(true)}
+                  onClick={() => {
+                    setShowModal(true);
+                    setIsSheetOpen(false); // Close sheet if modal is opened from inside sheet
+                  }}
                   className="text-white hover:text-blue-200 transition"
                 >
                   สนับสนุนการทำงานของชมรม
@@ -128,7 +143,7 @@ export default function Navigation() {
             </div>
 
             {/* Mobile Menu */}
-            <Sheet>
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild className="md:hidden">
                 <Button variant="ghost" size="icon" aria-label="Open menu">
                   <Menu className="w-6 h-6" />
@@ -142,7 +157,7 @@ export default function Navigation() {
                 <div className="flex flex-col items-center">
                   <div className="w-32 h-16 relative">
                     <Image
-                      src="/LOGO-MSS.png"
+                      src="/LOGO/LOGO-MSS.png"
                       fill
                       sizes="(max-width: 768px) 100vw, 200px"
                       alt="logo"
@@ -159,8 +174,8 @@ export default function Navigation() {
                   {navItems.map((item) => {
                     const isActive = pathname === item.href
                     return (
-                      <Link
-                        key={item.href}
+                      // 💡 สำคัญ: ทำให้ <SheetClose> และ <Link> อยู่บรรทัดเดียวกัน
+                      <SheetClose asChild key={item.href}><Link
                         href={item.href}
                         className={`block px-2 py-1 rounded-md text-lg font-semibold transition-colors duration-300 ${isActive
                           ? "bg-blue-600 text-white shadow-md"
@@ -168,12 +183,15 @@ export default function Navigation() {
                           }`}
                       >
                         {item.label}
-                      </Link>
+                      </Link></SheetClose>
                     )
                   })}
                 </nav>
                 <Button
-                  onClick={() => setShowModal(true)}
+                  onClick={() => {
+                    setShowModal(true);
+                    setIsSheetOpen(false); // Close the sheet when opening the modal from within it
+                  }}
                   className="mt-6 w-full bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   สนับสนุนการทำงานของชมรม

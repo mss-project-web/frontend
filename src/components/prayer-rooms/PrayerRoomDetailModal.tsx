@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { MapPin, Clock, Users, Star, Navigation, Phone, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Clock, Users, Navigation, Phone, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PrayerRoom } from '@/types/prayer';
 
 interface PrayerRoomDetailModalProps {
@@ -24,6 +23,10 @@ export function PrayerRoomDetailModal({ isOpen, onClose, room }: PrayerRoomDetai
     setCurrentImageIndex((prev) => (prev === 0 ? room.images.length - 1 : prev - 1));
   };
 
+  const getGoogleMapsNavigationUrl = (lat: number, lng: number) => {
+    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+  };
+
   return (
     <div
       className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 backdrop-blur-sm"
@@ -39,7 +42,7 @@ export function PrayerRoomDetailModal({ isOpen, onClose, room }: PrayerRoomDetai
           <div className="text-xl font-semibold">{room.name}</div>
           <div className="flex items-center space-x-2 text-sm mt-1">
             <MapPin className="w-4 h-4" />
-            <span>{room.address}</span>
+            <span>{room.place}, {room.faculty}</span>
           </div>
           <button
             className="absolute top-2 right-2 text-white hover:text-blue-200"
@@ -50,12 +53,11 @@ export function PrayerRoomDetailModal({ isOpen, onClose, room }: PrayerRoomDetai
           </button>
         </div>
         <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
-          <div className="relative h-48 rounded-md overflow-hidden">
-            <Image
-              src={room.images[currentImageIndex] || '/placeholder.svg'}
+          <div className="relative h-48 md:h-64 rounded-md overflow-hidden">
+            <img
+              src={room.images[currentImageIndex]}
               alt={`${room.name} ${currentImageIndex + 1}`}
-              fill
-              className="object-cover"
+              className="object-cover absolute inset-0 w-full h-full transition-transform duration-300 rounded-md"
               loading="lazy"
             />
             {room.images.length > 1 && (
@@ -80,42 +82,56 @@ export function PrayerRoomDetailModal({ isOpen, onClose, room }: PrayerRoomDetai
               </>
             )}
           </div>
-          <p className="text-gray-700 text-sm">{room.description}</p>
+          {room.description && (
+            <p className="text-gray-700 text-sm">{room.description}</p>
+          )}
+
           <div className="space-y-2">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Users className="w-4 h-4 text-blue-600" />
-              <span>ความจุ: {room.capacity}</span>
-            </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Clock className="w-4 h-4 text-blue-600" />
-              <span>เวลาเปิด: {room.openHours}</span>
-            </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Phone className="w-4 h-4 text-blue-600" />
-              <span>โทร: {room.phone}</span>
-            </div>
-            {room.rating && room.reviews !== undefined && (
+            {room.capacity !== undefined && (
               <div className="flex items-center space-x-2 text-sm text-gray-600">
-                <Star className="w-4 h-4 text-blue-600" />
-                <span>คะแนน: {room.rating} ({room.reviews} รีวิว)</span>
+                <Users className="w-4 h-4 text-blue-600" />
+                <span>ความจุ: {room.capacity}</span>
+              </div>
+            )}
+
+            {room.openingHours && (
+              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <Clock className="w-4 h-4 text-blue-600" />
+                <span>เวลาเปิด: {room.openingHours}</span>
+              </div>
+            )}
+
+            {room.phone && (
+              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                <Phone className="w-4 h-4 text-blue-600" />
+                <span>โทร: {room.phone}</span>
               </div>
             )}
           </div>
-          <div>
-            <h4 className="font-semibold text-gray-800 text-sm mb-2">สิ่งอำนวยความสะดวก</h4>
-            <div className="flex flex-wrap gap-2">
-              {room.facilities.map((facility, index) => (
-                <Badge key={index} variant="outline" className="text-xs border-blue-200 text-blue-700">
-                  {facility}
-                </Badge>
-              ))}
+
+          {room.facilities && room.facilities.length > 0 && (
+            <div>
+              <h4 className="font-semibold text-gray-800 text-sm mb-2">สิ่งอำนวยความสะดวก</h4>
+              <div className="flex flex-wrap gap-2">
+                {room.facilities.map((facility, index) => (
+                  <Badge key={index} variant="outline" className="text-xs border-blue-200 text-blue-700">
+                    {facility}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+
           <div className="space-y-2">
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+            <a
+              href={getGoogleMapsNavigationUrl(room.coordinates.lat, room.coordinates.lng)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
               <Navigation className="w-4 h-4 mr-2" />
               นำทางไปยังห้องละหมาด
-            </Button>
+            </a>
           </div>
         </div>
       </div>
