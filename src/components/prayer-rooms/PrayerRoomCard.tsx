@@ -13,7 +13,6 @@ import { usePrayerRooms } from '@/lib/hooks/usePrayerRooms';
 const ITEMS_PER_PAGE = 3;
 
 export function PrayerRoomDisplay() {
-  // ดึงข้อมูลจาก hook ที่แยกไว้
   const { prayerRooms: initialRooms, loading, error, refetch } = usePrayerRooms();
 
   // UI state
@@ -75,7 +74,6 @@ export function PrayerRoomDisplay() {
 
   return (
     <div className="container mx-auto px-8 py-8">
-      {/* Select */}
       <div className="mb-4 flex justify-end">
         <Select onValueChange={handleFacultySelect} value={selectedFaculty}>
           <SelectTrigger className="w-full sm:w-64 bg-blue-100 text-blue-900 border-blue-200 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none mt-4 md:mt-0">
