@@ -4,6 +4,7 @@ import { Kanit } from "next/font/google"
 import "./globals.css"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
+import RouteLoader from "@/components/RouteLoader"
 
 const kanit = Kanit({
   subsets: ["thai"],
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="th" className={kanit.variable} suppressHydrationWarning>
       <body className="font-sans">
+        <RouteLoader />
         <Navigation />
         <main className="min-h-screen">{children}</main>
         <Footer />

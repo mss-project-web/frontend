@@ -13,7 +13,7 @@ export function JoinUsSection() {
                         transition={{ duration: 1 }}
                         className="max-w-3xl mx-auto px-4 text-center"
                   >
-                        <div className="text-3xl md:text-5xl font-bold mb-6" style={{ fontFamily: "Kanit, sans-serif" }}>
+                        <div className="text-2xl md:text-5xl font-bold mb-6" style={{ fontFamily: "Kanit, sans-serif" }}>
                               พร้อมเข้าร่วมกับเราแล้วหรือยัง
                         </div>
                         <p className="text-xl mb-8 text-gray-100" style={{ fontFamily: "Kanit, sans-serif" }}>

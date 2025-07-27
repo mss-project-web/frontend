@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronUp } from "lucide-react";
 
 // Components
 import { ThreeDMarquee } from "../components/home/ThreeDMarquee";
@@ -10,15 +11,37 @@ import { NewsAndEvents } from "@/components/home/News";
 import { EventHome } from "@/components/home/EventHome";
 import { PresidentContens } from "@/components/home/PresidentContens";
 import { JoinUsSection } from "../components/home/JoinUsSection";
-import { MorphingText } from "@/components/ui/morphing-text";
 
 export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
   const [index, setIndex] = useState(0);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
   const images = Array.from({ length: 32 }, (_, i) => ({
     src: `/Image/${i + 1}.webp`,
     alt: `Image ${i + 1}`,
   }));
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const WavePattern = () => (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -63,10 +86,17 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -40, scale: 1.05 }}
             transition={{ duration: 1.5 }}
-            className="absolute inset-0 flex items-center justify-center text-4xl sm:text-5xl md:text-6xl font-bold text-sky-400 z-10 text-center px-4 md:px-8 lg:px-16 xl:px-24 2xl:px-32 pointer-events-none
-    "
-          >
-            <MorphingText texts={texts} />;
+            className="
+            absolute inset-0 flex items-center justify-center
+            text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
+            font-extrabold text-white text-center
+            shadow-sky-500/50
+            leading-tight tracking-tight
+            z-10 px-4 md:px-8 pointer-events-none
+            drop-shadow-[0_0_4px_#00BFFF]
+            [text-shadow:0_0_2px_#00BFFF,0_0_2px_#00BFFF,0_0_2px_#00BFFF]
+          "
+          > {texts[index]}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -96,7 +126,27 @@ export default function HomePage() {
       </div>
 
       {/* JoinUsSection */}
-      <JoinUsSection />
+      <div className="p-0">
+        <JoinUsSection />
+      </div>
+
+
+      {/* Scroll-to-Top Button */}
+      <AnimatePresence>
+        {showScrollToTop && (
+          <motion.button
+            className="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 z-50"
+            onClick={scrollToTop}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            aria-label="Scroll to top"
+          >
+            <ChevronUp size={24} />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

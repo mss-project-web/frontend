@@ -1,20 +1,26 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet" // Import SheetClose
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
 import { navItems } from "@/data/nav-items"
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [isCopied, setIsCopied] = useState(false) // State for copy icon toggle
-  const [isSheetOpen, setIsSheetOpen] = useState(false); // State for Sheet (mobile menu)
+  const [isCopied, setIsCopied] = useState(false)
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const pathname = usePathname()
+
+  const handleBackdropClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      setShowModal(false);
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -56,23 +62,23 @@ export default function Navigation() {
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4" />
-                <span>065-394-5821 (อมีร)</span>
+                <span className="text-xs">065-394-5821 (อมีร)</span>
               </div>
               <div className="flex items-center space-x-2 md:hidden">
                 <Hash className="w-4 h-4" />
                 <button
                   onClick={() => {
                     setShowModal(true);
-                    setIsSheetOpen(false); // Close sheet if modal is opened from inside sheet
+                    setIsSheetOpen(false);
                   }}
-                  className="text-white hover:text-blue-200 transition"
+                  className="text-xs text-white hover:text-blue-200 transition"
                 >
                   สนับสนุนการทำงานของชมรม
                 </button>
               </div>
               <div className="hidden md:flex items-center space-x-2">
                 <Mail className="w-4 h-4" />
-                <span>msspsuhatyai@gmail.com</span>
+                <span>msspsuhatyai1@gmail.com</span>
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-4">
@@ -107,10 +113,9 @@ export default function Navigation() {
               <div className="w-32 h-12 relative group-hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/LOGO/LOGO-MSS.png"
-                  alt="ชมรมหลังเดิม MSS"
+                  alt="logo-MSS"
                   fill
-                  className="object-contain"
-                  priority
+                  sizes="(max-width: 768px) 120px, (max-width: 1200px) 200px, 250px"
                 />
               </div>
             </Link>
@@ -146,7 +151,7 @@ export default function Navigation() {
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild className="md:hidden">
                 <Button variant="ghost" size="icon" aria-label="Open menu">
-                  <Menu className="w-6 h-6" />
+                  <Menu className="w-6 h-6 text-black" />
                 </Button>
               </SheetTrigger>
               <SheetContent
@@ -174,7 +179,6 @@ export default function Navigation() {
                   {navItems.map((item) => {
                     const isActive = pathname === item.href
                     return (
-                      // 💡 สำคัญ: ทำให้ <SheetClose> และ <Link> อยู่บรรทัดเดียวกัน
                       <SheetClose asChild key={item.href}><Link
                         href={item.href}
                         className={`block px-2 py-1 rounded-md text-lg font-semibold transition-colors duration-300 ${isActive
@@ -190,7 +194,7 @@ export default function Navigation() {
                 <Button
                   onClick={() => {
                     setShowModal(true);
-                    setIsSheetOpen(false); // Close the sheet when opening the modal from within it
+                    setIsSheetOpen(false);
                   }}
                   className="mt-6 w-full bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                 >
@@ -204,8 +208,10 @@ export default function Navigation() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
-          <div className="modal-content bg-white rounded-xl shadow-xl max-w-sm w-full p-6 relative animate-fade-in-up">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
+          onClick={handleBackdropClick}>
+          <div className="modal-content bg-white rounded-xl shadow-xl max-w-sm w-full p-6 relative animate-fade-in-up"
+            onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition text-xl"
@@ -219,20 +225,21 @@ export default function Navigation() {
             </div>
 
             <div className="flex flex-col items-center space-y-4">
-              <Image
-                src="/qr-promptpay-mss.png"
-                alt="QR พร้อมเพย์"
-                width={220}
-                height={220}
-                className="rounded-lg shadow-md"
-              />
+              <div className="relative w-[220px] h-[220px]">
+                <Image
+                  src="/qr-promptpay-mss.jpg"
+                  alt="QR พร้อมเพย์"
+                  fill
+                  className="rounded-lg shadow-md object-cover"
+                />
+              </div>
               <div className="text-center space-y-1">
                 <p className="text-sm text-gray-700">
-                  ชื่อบัญชี: <span className="font-semibold">ชมรมมุสลิมศึกษา ม.อ.</span>
+                  ชื่อบัญชี: <span className="font-semibold">นางสาวซอฟีเราะห์ ดอเลาะ</span>
                 </p>
                 <div className="flex items-center justify-center space-x-2">
                   <p className="text-sm text-gray-700">
-                    เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">123-4-56789-0</span>
+                    เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">153-8-50729-2</span>
                   </p>
                   <button
                     onClick={copyAccountNumber}
@@ -242,6 +249,9 @@ export default function Navigation() {
                     {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
+                <p className="text-sm text-gray-700">
+                  ธนาคารกสิกรไทย
+                </p>
                 <p className="text-xs text-gray-500">
                   * รองรับสแกนผ่านแอปธนาคารทุกประเภท
                 </p>
