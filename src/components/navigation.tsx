@@ -214,7 +214,7 @@ export default function Navigation() {
             onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setShowModal(false)}
-              className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition text-xl"
+              className="absolute top-3 right-3 text-black hover:text-gray-600 transition text-xl"
               aria-label="Close"
             >
               ✕

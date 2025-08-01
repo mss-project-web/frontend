@@ -5,10 +5,11 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Card } from '@/components/ui/card';
 import { PrayerRoom } from '@/types/prayer';
-import { usePrayerRooms } from '@/lib/hooks/usePrayerRooms';
-import { Loader2, AlertTriangle } from 'lucide-react';
+import { usePrayerRooms } from '@/lib/hooks/prayer/usePrayerRooms';
 import L from 'leaflet';
 import { PrayerRoomDetailModal } from '@/components/prayer-rooms/PrayerRoomDetailModal';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Loader2 } from 'lucide-react';
 
 const customMarkerIcon = new L.Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
@@ -31,7 +32,7 @@ const selectedMarkerIcon = new L.Icon({
 });
 
 export default function PrayerRoomMapPage() {
-  const { prayerRooms, loading, error } = usePrayerRooms();
+  const { prayerRooms, loading, error, refetch } = usePrayerRooms();
   const [selectedRoom, setSelectedRoom] = useState<PrayerRoom | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -50,54 +51,50 @@ export default function PrayerRoomMapPage() {
     setIsModalOpen(false);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-96">
-        <Loader2 className="animate-spin w-8 h-8 text-gray-500" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center h-96 text-red-600">
-        <AlertTriangle className="mr-2" /> Error: {error}
-      </div>
-    );
-  }
+  const showSkeleton = loading || !!error;
 
   return (
     <>
       <Card className="border-none shadow-lg">
         <div className="relative h-80 md:h-96 rounded-lg overflow-hidden">
-          <MapContainer
-            center={defaultCenter}
-            zoom={defaultZoom}
-            scrollWheelZoom={true}
-            className="h-full w-full z-0"
-            minZoom={minZoomLevel}
-            maxZoom={maxZoomLevel}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-
-            {prayerRooms.map((room) => (
-              <Marker
-                key={room._id}
-                position={[room.coordinates.lat, room.coordinates.lng]}
-                icon={
-                  selectedRoom && selectedRoom._id === room._id
-                    ? selectedMarkerIcon
-                    : customMarkerIcon
-                }
-                eventHandlers={{
-                  click: () => handleOpenModal(room),
-                }}
+          {showSkeleton ? (
+            <div className="relative w-full h-full flex items-center justify-center bg-gray-200 rounded-lg overflow-hidden">
+              <Skeleton className="absolute inset-0 w-full h-full rounded-lg" />
+              <div className="relative z-10 flex flex-col items-center justify-center text-gray-600">
+                <Loader2 className="animate-spin w-10 h-10 mb-2" />
+                <p className="text-lg font-medium">กำลังโหลดแผนที่...</p>
+              </div>
+            </div>
+          ) : (
+            <MapContainer
+              center={defaultCenter}
+              zoom={defaultZoom}
+              scrollWheelZoom={true}
+              className="h-full w-full z-0"
+              minZoom={minZoomLevel}
+              maxZoom={maxZoomLevel}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-            ))}
-          </MapContainer>
+
+              {prayerRooms.map((room) => (
+                <Marker
+                  key={room._id}
+                  position={[room.coordinates.lat, room.coordinates.lng]}
+                  icon={
+                    selectedRoom && selectedRoom._id === room._id
+                      ? selectedMarkerIcon
+                      : customMarkerIcon
+                  }
+                  eventHandlers={{
+                    click: () => handleOpenModal(room),
+                  }}
+                />
+              ))}
+            </MapContainer>
+          )}
         </div>
       </Card>
 

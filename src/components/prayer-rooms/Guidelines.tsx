@@ -6,12 +6,12 @@ export function Guidelines() {
             <section className="py-8">
                   <div className="container mx-auto px-3">
                         <div className="text-center mb-6">
-                              <h2 className="text-xl sm:text-3xl font-bold text-gray-800 mb-2">แนวทางการใช้ห้องละหมาด</h2>
+                              <div className="text-3xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">แนวทางการใช้ห้องละหมาด</div>
                               <p className="text-sm sm:text-lg text-gray-600">กฎและข้อปฏิบัติสำหรับการใช้ห้องละหมาดอย่างเหมาะสม</p>
                         </div>
 
-                        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4 bg-white">
-                              <Card className="border-0 shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300">
+                        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-4">
+                              <Card className="border-0 shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300 bg-white">
                                     <CardHeader className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 sm:p-6">
                                           <CardTitle className="text-lg sm:text-2xl font-bold flex items-center space-x-2">
                                                 <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
@@ -20,11 +20,11 @@ export function Guidelines() {
                                                 <span>สิ่งที่ควรทำ</span>
                                           </CardTitle>
                                     </CardHeader>
-                                    <CardContent className="p-4 sm:p-6">
-                                          <ul className="space-y-3">
+                                    <CardContent className="px-4 sm:px-6 pt-4">
+                                          <ul className="space-y-3 mb-4">
                                                 {[
                                                       { text: "ถอดรองเท้าก่อนเข้าห้องละหมาด", icon: "👟" },
-                                                      { text: "รักษาความเงียบและสงบ", icon: "🤫" },
+                                                      { text: "รักษาความเงียบและสงบ", icon: "🔇" },
                                                       { text: "ทำความสะอาดหลังใช้งาน", icon: "🧹" },
                                                       { text: "แต่งกายสุภาพเรียบร้อย", icon: "👔" },
                                                       { text: "เคารพผู้ที่กำลังละหมาด", icon: "🤲" }
@@ -40,7 +40,7 @@ export function Guidelines() {
                                     </CardContent>
                               </Card>
 
-                              <Card className="border-0 shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300">
+                              <Card className="border-0 shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300 bg-white">
                                     <CardHeader className="bg-gradient-to-r from-red-500 to-pink-600 text-white p-4 sm:p-6">
                                           <CardTitle className="text-lg sm:text-2xl font-bold flex items-center space-x-2">
                                                 <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
@@ -49,8 +49,8 @@ export function Guidelines() {
                                                 <span>สิ่งที่ไม่ควรทำ</span>
                                           </CardTitle>
                                     </CardHeader>
-                                    <CardContent className="p-4 sm:p-6">
-                                          <ul className="space-y-3">
+                                    <CardContent className="px-4 sm:px-6 pt-4">
+                                          <ul className="space-y-3 mb-4">
                                                 {[
                                                       { text: "ห้ามใช้โทรศัพท์เสียงดัง", icon: "📵" },
                                                       { text: "ห้ามนำอาหารเข้าไป", icon: "🚫" },

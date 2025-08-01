@@ -1,13 +1,5 @@
 import axios from "axios";
-
-export interface PrayerTimes {
-  Fajr: string;
-  Dhuhr: string;
-  Asr: string;
-  Maghrib: string;
-  Isha: string;
-  thaiDate: string;
-}
+import { PrayerTimes } from "@/types/prayer";
 
 const formatThaiDate = (date: Date): string => {
   const days = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
@@ -24,7 +16,7 @@ const formatThaiDate = (date: Date): string => {
   return `${dayName}ที่ ${day} ${month} ${year}`;
 };
 
-export const getTodayPrayerTimes = async (): Promise<PrayerTimes | null> => {
+export const usePrayerTimes = async (): Promise<PrayerTimes | null> => {
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth() + 1;

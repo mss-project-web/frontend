@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import React from "react";
+import Image from "next/image";
 
 export interface MarqueeImage {
   src: string;
@@ -39,61 +40,65 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
   };
 
 return (
-      <section
-      className={
-        'mx-auto block h-[700px] overflow-hidden rounded-none max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/50 border border-blue-200/30 dark:border-blue-800/30 ' +
-        className
-      }
-    >
-      <div className="flex w-full h-full items-center justify-center relative">
-        <div className="w-[1520px] shrink-0 scale-50 sm:scale-75 lg:scale-100">
-          <div
-            style={{
-              transform: 'rotateX(55deg) rotateY(0deg) rotateZ(45deg)',
+  <section
+  className={
+    'mx-auto block h-[700px] overflow-hidden rounded-none max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/50 border border-blue-200/30 dark:border-blue-800/30 ' +
+    className
+  }
+>
+  <div className="flex w-full h-full items-center justify-center relative">
+    <div className="w-[1520px] shrink-0 scale-50 sm:scale-75 lg:scale-100">
+      <div
+        style={{
+          transform: 'rotateX(55deg) rotateY(0deg) rotateZ(45deg)',
+        }}
+        className="relative grid w-full h-full origin-center grid-cols-4 gap-6 transform-3d place-items-center"
+      >
+        {imageGroups.map((imagesInGroup, idx) => (
+          <motion.div
+            key={'column-' + idx}
+            animate={{ y: idx % 2 === 0 ? 100 : -100 }}
+            transition={{
+              duration: idx % 2 === 0 ? 10 : 15,
+              repeat: Infinity,
+              repeatType: 'reverse',
             }}
-            className="relative grid w-full h-full origin-center grid-cols-4 gap-6 transform-3d place-items-center"
+            className="flex flex-col items-center gap-6"
           >
-            {imageGroups.map((imagesInGroup, idx) => (
-              <motion.div
-                key={'column-' + idx}
-                animate={{ y: idx % 2 === 0 ? 100 : -100 }}
-                transition={{
-                  duration: idx % 2 === 0 ? 10 : 15,
-                  repeat: Infinity,
-                  repeatType: 'reverse',
-                }}
-                className="flex flex-col items-center gap-6"
-              >
-                <VerticalGridLine extraStyles="-left-4" spacing="80px" />
-                {imagesInGroup.map((image, imgIdx) => {
-                  const globalIndex = idx * groupSize + imgIdx;
-                  const isClickable = image.href || onImageClick;
-  
-                  return (
-                    <div key={'img-' + imgIdx} className="relative">
-                      <HorizontalGridLine extraStyles="-top-4" spacing="20px" />
-                      <motion.img
-                        whileHover={{ y: -10 }}
-                        transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        src={image.src}
-                        alt={image.alt}
-                        width={970}
-                        height={700}
-                        className={
-                          'aspect-[970/700] rounded-xl object-cover ring-2 ring-blue-300/40 shadow-xl shadow-blue-300/20 hover:shadow-3xl hover:shadow-blue-400/40 transition-all duration-500 backdrop-blur-sm border border-blue-200/20 hover:border-blue-300/60' +
-                          (isClickable ? 'cursor-pointer hover:ring-blue-400/60' : '')
-                        }
-                        onClick={() => handleImageClick(image, globalIndex)}
-                      />
-                    </div>
-                  );
-                })}
-              </motion.div>
-            ))}
-          </div>
-        </div>
+            <VerticalGridLine extraStyles="-left-4" spacing="80px" />
+            {imagesInGroup.map((image, imgIdx) => {
+              const globalIndex = idx * groupSize + imgIdx;
+              const isClickable = image.href || onImageClick;
+
+              return (
+                <div key={'img-' + imgIdx} className="relative">
+                  <HorizontalGridLine extraStyles="-top-4" spacing="20px" />
+                  <motion.div
+                    whileHover={{ y: -10 }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    className={
+                        'aspect-[970/700] rounded-xl ring-2 ring-blue-300/40 shadow-xl shadow-blue-300/20 hover:shadow-3xl hover:shadow-blue-400/40 transition-all duration-500 backdrop-blur-sm border border-blue-200/20 hover:border-blue-300/60 ' +
+                        (isClickable ? 'cursor-pointer hover:ring-blue-400/60' : '')
+                    }
+                    onClick={() => handleImageClick(image, globalIndex)}
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      width={400}
+                      height={400}
+                      className="w-full h-full object-cover rounded-xl"
+                    />
+                  </motion.div>
+                </div>
+              );
+            })}
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 );
 };
 

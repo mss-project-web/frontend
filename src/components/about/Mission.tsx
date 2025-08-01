@@ -24,13 +24,12 @@ export function Mission() {
                               }}
                         ></div>
 
-                        {/* Content Container aligned with HomePage's max-w-screen-xl and px-4 */}
                         <div className="mx-auto max-w-screen-xl px-4 relative z-10">
                               <div className="mx-auto">
                                     <div className="text-center mb-5">
-                                          <h2 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4">
+                                          <div className="text-3xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
                                                 วิสัยทัศน์และพันธกิจ
-                                          </h2>
+                                          </div>
                                           <p className="text-lg text-gray-600">
                                                 หลักการและความเชื่อที่เป็นรากฐานของการทำงาน
                                           </p>
@@ -62,7 +61,7 @@ export function Mission() {
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: -20 }}
                                                 transition={{ duration: 0.5 }}
-                                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4 md:p-6"
+                                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 p-4 md:p-6"
                                           >
                                                 {mission.map((mission, index) => (
                                                       <Card
@@ -73,7 +72,7 @@ export function Mission() {
                                                                   <div className="w-14 h-14 mx-auto mb-5 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 flex items-center justify-center shadow-md">
                                                                         <mission.icon className="w-7 h-7 text-white" />
                                                                   </div>
-                                                                  <div className="text-lg md:text-lg font-bold mb-3">{mission.title}</div>
+                                                                  <div className="text-blue-900 text-lg md:text-lg font-bold mb-3">{mission.title}</div>
                                                             </CardContent>
                                                       </Card>
                                                 ))}
@@ -88,7 +87,7 @@ export function Mission() {
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: -20 }}
                                                 transition={{ duration: 0.5 }}
-                                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4 md:p-6" // Overall padding
+                                                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 p-4 md:p-6" // Overall padding
                                           >
                                                 {values.map((value, index) => (
 

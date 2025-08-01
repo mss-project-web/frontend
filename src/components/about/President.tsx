@@ -32,20 +32,21 @@ const presidents = [
 
 export function President() {
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden">
+    <section className="py-8 sm:py-16 bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden">
       <div className="mx-auto max-w-screen-xl px-4 relative z-10">
-        <h2 className="text-2xl font-bold text-center text-black mb-10">
-          ทำเนียบประธานชมรมมุสลิม
-        </h2>
-
-        <div className="overflow-y-auto max-h-100 shadow-lg bg-white/70 backdrop-blur-md">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="text-2xl sm:text-3xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1">
+            ทำเนียบประธานชมรมมุสลิม
+          </div>
+        </div>
+        <div className="overflow-x-auto overflow-y-auto max-h-80 shadow-lg bg-white/70 backdrop-blur-md rounded-lg">
           <table className="min-w-full text-sm text-blue-900">
             <thead>
               <tr className="bg-blue-100 text-left text-xs sm:text-sm uppercase tracking-wider sticky top-0 z-10">
-                <th className="px-6 py-4">ลำดับ</th>
-                <th className="px-6 py-4">ชื่อ-สกุล</th>
-                <th className="px-6 py-4">คณะ</th>
-                <th className="px-6 py-4">ปีการศึกษา</th>
+                <th className="px-2 py-3 sm:px-6 sm:py-4">ลำดับ</th>
+                <th className="px-4 py-3 sm:px-6 sm:py-4">ชื่อ-สกุล</th>
+                <th className="px-4 py-3 sm:px-6 sm:py-4">คณะ</th>
+                <th className="px-2 py-3 sm:px-6 sm:py-4">ปีการศึกษา</th>
               </tr>
             </thead>
             <tbody>
@@ -55,10 +56,18 @@ export function President() {
                   className={`${index % 2 === 0 ? "bg-white/80" : "bg-blue-50/50"
                     } hover:bg-blue-200/40 transition`}
                 >
-                  <td className="px-6 py-4 font-semibold">{index + 1}</td>
-                  <td className="px-6 py-4">{pres.name}</td>
-                  <td className="px-6 py-4">{pres.faculty}</td>
-                  <td className="px-6 py-4">{pres.year}</td>
+                  <td className="px-4 py-3 sm:px-6 sm:py-4 font-semibold text-xs sm:text-sm">
+                    {index + 1}
+                  </td>
+                  <td className="px-4 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm">
+                    {pres.name}
+                  </td>
+                  <td className="px-4 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm">
+                    {pres.faculty}
+                  </td>
+                  <td className="px-4 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm">
+                    {pres.year}
+                  </td>
                 </tr>
               ))}
             </tbody>

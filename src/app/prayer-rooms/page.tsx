@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import dynamic from "next/dynamic";
 
@@ -10,65 +9,13 @@ import { PrayerRoomDisplay } from '@/components/prayer-rooms/PrayerRoomCard';
 import { Guidelines } from '@/components/prayer-rooms/Guidelines';
 import { PrayerTime } from '@/components/prayer-rooms/PrayerTime';
 
-//API & interface
-import { PrayerRoom } from '@/types/prayer';
-import { usePrayerRooms } from '@/lib/hooks/usePrayerRooms';
-
 export default function PrayerRoomsPage() {
-  const [selectedRoom, setSelectedRoom] = useState<number | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { prayerRooms } = usePrayerRooms();
-
-  const handleMarkerClick = useCallback((roomId: number) => {
-    setSelectedRoom(roomId);
-    setIsModalOpen(true);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false);
-    setSelectedRoom(null);
-  }, []);
-
-  const selectedRoomData: PrayerRoom | null = selectedRoom
-    ? prayerRooms.find((room) => room._id === selectedRoom?.toString()) ?? null
-    : null;
-
-  useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        handleCloseModal();
-      }
-    };
-
-    if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
-      window.addEventListener('keydown', handleEsc);
-    } else {
-      document.body.style.overflow = 'auto';
-      window.removeEventListener('keydown', handleEsc);
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-      window.removeEventListener('keydown', handleEsc);
-    };
-  }, [isModalOpen, handleCloseModal]);
-
   const PrayerRoomMap = dynamic(
-    () =>
-      import("@/components/prayer-rooms/PrayerRoomMap").then((mod) => mod.default),
+    () => import('@/components/prayer-rooms/PrayerRoomMap').then((mod) => mod.default),
     {
       ssr: false,
-      loading: () => (
-        <div className="w-full h-96 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">กำลังโหลดแผนที่...</p>
-          </div>
-        </div>
-      ),
     }
-  )
+  );
 
   return (
     <main className="relative min-h-screen font-sans overflow-hidden bg-white">
@@ -120,17 +67,13 @@ export default function PrayerRoomsPage() {
       <section className="py-10 bg-gradient-to-br">
         <div className="mx-auto max-w-screen-xl px-4">
           <div className="mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">แผนที่ห้องละหมาด</h2>
-            <p className="text-gray-600 text-lg">คลิกที่จุดบนแผนที่เพื่อดูรายละเอียดห้องละหมาด</p>
+            <h2 className="text-3xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">แผนที่ห้องละหมาด</h2>
+            <p className="text-gray-600 text-lg mb-4">คลิกที่จุดบนแผนที่เพื่อดูรายละเอียดห้องละหมาด</p>
           </div>
           <div className="max-w-6xl mx-auto">
             <Card className="border-0 shadow-xl overflow-hidden">
               <CardContent className="p-0">
-                <PrayerRoomMap
-                  prayerRooms={prayerRooms}
-                  selectedRoom={selectedRoom}
-                  onMarkerClick={handleMarkerClick}
-                />
+                <PrayerRoomMap />
               </CardContent>
             </Card>
           </div>
@@ -141,10 +84,10 @@ export default function PrayerRoomsPage() {
       <section className="py-10 bg-gradient-to-br">
         <div className="mx-auto max-w-screen-xl px-4">
           <div className="mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">รายการห้องละหมาดทั้งหมด</h2>
+            <h2 className="text-3xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">รายการห้องละหมาดทั้งหมด</h2>
             <p className="text-gray-600 text-lg">ห้องละหมาดที่มีให้บริการในมหาวิทยาลัย</p>
           </div>
-          <PrayerRoomDisplay initialRooms={prayerRooms} />
+          <PrayerRoomDisplay />
         </div>
       </section>
 

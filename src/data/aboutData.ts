@@ -5,8 +5,6 @@ import {
       Lightbulb,
 } from "lucide-react"
 
-
-
 export const values = [
       {
             icon: Heart,

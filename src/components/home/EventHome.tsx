@@ -1,76 +1,76 @@
 "use client";
 
 import React from "react";
-import { Event } from "@/types/activitys";
 import Link from "next/link";
+import { useFavoriteActivities } from "@/lib/hooks/activities/useActivitiesFavorite";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
 
-const events: Event[] = [
-      {
-            id: 1,
-            name: "กิจกรรมวิ่งเพื่อสุขภาพ",
-            category: "สุขภาพ",
-            description: "ร่วมวิ่งและออกกำลังกายเพื่อสุขภาพที่ดีขึ้นกับเพื่อนๆ",
-            date: "10 สิงหาคม 2568",
-            time: "07:00 - 10:00 น.",
-            location: "สวนสาธารณะเมือง",
-            imageUrl: "/images/run-event.jpg",
-      },
-      {
-            id: 2,
-            name: "สัมมนาเทคโนโลยีใหม่",
-            category: "เทคโนโลยี",
-            description: "อัพเดทเทรนด์และนวัตกรรมใหม่ในวงการ IT",
-            date: "15 สิงหาคม 2568",
-            time: "09:00 - 16:00 น.",
-            location: "ศูนย์ประชุมแห่งชาติ",
-            imageUrl: "/images/tech-seminar.jpg",
-      },
-      {
-            id: 3,
-            name: "ประกวดวาดภาพศิลปะ",
-            category: "ศิลปะ",
-            description: "แสดงความคิดสร้างสรรค์ผ่านงานศิลปะของคุณ",
-            date: "20 สิงหาคม 2568",
-            time: "10:00 - 17:00 น.",
-            location: "หอศิลป์เมือง",
-            imageUrl: "/images/art-contest.jpg",
-      },
-];
+const SkeletonCard = () => (
+      <Card className="border-none rounded-lg">
+            <Skeleton className="w-full h-40 rounded-t-lg bg-gray-200" />
+            <CardContent className="p-4 space-y-3">
+                  <Skeleton className="h-6 w-3/4 bg-gray-200" />
+                  <Skeleton className="h-4 w-full bg-gray-200" />
+                  <Skeleton className="h-4 w-5/6 bg-gray-200" />
+            </CardContent>
+      </Card>
+);
 
 export function EventHome() {
+      const { activities, loading, error } = useFavoriteActivities();
+
+      const showSkeletons = loading || activities.length === 0;
+
       return (
             <section className="max-w-7xl mx-auto py-6">
                   <h2 className="text-2xl font-extrabold text-blue-800 mb-8 border-b-2 border-gray-300 inline-block pb-1">
                         กิจกรรมดีเด่น
                   </h2>
-
+                  {error && (
+                        <p className="text-red-600 mb-6">เกิดข้อผิดพลาด: {error}</p>
+                  )}
                   <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                        {events.map((event) => (
-                              <div
-                                    key={event.id}
-                                    className="h-full flex flex-col bg-white/95 backdrop-blur-sm border border-blue-100/50 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 rounded-lg cursor-pointer"
-                              >
-                                    <img
-                                          src={event.imageUrl}
-                                          alt={event.name}
-                                          className="w-full h-40 object-cover rounded-t-lg"
-                                    />
-                                    <div className="p-4 flex-grow flex flex-col"> {/* CardContent equivalent */}
-                                          <div className="flex items-center space-x-4 mb-3">
-                                                <h3 className="text-xl font-semibold text-gray-800">{event.name}</h3>
-                                          </div>
-                                          <div className="space-y-2">
-                                                <div className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-blue-100 text-blue-700 border border-blue-200 hover:bg-blue-200 transition-colors duration-200 self-start"> {/* Badge equivalent */}                                                      {event.category}
-                                                </div>
-                                          </div>
-                                          <p className="text-sm text-gray-600 mt-3 line-clamp-2">{event.description}</p> {/* เพิ่ม line-clamp-2 เพื่อให้มี 2 บรรทัด */}
-                                    </div>
-                              </div>
-                        ))}
+                        {showSkeletons ? (
+                              Array.from({ length: 3 }).map((_, index) => (
+                                    <SkeletonCard key={index} />
+                              ))
+                        ) : (
+                              activities.map((event) => (
+                                    <Link
+                                          key={event._id}
+                                          href={`/activities/${event._id}`}
+                                          className="block"
+                                          aria-label={`ดูรายละเอียดกิจกรรม ${event.name_th}`}
+                                    >
+                                          <Card className="h-full bg-white/95 backdrop-blur-sm border border-blue-100/50 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 rounded-lg">
+                                                <Image
+                                                      src={event.images?.[0] || "/fallback.jpg"} 
+                                                      alt={event.name_th}
+                                                      className="w-full h-48 object-cover rounded-t-lg"
+                                                      width={800}
+                                                      height={300}
+                                                />
+                                                <CardContent className="p-4 flex-grow flex flex-col">
+                                                      <div className="flex items-center space-x-4 mb-3">
+                                                            <div className="text-xl font-semibold text-gray-800">
+                                                                  {event.name_th}
+                                                            </div>
+                                                      </div>
+                                                      <div className="text-sm text-gray-600 line-clamp-2">
+                                                            {event.description}
+                                                      </div>
+                                                </CardContent>
+                                          </Card>
+                                    </Link>
+                              ))
+                        )}
                   </div>
-                  <div className="flex justify-end">
+
+                  <div className="flex justify-end mt-6">
                         <Link href="/activitys">
-                              <div className="py-3 text-sx text-left text-gray-800 border-b-2 border-gray-300 inline-block pb-1 mb-4 hover:text-blue-600 hover:border-blue-600 transition-colors duration-300 cursor-pointer">
+                              <div className="py-3 text-sx text-left text-gray-800 border-b-2 border-gray-300 inline-block pb-1 hover:text-blue-600 hover:border-blue-600 transition-colors duration-300 cursor-pointer">
                                     กิจกรรมทั้งหมด
                               </div>
                         </Link>
