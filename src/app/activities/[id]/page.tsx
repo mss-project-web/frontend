@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Target, CheckCircle, MessageSquare, MapPin, Users, Clock } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
+import ActivityGallery from "@/components/activities/ActivityGallery";
 
 export default function ActivityDetailPage() {
   const { id } = useParams();
@@ -256,15 +256,7 @@ export default function ActivityDetailPage() {
                           <div className="grid grid-cols-2 gap-6">
                             {activity.images && activity.images.length > 0 ? (
                               activity.images.slice(0, 4).map((img, index) => (
-                                <div key={index} className="aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                                  <Image
-                                    src={img}
-                                    alt={`กิจกรรม ${index + 1}`}
-                                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                  />""
-                                </div>
+                                <ActivityGallery images={activity.images || []} />
                               ))
                             ) : (
                               <div className="col-span-2 aspect-[4/3] bg-gray-100 rounded-lg flex items-center justify-center shadow-md">

@@ -13,6 +13,34 @@ interface PrayerRoomDetailModalProps {
 
 export function PrayerRoomDetailModal({ isOpen, onClose, room }: PrayerRoomDetailModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+
+    const distance = touchStartX - touchEndX;
+
+    const minSwipeDistance = 50;
+
+    if (distance > minSwipeDistance) {
+      handleNextImage();
+    } else if (distance < -minSwipeDistance) {
+      handlePrevImage();
+    }
+
+    setTouchStartX(null);
+    setTouchEndX(null);
+  };
+
 
   useEffect(() => {
     if (isOpen) {
@@ -94,7 +122,13 @@ export function PrayerRoomDetailModal({ isOpen, onClose, room }: PrayerRoomDetai
         <div className="p-6 space-y-4 overflow-y-auto flex-grow">
           {/* Image Gallery */}
           {room.images && room.images.length > 0 && (
-            <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+            <div
+              className="relative w-full"
+              style={{ paddingTop: '56.25%' }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
               <Image
                 src={room.images[currentImageIndex]}
                 alt={`${room.name} ${currentImageIndex + 1}`}

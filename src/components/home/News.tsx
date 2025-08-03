@@ -164,7 +164,7 @@ export function NewsAndEvents() {
                                 ))
                             ) : activities.length === 0 ? (
                                 <li>
-                                    <p className="text-sm text-gray-500">ไม่มีกิจกรรมในเดือนนี้</p>
+                                    <p className="text-sm text-gray-500 text-center sm:text-start">ไม่มีกิจกรรมในเดือนนี้</p>
                                 </li>
                             ) : (
                                 activities.map((activity) => (
