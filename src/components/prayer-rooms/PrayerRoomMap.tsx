@@ -36,7 +36,7 @@ export default function PrayerRoomMapPage() {
   const [selectedRoom, setSelectedRoom] = useState<PrayerRoom | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const defaultCenter: [number, number] = [7.0043915, 100.4949182];
+  const defaultCenter: [number, number] = [7.0087432, 100.4965171];
   const defaultZoom = 15;
   const minZoomLevel = 15;
   const maxZoomLevel = 25;

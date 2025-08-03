@@ -3,7 +3,7 @@ import { Phone, Mail, MapPin } from "lucide-react"
 
 export default function ContactUsSection() {
       return (
-            <section className="relative z-10 mx-auto max-w-screen-xl px-4 py-10 md:py-10">
+            <section className="relative z-10 mx-auto max-w-screen-xl px-4 py-10 md:py-10 bg-white">
                   <div className="container mx-auto px-4">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
                               <div className="space-y-5">
@@ -17,7 +17,7 @@ export default function ContactUsSection() {
                                     </div>
 
                                     {/* Contact Cards */}
-                                    <div className="space-y-4">
+                                    <div className="space-y-4 bg-white">
                                           {/* Phone Card */}
                                           <Card className="border-l-6 border-blue-600 transition-all duration-300 ease-in-out">
                                                 <CardContent className="px-7 py-2 flex items-center space-x-6">

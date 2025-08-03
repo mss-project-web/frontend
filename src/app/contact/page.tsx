@@ -46,7 +46,7 @@ export default function ContactPage() {
                   <ContactUsSection />
 
                   {/* Enhanced Social Media Section */}
-                  <section className="relative z-10 mx-auto max-w-screen-xl px-1 py-10">
+                  <section className="relative z-10 mx-auto max-w-screen-xl px-1 py-10 bg-white">
                         <div className="container mx-auto px-1 space-y-12">
                               <div className="text-center">
                                     <h2 className="font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
@@ -58,7 +58,7 @@ export default function ContactPage() {
                               </div>
 
                               {/* Enhanced Social Media Grid */}
-                              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+                              <div className="bg-white grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                                     {socialMediaData.map((social, index) => (
                                           <Card
                                                 key={index}

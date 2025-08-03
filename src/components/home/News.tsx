@@ -85,6 +85,14 @@ export function NewsAndEvents() {
                             Array.from({ length: 3 }).map((_, index) => (
                                 <NewsCardSkeleton key={index} />
                             ))
+                        ) : newsError ? (
+                            Array.from({ length: 3 }).map((_, index) => (
+                                <NewsCardSkeleton key={index} />
+                            ))
+                        ) : news.length === 0 ? (
+                            <div className="col-span-3 text-center text-gray-500">
+                                <p>ไม่พบข่าวสารในขณะนี้</p>
+                            </div>
                         ) : (
                             news.map((newsItem) => (
                                 <motion.div
@@ -110,14 +118,7 @@ export function NewsAndEvents() {
                                             <h4 className="font-semibold text-blue-700 mb-0 line-clamp-2">
                                                 {newsItem.name}
                                             </h4>
-                                            <div
-                                                className="text-sm text-blue-700 mb-0"
-                                                style={{
-                                                    overflow: "hidden",
-                                                    whiteSpace: "nowrap",
-                                                    textOverflow: "ellipsis",
-                                                }}
-                                            >
+                                            <div className="text-sm text-blue-700 line-clamp-2">
                                                 {newsItem.description}
                                             </div>
                                             <p className="text-xs text-blue-800">
@@ -143,6 +144,7 @@ export function NewsAndEvents() {
                     </div>
                 </div>
 
+
                 {/* --- Right: Activities Section --- */}
                 <div className="space-y-8">
                     <div>
@@ -157,11 +159,9 @@ export function NewsAndEvents() {
                                     <ActivityItemSkeleton key={index} />
                                 ))
                             ) : activityError ? (
-                                <li>
-                                    <p className="text-sm text-red-500">
-                                        เกิดข้อผิดพลาดในการโหลดกิจกรรม: {activityError}
-                                    </p>
-                                </li>
+                                Array.from({ length: 2 }).map((_, index) => (
+                                    <ActivityItemSkeleton key={index} />
+                                ))
                             ) : activities.length === 0 ? (
                                 <li>
                                     <p className="text-sm text-gray-500">ไม่มีกิจกรรมในเดือนนี้</p>
