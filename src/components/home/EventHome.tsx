@@ -19,53 +19,66 @@ const SkeletonCard = () => (
 );
 
 export function EventHome() {
-      const { activities, loading, error } = useFavoriteActivities();
+      const {
+            activities,
+            loading: activitiesLoading,
+            error: activitiesError,
+      } = useFavoriteActivities();
 
-      const showSkeletons = loading || activities.length === 0;
+      let content;
+
+      if (activitiesError) {
+            content = Array.from({ length: 3 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+            ));
+      } else if (activitiesLoading) {
+            content = Array.from({ length: 3 }).map((_, index) => (
+                  <SkeletonCard key={index} />
+            ));
+      } else if (activities.length === 0) {
+            content = (
+                  <div className="col-span-3 text-center text-gray-500">
+                        ไม่พบกิจกรรมที่แนะนำในขณะนี้
+                  </div>
+            );
+      } else {
+            content = activities.map((event) => (
+                  <Link
+                        key={event._id}
+                        href={`/activities/${event._id}`}
+                        className="block"
+                        aria-label={`ดูรายละเอียดกิจกรรม ${event.name_th}`}
+                  >
+                        <Card className="h-full bg-white/95 backdrop-blur-sm border border-blue-100/50 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 rounded-lg">
+                              <Image
+                                    src={event.images?.[0] || "/fallback.jpg"}
+                                    alt={event.name_th}
+                                    className="w-full h-48 object-cover rounded-t-lg"
+                                    width={800}
+                                    height={300}
+                              />
+                              <CardContent className="p-4 flex-grow flex flex-col">
+                                    <div className="flex items-center space-x-4 mb-3">
+                                          <div className="text-xl font-semibold text-gray-800">
+                                                {event.name_th}
+                                          </div>
+                                    </div>
+                                    <div className="text-sm text-gray-600 line-clamp-2">
+                                          {event.description}
+                                    </div>
+                              </CardContent>
+                        </Card>
+                  </Link>
+            ));
+      }
 
       return (
             <section className="max-w-7xl mx-auto py-6">
                   <h2 className="text-2xl font-extrabold text-blue-800 mb-8 border-b-2 border-gray-300 inline-block pb-1">
                         กิจกรรมดีเด่น
                   </h2>
-                  {error && (
-                        <p className="text-red-600 mb-6">เกิดข้อผิดพลาด: {error}</p>
-                  )}
                   <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                        {showSkeletons ? (
-                              Array.from({ length: 3 }).map((_, index) => (
-                                    <SkeletonCard key={index} />
-                              ))
-                        ) : (
-                              activities.map((event) => (
-                                    <Link
-                                          key={event._id}
-                                          href={`/activities/${event._id}`}
-                                          className="block"
-                                          aria-label={`ดูรายละเอียดกิจกรรม ${event.name_th}`}
-                                    >
-                                          <Card className="h-full bg-white/95 backdrop-blur-sm border border-blue-100/50 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 rounded-lg">
-                                                <Image
-                                                      src={event.images?.[0] || "/fallback.jpg"} 
-                                                      alt={event.name_th}
-                                                      className="w-full h-48 object-cover rounded-t-lg"
-                                                      width={800}
-                                                      height={300}
-                                                />
-                                                <CardContent className="p-4 flex-grow flex flex-col">
-                                                      <div className="flex items-center space-x-4 mb-3">
-                                                            <div className="text-xl font-semibold text-gray-800">
-                                                                  {event.name_th}
-                                                            </div>
-                                                      </div>
-                                                      <div className="text-sm text-gray-600 line-clamp-2">
-                                                            {event.description}
-                                                      </div>
-                                                </CardContent>
-                                          </Card>
-                                    </Link>
-                              ))
-                        )}
+                        {content}
                   </div>
 
                   <div className="flex justify-end mt-6">

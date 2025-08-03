@@ -16,7 +16,6 @@ import BackgroundPaths from "@/components/about/BackgroundPaths";
 
 export default function AboutPage() {
       const [expandedSection, setExpandedSection] = useState<string | null>("story")
-      const [activeTab, setActiveTab] = useState("mission")
       const [shouldScroll, setShouldScroll] = useState(false)
 
       const toggleSection = (section: string) => {

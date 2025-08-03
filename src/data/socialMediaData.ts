@@ -74,12 +74,12 @@ export const socialMediaData = [
                   {
                         name: "MSS Bridge",
                         icon: "Facebook",
-                        links: [{ platform: "ติดตาม", url: "https://facebook.com/psucommunity" }],
+                        links: [{ platform: "ติดตาม", url: "https://www.facebook.com/profile.php?id=61561642010225" }],
                   },
                   {
                         name: "mssinter.psuhatyai",
                         icon: "Instagram",
-                        links: [{ platform: "ติดตาม", url: "https://www.facebook.com/profile.php?id=61561642010225" }],
+                        links: [{ platform: "ติดตาม", url: "https://www.instagram.com/mssinter.psuhatyai/" }],
                   }
             ],
       },
