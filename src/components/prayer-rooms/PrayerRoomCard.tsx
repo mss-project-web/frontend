@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,7 +12,23 @@ import { PrayerRoom } from "@/types/prayer";
 import { usePrayerRooms } from '@/lib/hooks/prayer/usePrayerRooms';
 import { Skeleton } from '@/components/ui/skeleton';
 
+
 const ITEMS_PER_PAGE = 3;
+
+function useIsMobile(breakpoint = 640) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    function onResize() {
+      setIsMobile(window.innerWidth < breakpoint);
+    }
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [breakpoint]);
+
+  return isMobile;
+}
 
 function PrayerRoomCardSkeleton() {
   return (
@@ -55,6 +71,8 @@ export function PrayerRoomDisplay() {
   const [selectedFaculty, setSelectedFaculty] = useState<string>('ทั้งหมด');
   const [selectedRoom, setSelectedRoom] = useState<PrayerRoom | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isMobile = useIsMobile();
+  const listRef = useRef<HTMLDivElement | null>(null);
 
   const handleOpenModal = useCallback((room: PrayerRoom) => {
     setSelectedRoom(room);
@@ -86,22 +104,61 @@ export function PrayerRoomDisplay() {
     return filteredRooms.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [filteredRooms, currentPage]);
 
-  const goToPage = (page: number) => setCurrentPage(page);
-  const goToPreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const scrollToList = () => {
+    listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    setTimeout(scrollToList, 100);
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      setTimeout(scrollToList, 100);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      setTimeout(scrollToList, 100);
+    }
+  };
+
   const handleFacultySelect = (faculty: string) => {
     setSelectedFaculty(faculty);
     setCurrentPage(1);
+    setTimeout(() => {
+      listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
+
+  const pagesToShow = useMemo(() => {
+    if (isMobile) {
+      return [1, currentPage, totalPages]
+        .filter((v, i, a) => a.indexOf(v) === i)
+        .sort((a, b) => a - b);
+    } else {
+      return Array.from({ length: totalPages }, (_, i) => i + 1).filter(
+        (page) =>
+          page === 1 ||
+          page === totalPages ||
+          (page >= currentPage - 1 && page <= currentPage + 1)
+      );
+    }
+  }, [currentPage, totalPages, isMobile]);
 
   const showSkeleton = loading || !!error;
   const displayRooms = showSkeleton ? Array(ITEMS_PER_PAGE).fill(0) : currentRooms;
 
+
   return (
     <div className="container mx-auto px-8 py-8">
-      <div className="mb-4 flex justify-end w-full relative -top-4 md:-top-0 lg:-top-0 z-10">
+      <div ref={listRef} className="mb-4 flex justify-end w-full relative -top-4 md:-top-0 lg:-top-0 z-10">
         <Select onValueChange={handleFacultySelect} value={selectedFaculty} disabled={showSkeleton}>
-          <SelectTrigger className="w-full sm:w-64 bg-white text-blue-900 border-blue-200 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none !mt-0 md:!mt-0">
+          <SelectTrigger className=" w-full sm:w-64 bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             {showSkeleton ? <Skeleton className="h-6 w-3/4" /> : <SelectValue placeholder="เลือกคณะ" />}
           </SelectTrigger>
           <SelectContent className="bg-white border-blue-200 z-50">
@@ -198,28 +255,56 @@ export function PrayerRoomDisplay() {
           room={selectedRoom}
         />
       )}
+
       {!showSkeleton && totalPages > 1 && (
-        <div className="mt-8 flex justify-center items-center gap-2">
-          <Button onClick={goToPreviousPage} disabled={currentPage === 1} className="bg-blue-700 text-white">
-            <ChevronLeft className="w-5 h-5 mr-1" />
+        <div className="mt-8 flex justify-center items-center gap-2 font-medium overflow-x-auto px-0 whitespace-nowrap">
+          <Button
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+            className={`flex items-center gap-0 rounded-md px-3 py-2 transition ${currentPage === 1
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+              }`}
+            aria-label="ไปหน้าก่อนหน้า"
+          >
+            <ChevronLeft className="w-5 h-5" />
             ก่อนหน้า
           </Button>
-          {Array.from({ length: totalPages }, (_, i) => i + 1)
-            .filter(page => page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1))
-            .map((page) => (
-              <Button
-                key={page}
-                onClick={() => goToPage(page)}
-                className={`${currentPage === page ? 'bg-blue-600 text-white' : 'bg-white text-blue-800'
-                  } border border-blue-200 min-w-[40px]`}
-              >
-                {page}
-              </Button>
-            ))}
-          {totalPages > 4 && currentPage + 1 < totalPages && <span className="text-gray-500">...</span>}
-          <Button onClick={goToNextPage} disabled={currentPage === totalPages} className="bg-blue-700 text-white">
+
+          {pagesToShow.map((page, idx, arr) => {
+            const isPreviousPageSkipped = idx > 0 && page - arr[idx - 1] > 1;
+
+            return (
+              <React.Fragment key={page}>
+                {isPreviousPageSkipped && (
+                  <span className="px-2 text-gray-400 select-none">...</span>
+                )}
+                <Button
+                  onClick={() => goToPage(page)}
+                  className={`min-w-[40px] rounded-md px-3 py-2 transition ${currentPage === page
+                    ? "bg-blue-700 text-white shadow-md"
+                    : "bg-white text-blue-600 hover:bg-blue-50"
+                    }`}
+                  aria-current={currentPage === page ? "page" : undefined}
+                  aria-label={`ไปหน้า ${page}`}
+                >
+                  {page}
+                </Button>
+              </React.Fragment>
+            );
+          })}
+
+          <Button
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+            className={`flex items-center gap-1 rounded-md px-3 py-2 transition ${currentPage === totalPages
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
+              }`}
+            aria-label="ไปหน้าถัดไป"
+          >
             ถัดไป
-            <ChevronRight className="w-5 h-5 ml-1" />
+            <ChevronRight className="w-5 h-5" />
           </Button>
         </div>
       )}
