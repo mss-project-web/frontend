@@ -14,10 +14,9 @@ export default function Footer() {
             <div className="w-36 h-14 relative mx-auto md:mx-0">
               <Image
                 src="/LOGO/LOGO-MSS_white.png"
-                alt="LOGO-MSS"
+                alt="logo-MSS"
                 fill
-                className="object-contain"
-                priority
+                sizes="(max-width: 768px) 120px, (max-width: 1200px) 200px, 250px"
               />
             </div>
             <div className="w-20 border-t-2 border-blue-400 mx-auto md:mx-0" />
@@ -49,10 +48,10 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/support"
+                  href="/news"
                   className="text-gray-300 hover:text-white transition"
                 >
-                  สนับสนุนการทำงานของชมรม
+                  ข่าวสารต่างๆ
                 </Link>
               </li>
             </ul>
@@ -85,9 +84,9 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-4">
-          <p className="text-gray-400 text-center">
+          <div className="text-gray-400 text-center text-sm sm:text-base">
             © 2025 ชมรมมุสลิม ม.อ.หาดใหญ่ MSS PSU Hatyai. สงวนลิขสิทธิ์.
-          </p>
+          </div>
         </div>
       </div>
     </footer>
