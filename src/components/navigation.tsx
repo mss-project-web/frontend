@@ -47,7 +47,7 @@ export default function Navigation() {
   }, [showModal])
 
   const copyAccountNumber = () => {
-    navigator.clipboard.writeText("1234567890").then(
+    navigator.clipboard.writeText("1538507292").then(
       () => setIsCopied(true),
       () => console.error("Failed to copy account number")
     )

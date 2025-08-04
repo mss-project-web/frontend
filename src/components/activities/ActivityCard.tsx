@@ -4,7 +4,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Activity } from '@/types/activities';
 import { Skeleton } from '@/components/ui/skeleton';
 import Image from 'next/image';
-import { Clock, MapPin, Users } from 'lucide-react';
 
 interface ActivityCardProps {
       activity?: Activity & { imageUrl?: string; name?: string };
