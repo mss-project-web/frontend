@@ -113,6 +113,14 @@ export function NewsAndEvents() {
                                                 sizes="(max-width: 768px) 100vw, 600px"
                                                 className="object-cover"
                                             />
+                                            <div className="absolute top-4 right-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                                                จัดวันที่ {" "}
+                                                {new Date(newsItem.date).toLocaleDateString("th-TH", {
+                                                    day: "2-digit",
+                                                    month: "short",
+                                                    year: "numeric",
+                                                })}
+                                            </div>
                                         </div>
                                         <div className="p-4">
                                             <h4 className="font-semibold text-blue-700 mb-0 line-clamp-2">
@@ -122,8 +130,8 @@ export function NewsAndEvents() {
                                                 {newsItem.description}
                                             </div>
                                             <p className="text-xs text-blue-800">
-                                                จัดวันที่{" "}
-                                                {new Date(newsItem.date).toLocaleDateString("th-TH", {
+                                                สร้างเมื่อ {" "}
+                                                {new Date(newsItem.createdAt).toLocaleDateString("th-TH", {
                                                     day: "2-digit",
                                                     month: "short",
                                                     year: "numeric",

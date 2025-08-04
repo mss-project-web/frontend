@@ -26,8 +26,8 @@ export default function ContactUsSection() {
                                                       </div>
                                                       <div>
                                                             <h4 className="text-xl font-semibold text-gray-900 mb-1">โทรศัพท์</h4>
-                                                            <p className="text-lg text-gray-700">065-3945821 อมีร (มุสลีมีน)</p>
-                                                            <p className="text-sm text-gray-700 mt-1">094-5761369 อามีเราะห์ (มุสลีมะฮฺ)</p>
+                                                            <div className="text-sm sm:text-base text-gray-700">065-3945821 อมีร (มุสลีมีน)</div>
+                                                            <div className="text-sm sm:text-base text-gray-700 mt-1">094-5761369 อามีเราะห์ (มุสลีมะฮฺ)</div>
                                                       </div>
                                                 </CardContent>
                                           </Card>
@@ -40,8 +40,8 @@ export default function ContactUsSection() {
                                                       </div>
                                                       <div>
                                                             <h4 className="text-xl font-semibold text-gray-900 mb-1">อีเมล</h4>
-                                                            <p className="text-lg text-gray-700">msspsuhatyai@gmail.com                                                            </p>
-                                                            <p className="text-sm text-gray-500 mt-1">เราจะตอบกลับภายใน 24 ชั่วโมง</p>
+                                                            <div className="text-sm sm:text-base text-gray-700">msspsuhatyai@gmail.com</div>
+                                                            <div className="text-sm sm:text-base text-gray-500 mt-1">เราจะตอบกลับภายใน 24 ชั่วโมง</div>
                                                       </div>
                                                 </CardContent>
                                           </Card>
@@ -54,8 +54,8 @@ export default function ContactUsSection() {
                                                       </div>
                                                       <div>
                                                             <h3 className="text-xl font-semibold text-gray-900 mb-1">ที่อยู่</h3>
-                                                            <p className="text-lg text-gray-700">มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่</p>
-                                                            <p className="text-sm text-gray-500 mt-1">อำเภอหาดใหญ่ จังหวัดสงขลา</p>
+                                                            <div className="text-sm sm:text-base text-gray-700">มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่</div>
+                                                            <div className="text-sm sm:text-base text-gray-500 mt-1">อำเภอหาดใหญ่ จังหวัดสงขลา</div>
                                                       </div>
                                                 </CardContent>
                                           </Card>
