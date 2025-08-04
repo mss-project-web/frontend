@@ -152,33 +152,6 @@ export default function AboutPage() {
                                                             )}
                                                       </CardContent>
                                                 </Card>
-
-                                                <Card
-                                                      className="border-0 shadow-xl cursor-pointer transition-all duration-300 hover:shadow-2xl bg-white"
-                                                      onClick={() => toggleSection("vision")}
-                                                >
-                                                      <CardContent className="p-8">
-                                                            <div className="flex items-center justify-between mb-4">
-                                                                  <h3 className="text-2xl font-bold text-gray-800 flex items-center">
-                                                                        <Target className="w-6 h-6 mr-3 text-blue-600" />
-                                                                        วิสัยทัศน์
-                                                                  </h3>
-                                                                  {expandedSection === "vision" ? (
-                                                                        <ChevronUp className="w-6 h-6 text-gray-500" />
-                                                                  ) : (
-                                                                        <ChevronDown className="w-6 h-6 text-gray-500" />
-                                                                  )}
-                                                            </div>
-                                                            {expandedSection === "vision" && (
-                                                                  <div className="space-y-4 text-gray-600">
-                                                                        <p className="text-lg font-semibold text-blue-600">
-                                                                              "เป็นชมรมต้นแบบที่สร้างคนดีให้สังคม ผ่านกิจกรรมที่หลากหลายและการเรียนรู้ร่วมกัน"
-                                                                        </p>
-                                                                        <p>เรามุ่งมั่นที่จะเป็นแรงบันดาลใจให้กับนักศึกษารุ่นใหม่ในการพัฒนาตนเองและสร้างสรรค์สิ่งดีๆ ให้กับสังคม</p>
-                                                                  </div>
-                                                            )}
-                                                      </CardContent>
-                                                </Card>
                                           </div>
                                           <div className="relative">
                                                 <div className="grid grid-cols-2 gap-4">
