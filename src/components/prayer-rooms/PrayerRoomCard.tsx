@@ -158,19 +158,24 @@ export function PrayerRoomDisplay() {
     <div className="container mx-auto px-8 py-8">
       <div ref={listRef} className="mb-4 flex justify-end w-full relative -top-4 md:-top-0 lg:-top-0 z-10">
         <Select onValueChange={handleFacultySelect} value={selectedFaculty} disabled={showSkeleton}>
-          <SelectTrigger className=" w-full sm:w-64 bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <SelectTrigger className="w-full sm:w-64 bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-white dark:text-black">
             {showSkeleton ? <Skeleton className="h-6 w-3/4" /> : <SelectValue placeholder="เลือกคณะ" />}
           </SelectTrigger>
-          <SelectContent className="bg-white border-blue-200 z-50">
-            <SelectItem value="ทั้งหมด">ทั้งหมด</SelectItem>
+          <SelectContent className="bg-white text-black border-blue-200 z-50 dark:bg-white dark:text-black">
+            <SelectItem value="ทั้งหมด" className="hover:bg-blue-50 text-black dark:text-black">ทั้งหมด</SelectItem>
             {allFaculties.map((faculty) => (
-              <SelectItem key={faculty} value={faculty}>
+              <SelectItem
+                key={faculty}
+                value={faculty}
+                className="hover:bg-blue-50 text-black dark:text-black"
+              >
                 {faculty}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
       </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {showSkeleton ? (

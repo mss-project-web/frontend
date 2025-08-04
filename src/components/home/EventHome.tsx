@@ -82,7 +82,7 @@ export function EventHome() {
                   </div>
 
                   <div className="flex justify-end mt-6">
-                        <Link href="/activitys">
+                        <Link href="/activities">
                               <div className="py-3 text-sx text-left text-gray-800 border-b-2 border-gray-300 inline-block pb-1 hover:text-blue-600 hover:border-blue-600 transition-colors duration-300 cursor-pointer">
                                     กิจกรรมทั้งหมด
                               </div>

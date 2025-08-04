@@ -173,7 +173,7 @@ export default function ActivityDetailPage() {
                         หน้าหลัก
                       </Link>
                       <span className="text-gray-400">/</span>
-                      <Link href="/activitys" className="hover:underline hover:text-blue-100 transition-colors">
+                      <Link href="/activities" className="hover:underline hover:text-blue-100 transition-colors">
                         กิจกรรม
                       </Link>
                       <span className="text-gray-400">/</span>
@@ -253,16 +253,8 @@ export default function ActivityDetailPage() {
                           <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b border-gray-200 pb-3">
                             ภาพกิจกรรม
                           </h2>
-                          <div className="grid grid-cols-2 gap-6">
-                            {activity.images && activity.images.length > 0 ? (
-                              activity.images.slice(0, 4).map((img, index) => (
-                                <ActivityGallery images={activity.images || []} />
-                              ))
-                            ) : (
-                              <div className="col-span-2 aspect-[4/3] bg-gray-100 rounded-lg flex items-center justify-center shadow-md">
-                                <span className="text-gray-500">ไม่มีรูปภาพ</span>
-                              </div>
-                            )}
+                          <div className="p-0">
+                            <ActivityGallery images={activity.images || []} />
                           </div>
                         </section>
 
@@ -316,11 +308,11 @@ export default function ActivityDetailPage() {
                           <div className="space-y-3">
                             <div className="flex justify-between">
                               <span className="text-gray-600">จำนวนผู้เข้าร่วม:</span>
-                              <span className="font-semibold">{activity.participants} คน</span>
+                              <span className="font-semibold text-black">{activity.participants} คน</span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-gray-600">ระยะเวลา:</span>
-                              <span className="font-semibold">{activity.duration} ชั่วโมง</span>
+                              <span className="font-semibold text-black">{activity.duration} ชั่วโมง</span>
                             </div>
                           </div>
                         </section>

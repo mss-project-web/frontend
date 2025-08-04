@@ -63,7 +63,7 @@ export function ActivityCard({ activity, isLoading }: ActivityCardProps) {
 
                         <CardContent className="p-6 flex-grow flex flex-col">
                               <div className="flex items-center space-x-4 mb-2">
-                                    <div className="text-xl font-bold text-gray-800 line-clamp-1 group-hover:text-blue-600 transition-colors duration-200">
+                                    <div className="text-xl font-bold text-gray-800 line-clamp-2 group-hover:text-blue-600 transition-colors duration-200">
                                           {activity.name_th}
                                     </div>
                               </div>
