@@ -90,11 +90,11 @@ export default function HomePage() {
             absolute inset-0 flex items-center justify-center
             text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
             font-extrabold text-white text-center
-            shadow-sky-500/50
+            shadow-black/50
             leading-tight tracking-tight
             z-10 px-4 md:px-8 pointer-events-none
-            drop-shadow-[0_0_4px_#00BFFF]
-            [text-shadow:0_0_2px_#00BFFF,0_0_2px_#00BFFF,0_0_2px_#00BFFF]
+            drop-shadow-[0_0_6px_#000000]
+            [text-shadow:0_0_4px_#000000,0_0_2px_#000000,0_0_2px_#000000]
           "
           > {texts[index]}
           </motion.div>
@@ -118,12 +118,12 @@ export default function HomePage() {
       </div>
 
       {/* PresidentContens */}
-      <div className="mx-auto max-w-screen-xl px-4 py-8">
+      {/* <div className="mx-auto max-w-screen-xl px-4 py-8">
         <h2 className="text-2xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
           จากใจพี่...ถึงน้อง
         </h2>
         <PresidentContens />
-      </div>
+      </div> */}
 
       {/* JoinUsSection */}
       <div className="p-0">
