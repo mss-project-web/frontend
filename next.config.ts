@@ -1,15 +1,19 @@
 import type { NextConfig } from "next";
 
+const IMAGE_HOST = process.env.NEXT_PUBLIC_IMAGE_HOST;
+
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'pub-853ef1e3196d47079694e9c281ce8748.r2.dev',
-        port: '',
-        pathname: '/**',
-      },
-    ],
+    remotePatterns: IMAGE_HOST
+      ? [
+          {
+            protocol: 'https',
+            hostname: IMAGE_HOST,
+            port: '',
+            pathname: '/**',
+          },
+        ]
+      : [],
   },
 };
 
