@@ -221,7 +221,7 @@ export function PrayerTime() {
               {/* Source */}
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
-                  <span>ข้อมูลจาก:</span>
+                  <span>สามารถเปรียบเทียบจาก:</span>
                   <a
                     href="https://whitechannel.tv/solahtimes/"
                     target="_blank"
