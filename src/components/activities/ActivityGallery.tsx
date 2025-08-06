@@ -9,13 +9,16 @@ interface Props {
 
 export default function ActivityGallery({ images }: Props) {
       const [selectedImage, setSelectedImage] = useState<string | null>(null);
+      const [showAll, setShowAll] = useState(false);
+
+      const imagesToShow = showAll ? images : images.slice(0, 8);
 
       return (
             <>
                   {/* Gallery แบบ grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                         {images.length > 0 ? (
-                              images.slice(0, 4).map((img, index) => (
+                              imagesToShow.map((img, index) => (
                                     <div
                                           key={index}
                                           className="relative w-full aspect-[1/1] rounded-lg overflow-hidden shadow-md transition-shadow duration-300 hover:shadow-xl cursor-pointer"
@@ -36,6 +39,18 @@ export default function ActivityGallery({ images }: Props) {
                               </div>
                         )}
                   </div>
+
+                  {/* ปุ่มแสดงเพิ่มเติม */}
+                  {images.length > 8 && !showAll && (
+                        <div className="mt-4 flex justify-center">
+                              <button
+                                    onClick={() => setShowAll(true)}
+                                    className="px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition"
+                              >
+                                    แสดงเพิ่มเติม
+                              </button>
+                        </div>
+                  )}
 
                   {/* Modal รูปใหญ่ */}
                   {selectedImage && (

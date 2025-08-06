@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Mail, MapPin } from "lucide-react"
+import { CONTACT } from "@/lib/constants";
 
 export default function ContactUsSection() {
       return (
@@ -26,8 +27,8 @@ export default function ContactUsSection() {
                                                       </div>
                                                       <div>
                                                             <h4 className="text-xl font-semibold text-gray-900 mb-1">โทรศัพท์</h4>
-                                                            <div className="text-sm sm:text-base text-gray-700">065-3945821 อมีร (มุสลีมีน)</div>
-                                                            <div className="text-sm sm:text-base text-gray-700 mt-1">094-5761369 อามีเราะห์ (มุสลีมะฮฺ)</div>
+                                                            <div className="text-sm sm:text-base text-gray-700">{CONTACT.phone_Amir}</div>
+                                                            <div className="text-sm sm:text-base text-gray-700 mt-1">{CONTACT.phone_Amirah}</div>
                                                       </div>
                                                 </CardContent>
                                           </Card>
@@ -40,7 +41,7 @@ export default function ContactUsSection() {
                                                       </div>
                                                       <div>
                                                             <h4 className="text-xl font-semibold text-gray-900 mb-1">อีเมล</h4>
-                                                            <div className="text-sm sm:text-base text-gray-700">msspsuhatyai@gmail.com</div>
+                                                            <div className="text-sm sm:text-base text-gray-700">{CONTACT.email}</div>
                                                             <div className="text-sm sm:text-base text-gray-500 mt-1">เราจะตอบกลับภายใน 24 ชั่วโมง</div>
                                                       </div>
                                                 </CardContent>
