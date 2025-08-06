@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Phone, Mail, MapPin } from "lucide-react"
 import Image from "next/image"
 import { navItems } from "@/data/nav-items"
+import { CONTACT } from "@/lib/constants";
 
 export default function Footer() {
   return (
@@ -63,11 +64,11 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center justify-center md:justify-start gap-3">
                 <Phone className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-300">065-394-5821 (อมีรชมรม)</span>
+                <span className="text-gray-300">{CONTACT.phone_Amir}</span>
               </li>
               <li className="flex items-center justify-center md:justify-start gap-3">
                 <Mail className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-300">msspsuhatyai@gmail.com</span>
+                <span className="text-gray-300">{CONTACT.email}</span>
               </li>
               <li className="flex items-start justify-center md:justify-start gap-3 text-center md:text-left">
                 <MapPin className="w-4 h-4 text-blue-400 mt-1" />

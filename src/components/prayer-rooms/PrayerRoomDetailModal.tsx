@@ -100,21 +100,24 @@ export function PrayerRoomDetailModal({ isOpen, onClose, room }: PrayerRoomDetai
         </div>
 
         <div className="p-6 pb-0 flex-shrink-0 flex justify-end">
-          <a
-            href={room.youtube_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block"
-          >
-            <Button
-              className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
-              type="button"
-              disabled={!room.coordinates?.lat || !room.coordinates?.lng}
+          {room.youtube_url && (
+            <a
+              href={room.youtube_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
             >
-              <Youtube className="w-4 h-4 mr-2" />
-              คลิปนำทาง
-            </Button>
-          </a>
+              <Button
+                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                type="button"
+                disabled={!room.coordinates?.lat || !room.coordinates?.lng}
+              >
+                <Youtube className="w-4 h-4 mr-2" />
+                คลิปนำทาง
+              </Button>
+            </a>
+          )}
+
         </div>
 
 
@@ -171,19 +174,19 @@ export function PrayerRoomDetailModal({ isOpen, onClose, room }: PrayerRoomDetai
             {room.capacity !== undefined && (
               <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <Users className="w-4 h-4 text-blue-600" />
-                <span>ความจุ: {room.capacity}</span>
+                <span>ความจุ : {room.capacity} คน</span>
               </div>
             )}
             {room.openingHours && (
               <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <Clock className="w-4 h-4 text-blue-600" />
-                <span>เวลาเปิด: {room.openingHours}</span>
+                <span>เวลาเปิด : {room.openingHours}</span>
               </div>
             )}
             {room.phone && (
               <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <Phone className="w-4 h-4 text-blue-600" />
-                <span>โทร: {room.phone}</span>
+                <span>โทร : {room.phone}</span>
               </div>
             )}
           </div>

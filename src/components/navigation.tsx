@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
 import { navItems } from "@/data/nav-items"
+import { CONTACT } from "@/lib/constants";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -47,7 +48,7 @@ export default function Navigation() {
   }, [showModal])
 
   const copyAccountNumber = () => {
-    navigator.clipboard.writeText("1538507292").then(
+    navigator.clipboard.writeText(CONTACT.accountNumber).then(
       () => setIsCopied(true),
       () => console.error("Failed to copy account number")
     )
@@ -62,7 +63,7 @@ export default function Navigation() {
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4" />
-                <span className="text-xs">065-394-5821 (อมีร)</span>
+                <span className="text-xs">{CONTACT.phone_Amir}</span>
               </div>
               <div className="flex items-center space-x-2 md:hidden">
                 <Hash className="w-4 h-4" />
@@ -78,19 +79,19 @@ export default function Navigation() {
               </div>
               <div className="hidden md:flex items-center space-x-2">
                 <Mail className="w-4 h-4" />
-                <span>msspsuhatyai1@gmail.com</span>
+                <span>{CONTACT.email}</span>
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <span>ติดตามเรา:</span>
               <div className="flex space-x-2">
-                <a href="https://www.facebook.com/MSSPSU" target="_blank" rel="noopener noreferrer">
+                <a href={CONTACT.facebook} target="_blank" rel="noopener noreferrer">
                   <Facebook className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
-                <a href="https://www.instagram.com/msspsuhatyai/" target="_blank" rel="noopener noreferrer">
+                <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer">
                   <Instagram className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
-                <a href="https://www.youtube.com/@msspsuhatyai" target="_blank" rel="noopener noreferrer">
+                <a href={CONTACT.youtube} target="_blank" rel="noopener noreferrer">
                   <Youtube className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
               </div>
@@ -126,7 +127,7 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative font-medium transition-colors duration-300 hover:text-blue-600 ${pathname === item.href ? "text-blue-600" : "text-gray-700"
+                  className={`relative text-xs sm:text-xs lg:text-base font-medium transition-colors duration-300 hover:text-blue-600 ${pathname === item.href ? "text-blue-600" : "text-gray-700"
                     }`}
                 >
                   {item.label}
@@ -235,11 +236,11 @@ export default function Navigation() {
               </div>
               <div className="text-center space-y-1">
                 <p className="text-sm text-gray-700">
-                  ชื่อบัญชี: <span className="font-semibold">นางสาวซอฟีเราะห์ ดอเลาะ</span>
+                  ชื่อบัญชี: <span className="font-semibold">{CONTACT.accountName}</span>
                 </p>
                 <div className="flex items-center justify-center space-x-2">
                   <p className="text-sm text-gray-700">
-                    เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">153-8-50729-2</span>
+                    เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">{CONTACT.accountNumber}</span>
                   </p>
                   <button
                     onClick={copyAccountNumber}
@@ -250,7 +251,7 @@ export default function Navigation() {
                   </button>
                 </div>
                 <p className="text-sm text-gray-700">
-                  ธนาคารกสิกรไทย
+                  {CONTACT.bank}
                 </p>
                 <p className="text-xs text-gray-500">
                   * รองรับสแกนผ่านแอปธนาคารทุกประเภท
