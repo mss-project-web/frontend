@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { ActivityById } from "@/types/activities";
 import { API_URL } from "@/config";
@@ -7,13 +7,24 @@ export function useActivityById(id: string | null) {
   const [activity, setActivity] = useState<ActivityById | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const fetchActivityById = async () => {
     if (!id) return;
 
+    // Cancel previous request if exists
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    // Create new abort controller
+    abortControllerRef.current = new AbortController();
     setLoading(true);
+
     try {
-      const res = await axios.get(`${API_URL}/activities/${id}`);
+      const res = await axios.get(`${API_URL}/activities/${id}`, {
+        signal: abortControllerRef.current.signal,
+      });
       const data = res.data.data;
 
       const formattedActivity: ActivityById = {
@@ -37,7 +48,9 @@ export function useActivityById(id: string | null) {
 
       setActivity(formattedActivity);
     } catch (err: any) {
-      setError(err.message || "เกิดข้อผิดพลาดในการโหลดข้อมูลกิจกรรม");
+      if (err.name !== 'CanceledError') {
+        setError(err.message || "เกิดข้อผิดพลาดในการโหลดข้อมูลกิจกรรม");
+      }
     } finally {
       setLoading(false);
     }
@@ -45,6 +58,13 @@ export function useActivityById(id: string | null) {
 
   useEffect(() => {
     fetchActivityById();
+
+    // Cleanup function
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, [id]);
 
   return { activity, loading, error, refetch: fetchActivityById };

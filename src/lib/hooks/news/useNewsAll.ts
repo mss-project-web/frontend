@@ -24,7 +24,6 @@ export const useNewsAll = () => {
                   setAllNews(res.data.data.data);
                   setCurrentPage(1);
             } catch (err) {
-                  console.error("Error fetching news:", err);
                   setAllNews([]);
             } finally {
                   setLoading(false);
