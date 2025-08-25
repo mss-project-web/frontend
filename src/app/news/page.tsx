@@ -55,19 +55,7 @@ export default function NewsMainPage() {
         </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <nav className="mb-6 flex items-center justify-center space-x-2 text-base text-white">
-              <Link
-                href="/"
-                className="hover:underline hover:text-blue-100 transition-colors"
-              >
-                หน้าหลัก
-              </Link>
-              <span className="text-gray-400">/</span>
-              <span className="font-medium text-blue-100 flex items-center space-x-1">
-                <span>ข่าวสาร</span>
-              </span>
-            </nav>
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg pt-8">
               ข่าวสารและกิจกรรมล่าสุด
             </h1>
             <p className="text-lg md:text-xl opacity-90 leading-relaxed">

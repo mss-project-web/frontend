@@ -1,34 +1,35 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronUp } from "lucide-react";
 
-// Components
-import { ThreeDMarquee } from "../components/home/ThreeDMarquee";
-import { AnimatedCounterPage } from "@/components/home/AnimatedCounter";
-import { NewsAndEvents } from "@/components/home/News";
-import { EventHome } from "@/components/home/EventHome";
-import { PresidentContens } from "@/components/home/PresidentContens";
-import { JoinUsSection } from "../components/home/JoinUsSection";
+// Lazy load heavy components
+const ThreeDMarquee = lazy(() => import("../components/home/ThreeDMarquee").then(module => ({ default: module.ThreeDMarquee })));
+const AnimatedCounterPage = lazy(() => import("@/components/home/AnimatedCounter").then(module => ({ default: module.AnimatedCounterPage })));
+const NewsAndEvents = lazy(() => import("@/components/home/News").then(module => ({ default: module.NewsAndEvents })));
+const EventHome = lazy(() => import("@/components/home/EventHome").then(module => ({ default: module.EventHome })));
+const JoinUsSection = lazy(() => import("../components/home/JoinUsSection").then(module => ({ default: module.JoinUsSection })));
 
 export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
   const [index, setIndex] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
-  const images = Array.from({ length: 32 }, (_, i) => ({
-    src: `/Image/${i + 1}.webp`,
-    alt: `Image ${i + 1}`,
-  }));
+  
+  // Memoize images array to prevent recreation on every render
+  const images = useMemo(() => 
+    Array.from({ length: 32 }, (_, i) => ({
+      src: `/Image/${i + 1}.webp`,
+      alt: `Image ${i + 1}`,
+    })), []
+  );
+
+  // Memoize scroll handler
+  const handleScroll = useCallback(() => {
+    setShowScrollToTop(window.scrollY > 300);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowScrollToTop(true);
-      } else {
-        setShowScrollToTop(false);
-      }
-    };
 
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -74,11 +75,13 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-  return (
+    return (
     <main className="relative min-h-screen font-sans overflow-hidden bg-white">
       {/* BG */}
       <div className="relative">
-        <ThreeDMarquee images={images} imageWidth={20} imageHeight={35} />
+        <Suspense fallback={<div className="h-[700px] max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 animate-pulse" />}>
+          <ThreeDMarquee images={images} imageWidth={20} imageHeight={35} />
+        </Suspense>
         <AnimatePresence mode="wait">
           <motion.div
             key={texts[index]}
@@ -105,31 +108,30 @@ export default function HomePage() {
       <div className="relative bg-gradient-to-r from-blue-100 via-sky-50 to-blue-200 overflow-hidden">
         <WavePattern />
         <div className="relative z-10 mx-auto max-w-screen-xl px-4">
-          <AnimatedCounterPage />
+          <Suspense fallback={<div className="h-64 bg-white/20 rounded-lg animate-pulse" />}>
+            <AnimatedCounterPage />
+          </Suspense>
         </div>
       </div>
 
       {/* NewsAndEvents */}
       <div className="relative overflow-hidden">
         <div className="relative z-10 mx-auto max-w-screen-xl px-4">
-          <NewsAndEvents />
-          <EventHome />
+          <Suspense fallback={<div className="h-96 bg-gray-100 rounded-lg animate-pulse mb-8" />}>
+            <NewsAndEvents />
+          </Suspense>
+          <Suspense fallback={<div className="h-64 bg-gray-100 rounded-lg animate-pulse" />}>
+            <EventHome />
+          </Suspense>
         </div>
       </div>
 
-      {/* PresidentContens */}
-      {/* <div className="mx-auto max-w-screen-xl px-4 py-8">
-        <h2 className="text-2xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
-          จากใจพี่...ถึงน้อง
-        </h2>
-        <PresidentContens />
-      </div> */}
-
       {/* JoinUsSection */}
       <div className="p-0">
-        <JoinUsSection />
+        <Suspense fallback={<div className="h-96 bg-blue-50 animate-pulse" />}>
+          <JoinUsSection />
+        </Suspense>
       </div>
-
 
       {/* Scroll-to-Top Button */}
       <AnimatePresence>
