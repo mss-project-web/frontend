@@ -1,0 +1,26 @@
+{
+  "name": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
+  "short_name": "ชมรมมุสลิม ม.อ.หาดใหญ่",
+  "description": "ชมรมมุสลิม ม.อ.หาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "categories": ["education", "lifestyle", "social"],
+  "lang": "th",
+  "icons": [
+    {
+      "src": "/LOGO/LOGO-MSS.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/LOGO/LOGO-MSS.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React from "react";
+import React, { memo } from "react";
 
 export interface MarqueeImage {
   src: string;
@@ -18,8 +18,8 @@ export interface ThreeDMarqueeProps {
   imageHeight?: number;
 }
 
-// Main Component
-export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
+// Main Component - Memoized for performance
+const ThreeDMarqueeComponent: React.FC<ThreeDMarqueeProps> = ({
   images,
   className = "",
   onImageClick,
@@ -169,4 +169,6 @@ const VerticalGridLine = ({
   return <div style={lineStyles} className={baseClasses}></div>;
 };
 
+// Export memoized component
+export const ThreeDMarquee = memo(ThreeDMarqueeComponent);
 export default ThreeDMarquee;

@@ -72,17 +72,10 @@ export default function ActivitysPage() {
     <main className="min-h-screen bg-gray-100 font-sans">
       <section className="py-16 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <nav className="mb-6 flex items-center justify-center space-x-2 text-base text-white">
-              <Link href="/" className="hover:underline hover:text-blue-100 transition-colors">
-                หน้าหลัก
-              </Link>
-              <span className="text-gray-400">/</span>
-              <span className="font-medium text-blue-100 flex items-center space-x-1">
-                <span>กิจกรรม</span>
-              </span>
-            </nav>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">กิจกรรม</h1>
+          <div className="max-w-3xl mx-auto text-center py-6">
+            <h1 className="text-4xl md:text-5xl font-bold">
+              กิจกรรม
+            </h1>
             <p className="text-lg md:text-xl opacity-90">
               ร่วมสร้างประสบการณ์ใหม่ๆ ผ่านกิจกรรมที่ออกแบบมาเพื่อพัฒนาศักยภาพและสร้างความสัมพันธ์
             </p>

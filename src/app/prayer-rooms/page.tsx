@@ -29,19 +29,8 @@ export default function PrayerRoomsPage() {
 
         <div className="relative container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Breadcrumb */}
-            <nav className="mb-6 flex items-center justify-center space-x-2 text-base text-white">
-              <Link href="/" className="hover:underline hover:text-blue-100 transition-colors">
-                หน้าหลัก
-              </Link>
-              <span className="text-gray-400">/</span>
-              <span className="font-medium text-blue-100 flex items-center space-x-1">
-                <span>ห้องละหมาด</span>
-              </span>
-            </nav>
-
             {/* Main heading */}
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight pt-8">
               ห้องละหมาด
               <span className="block text-3xl md:text-4xl font-medium text-blue-200 mt-2">
                 มหาวิทยาลัยสงขลานครินทร์

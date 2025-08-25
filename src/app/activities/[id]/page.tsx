@@ -20,7 +20,6 @@ export default function ActivityDetailPage() {
           <section className="py-16 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">
-                <Skeleton className="h-6 w-48 mx-auto mb-6 bg-blue-300" />
                 <Skeleton className="h-10 w-2/3 mx-auto mb-4 bg-blue-400" />
                 <Skeleton className="h-6 w-1/2 mx-auto bg-blue-300" />
               </div>
@@ -167,20 +166,7 @@ export default function ActivityDetailPage() {
               {/* Hero Section */}
               <section className="py-16 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
                 <div className="container mx-auto px-4">
-                  <div className="max-w-3xl mx-auto text-center">
-                    <nav className="mb-6 flex items-center justify-center space-x-2 text-base text-white">
-                      <Link href="/" className="hover:underline hover:text-blue-100 transition-colors">
-                        หน้าหลัก
-                      </Link>
-                      <span className="text-gray-400">/</span>
-                      <Link href="/activities" className="hover:underline hover:text-blue-100 transition-colors">
-                        กิจกรรม
-                      </Link>
-                      <span className="text-gray-400">/</span>
-                      <span className="font-medium text-blue-100 flex items-center space-x-1">
-                        <span>{activity.name_eng}</span>
-                      </span>
-                    </nav>
+                  <div className="max-w-3xl mx-auto text-center py-6">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">{activity.name_eng}</h1>
                     <div className="text-lg md:text-xl opacity-90">
                       {activity.name_th}

@@ -51,16 +51,6 @@ export default function AboutPage() {
                         {/* Content aligned with HomePage's max-w-screen-xl and px-4 */}
                         <div className="relative z-10 mx-auto max-w-screen-xl px-4"> {/* Adjusted */}
                               <div className="mx-auto text-center"> {/* Removed max-w-4xl to let content fill max-w-screen-xl */}
-                                    <nav className="mb-6 flex items-center justify-center space-x-2 text-base text-gray-600">
-                                          <Link href="/" className="hover:underline hover:text-blue-600 transition-colors">
-                                                หน้าหลัก
-                                          </Link>
-                                          <span className="text-gray-400">/</span>
-                                          <span className="font-medium text-blue-800 flex items-center space-x-1">
-                                                <span>เกี่ยวกับ</span>
-                                          </span>
-                                    </nav>
-
                                     <div className="text-6xl md:text-7xl font-bold mb-8">
                                           <span className="bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300 bg-clip-text text-transparent">
                                                 ชมรมมุสลิม ม.อ.หาดใหญ่
