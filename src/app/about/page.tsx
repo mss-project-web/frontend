@@ -146,7 +146,7 @@ export default function AboutPage() {
                                           <div className="relative">
                                                 <div className="grid grid-cols-2 gap-4">
                                                       <Image
-                                                            src="/LOGO/about/LOGO-MSS0.jpg?height=300&width=300"
+                                                            src="/LOGO/about/LOGO-MSS0.jpg"
                                                             alt="ชมรมหลังเดิม"
                                                             width={300}
                                                             height={300}
@@ -154,21 +154,21 @@ export default function AboutPage() {
                                                       />
 
                                                       <Image
-                                                            src="/LOGO/about/LOGO-MSS1.jpg?height=300&width=300"
+                                                            src="/LOGO/about/LOGO-MSS1.jpg"
                                                             alt="กิจกรรมชมรม"
                                                             width={300}
                                                             height={300}
                                                             className="rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-8"
                                                       />
                                                       <Image
-                                                            src="/LOGO/about/LOGO-MSS2.jpg?height=300&width=300"
+                                                            src="/LOGO/about/LOGO-MSS2.jpg"
                                                             alt="สมาชิกชมรม"
                                                             width={300}
                                                             height={300}
                                                             className="rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 -mt-8"
                                                       />
                                                       <Image
-                                                            src="/LOGO/about/LOGO-MSS.jpg?height=300&width=300"
+                                                            src="/LOGO/about/LOGO-MSS.jpg"
                                                             alt="ความสำเร็จ"
                                                             width={300}
                                                             height={300}
