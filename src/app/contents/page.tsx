@@ -118,7 +118,7 @@ export default function ContentsPage() {
                                     {blogs.length > 0 ? (
                                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                                 {blogs.map((blog) => (
-                                                      <Link href={`/blog/${blog.slug}`} key={blog._id} className="group block h-full">
+                                                      <Link href={`/contents/${blog.slug}`} key={blog._id} className="group block h-full">
                                                             <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-gray-200">
                                                                   {/* Background Image */}
                                                                   {blog.coverImage ? (

@@ -47,7 +47,10 @@ export const getBlogPreviews = async (group?: string, page: number = 1, limit: n
 
 export const getBlogPost = async (slug: string): Promise<BlogPost | null> => {
     try {
-        const response = await axios.get(`${API_URL}/blog/${slug}`);
+        const decodedSlug = decodeURIComponent(slug);
+        const url = `${API_URL}/blog/${decodedSlug}`;
+        console.log("Fetching blog post from:", url);
+        const response = await axios.get(url);
         return response.data.data;
     } catch (error) {
         console.error(`Error fetching blog post ${slug}:`, error);
