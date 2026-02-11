@@ -11,7 +11,7 @@ interface BreadcrumbItem {
 
 export default function Breadcrumb() {
   const pathname = usePathname();
-  
+
   const getBreadcrumbs = (): BreadcrumbItem[] => {
     const segments = pathname.split('/').filter(Boolean);
     const breadcrumbs: BreadcrumbItem[] = [
@@ -43,16 +43,16 @@ export default function Breadcrumb() {
   return (
     <nav className="bg-white py-3 px-4" aria-label="Breadcrumb">
       <div className="max-w-7xl mx-auto">
-        <ol className="flex items-center space-x-2 text-sm">
+        <ol className="flex items-center space-x-2 text-sm flex-nowrap overflow-hidden">
           {breadcrumbs.map((crumb, index) => (
-            <li key={crumb.href} className="flex items-center">
+            <li key={crumb.href} className="flex items-center shrink-0 last:shrink last:min-w-0">
               {index === 0 && <Home className="w-4 h-4 mr-1" />}
               {index > 0 && <ChevronRight className="w-4 h-4 mx-2 text-gray-400" />}
               {index === breadcrumbs.length - 1 ? (
-                <span className="text-gray-600 font-medium">{crumb.label}</span>
+                <span className="text-gray-600 font-medium truncate max-w-[150px] sm:max-w-[300px] md:max-w-none inline-block">{crumb.label}</span>
               ) : (
-                <Link 
-                  href={crumb.href} 
+                <Link
+                  href={crumb.href}
                   className="text-blue-600 hover:text-blue-800 hover:underline"
                 >
                   {crumb.label}
