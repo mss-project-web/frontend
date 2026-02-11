@@ -1,3 +1,4 @@
+
 import { Metadata, ResolvingMetadata } from 'next';
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -11,9 +12,10 @@ export async function generateMetadata(
 ): Promise<Metadata> {
     // read route params
     const { slug } = await params;
+    const decodedSlug = decodeURIComponent(slug);
 
     // fetch data
-    const blog = await getBlogPost(slug);
+    const blog = await getBlogPost(decodedSlug);
 
     if (!blog) {
         return {
@@ -44,7 +46,8 @@ export async function generateMetadata(
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const blog = await getBlogPost(slug);
+    const decodedSlug = decodeURIComponent(slug);
+    const blog = await getBlogPost(decodedSlug);
 
     if (!blog) {
         return (

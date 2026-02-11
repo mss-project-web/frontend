@@ -93,7 +93,7 @@ export default function BlogContent({ blog }: BlogContentProps) {
 
                         <div className="flex flex-row items-center justify-between gap-4 mb-4">
                             <div className="flex items-center space-x-6 text-blue-100 text-sm md:text-base">
-                                <Badge className="bg-blue-500 hover:bg-blue-600 border-none">
+                                <Badge className="bg-transparent border border-blue-400 text-blue-100 px-3 hover:bg-blue-900/30 transition-colors">
                                     {blog.group || "ทั่วไป"}
                                 </Badge>
 
