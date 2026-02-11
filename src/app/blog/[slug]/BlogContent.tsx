@@ -66,7 +66,7 @@ export default function BlogContent({ blog }: BlogContentProps) {
     return (
         <div className="min-h-screen bg-gray-50 pb-20">
             {/* Hero/Header Image */}
-            <div className="relative h-64 md:h-96 w-full bg-gray-900 overflow-hidden">
+            <div className="relative h-[325px] md:h-[375px] w-full bg-gray-900 overflow-hidden">
                 {/* Background Image or Gradient */}
                 {blog.coverImage ? (
                     <Image
@@ -81,8 +81,8 @@ export default function BlogContent({ blog }: BlogContentProps) {
                 )}
 
                 {/* Dark Overlay for Text Readability */}
-                <div className="absolute inset-0 bg-black/60" />
-                <div className="container mx-auto px-4 h-full flex flex-col justify-end pb-12 relative z-10">
+                <div className="absolute inset-0 bg-black/80" />
+                <div className="container mx-auto px-4 h-full flex flex-col justify-end pb-12 pt-24 relative z-10">
                     <div className="max-w-4xl mx-auto w-full text-white">
                         <Link href="/contents" className="inline-flex items-center text-blue-200 hover:text-white mb-6 transition-colors">
                             <ArrowLeft className="w-4 h-4 mr-2" />
