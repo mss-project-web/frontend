@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/admin/', '/api/'],
+      disallow: ['/private/', '/admin/'],
     },
     sitemap: 'https://msspsuhatyai.org/sitemap.xml',
   }

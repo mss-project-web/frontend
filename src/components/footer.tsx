@@ -1,10 +1,23 @@
+"use client"
+
 import Link from "next/link"
 import { Phone, Mail, MapPin } from "lucide-react"
 import Image from "next/image"
 import { navItems } from "@/data/nav-items"
-import { CONTACT } from "@/lib/constants";
+import { CONTACT } from "@/lib/constants"
+import { useCookieConsent } from "@/context/cookie-consent-context"
+import { useState, useEffect } from "react"
 
 export default function Footer() {
+  const [mounted, setMounted] = useState(false)
+
+  // Handle hydratation mismatch
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const { setIsOpen } = useCookieConsent()
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700 text-white text-sm">
       {/* Main Footer */}
@@ -55,6 +68,24 @@ export default function Footer() {
                   ข่าวสารต่างๆ
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="text-gray-300 hover:text-white transition"
+                >
+                  นโยบายความเป็นส่วนตัว
+                </Link>
+              </li>
+              {mounted && (
+                <li>
+                  <button
+                    onClick={() => setIsOpen(true)}
+                    className="text-gray-300 hover:text-white transition text-left"
+                  >
+                    ตั้งค่าคุกกี้
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 

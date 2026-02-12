@@ -8,20 +8,22 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
 import { navItems } from "@/data/nav-items"
-import { CONTACT } from "@/lib/constants";
+import { CONTACT } from "@/lib/constants"
+import { useClickTracking } from "@/hooks/use-click-tracking"
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
   const pathname = usePathname()
+  const { trackEvent } = useClickTracking()
 
   const handleBackdropClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      setShowModal(false);
+      setShowModal(false)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -48,10 +50,16 @@ export default function Navigation() {
   }, [showModal])
 
   const copyAccountNumber = () => {
+    trackEvent("copy_account_number")
     navigator.clipboard.writeText(CONTACT.accountNumber).then(
       () => setIsCopied(true),
       () => console.error("Failed to copy account number")
     )
+  }
+
+  const handleSupportClick = () => {
+    trackEvent("click_support_button", { location: "desktop_header" })
+    setShowModal(true)
   }
 
   return (
@@ -69,8 +77,9 @@ export default function Navigation() {
                 <Hash className="w-4 h-4" />
                 <button
                   onClick={() => {
-                    setShowModal(true);
-                    setIsSheetOpen(false);
+                    trackEvent("click_support_button", { location: "mobile_topbar" })
+                    setShowModal(true)
+                    setIsSheetOpen(false)
                   }}
                   className="text-xs text-white hover:text-blue-200 transition"
                 >
@@ -85,13 +94,28 @@ export default function Navigation() {
             <div className="hidden md:flex items-center space-x-4">
               <span>ติดตามเรา:</span>
               <div className="flex space-x-2">
-                <a href={CONTACT.facebook} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={CONTACT.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("social_click", { platform: "facebook" })}
+                >
                   <Facebook className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
-                <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={CONTACT.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("social_click", { platform: "instagram" })}
+                >
                   <Instagram className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
-                <a href={CONTACT.youtube} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={CONTACT.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("social_click", { platform: "youtube" })}
+                >
                   <Youtube className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
               </div>
@@ -110,7 +134,7 @@ export default function Navigation() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
-            <Link href="/" className="inline-block group">
+            <Link href="/" className="inline-block group" onClick={() => trackEvent("nav_click", { item: "logo" })}>
               <div className="w-32 h-12 relative group-hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/LOGO/LOGO-MSS.png"
@@ -127,6 +151,7 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={() => trackEvent("nav_click", { item: item.label })}
                   className={`relative text-xs sm:text-xs lg:text-base font-medium transition-colors duration-300 hover:text-blue-600 ${pathname === item.href ? "text-blue-600" : "text-gray-700"
                     }`}
                 >
@@ -141,7 +166,7 @@ export default function Navigation() {
             {/* CTA Button */}
             <div className="hidden md:block">
               <Button
-                onClick={() => setShowModal(true)}
+                onClick={handleSupportClick}
                 className="bg-gradient-to-r from-blue-500 to-blue-400 hover:from-blue-600 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 สนับสนุนการทำงานของชมรม
