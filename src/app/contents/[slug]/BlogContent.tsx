@@ -35,7 +35,7 @@ export default function BlogContent({ blog }: BlogContentProps) {
         return content.map((block, index) => {
             switch (block.type) {
                 case "paragraph":
-                    return <p key={index} className="text-gray-700 leading-relaxed mb-6 font-light text-lg">{block.data}</p>;
+                    return <div key={index} className="text-gray-700 leading-relaxed mb-6 font-light text-lg" dangerouslySetInnerHTML={{ __html: block.data }} />;
                 case "image":
                     return (
                         <div key={index} className="my-8">
