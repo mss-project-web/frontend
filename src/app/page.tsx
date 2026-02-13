@@ -10,14 +10,15 @@ const AnimatedCounterPage = lazy(() => import("@/components/home/AnimatedCounter
 const NewsAndEvents = lazy(() => import("@/components/home/News").then(module => ({ default: module.NewsAndEvents })));
 const EventHome = lazy(() => import("@/components/home/EventHome").then(module => ({ default: module.EventHome })));
 const JoinUsSection = lazy(() => import("../components/home/JoinUsSection").then(module => ({ default: module.JoinUsSection })));
+const BlogHome = lazy(() => import("../components/home/BlogHome").then(module => ({ default: module.BlogHome })));
 
 export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
   const [index, setIndex] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
-  
+
   // Memoize images array to prevent recreation on every render
-  const images = useMemo(() => 
+  const images = useMemo(() =>
     Array.from({ length: 32 }, (_, i) => ({
       src: `/Image/${i + 1}.webp`,
       alt: `Image ${i + 1}`,
@@ -75,7 +76,7 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
-    return (
+  return (
     <main className="relative min-h-screen font-sans overflow-hidden bg-white">
       {/* BG */}
       <div className="relative">
@@ -122,6 +123,9 @@ export default function HomePage() {
           </Suspense>
           <Suspense fallback={<div className="h-64 bg-gray-100 rounded-lg animate-pulse" />}>
             <EventHome />
+          </Suspense>
+          <Suspense fallback={<div className="h-96 bg-gray-100 rounded-lg animate-pulse my-8" />}>
+            <BlogHome />
           </Suspense>
         </div>
       </div>

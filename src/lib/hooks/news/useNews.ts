@@ -40,6 +40,8 @@ export function useNews() {
                         updatedAt: news.updatedAt,
                   }));
 
+                  // Sort by date descending (newest first)
+                  formattedNews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
                   setNews(formattedNews);
             } catch (err: any) {
                   if (err.name !== 'CanceledError') {
