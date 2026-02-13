@@ -29,13 +29,22 @@ export default function BlogContent({ blog }: BlogContentProps) {
         setTimeout(() => setCopied(false), 2000);
     };
 
+    const unescapeHtml = (html: string) => {
+        return html
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&amp;/g, "&");
+    };
+
     const renderContent = (content: any[]) => {
         if (!content || !Array.isArray(content)) return null;
 
         return content.map((block, index) => {
             switch (block.type) {
                 case "paragraph":
-                    return <p key={index} className="text-gray-700 leading-relaxed mb-6 font-light text-lg">{block.data}</p>;
+                    return <div key={index} className="mb-6 text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: unescapeHtml(block.data) }} />;
                 case "image":
                     return (
                         <div key={index} className="my-8">
