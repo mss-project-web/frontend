@@ -43,6 +43,9 @@ export const getBlogGroups = async (): Promise<string[]> => {
 export const getBlogPreviews = async (group?: string, page: number = 1, limit: number = 10): Promise<BlogPreviewResponse | null> => {
     try {
         const params: any = { page, limit };
+        if (group && group !== 'all') {
+            params.group = group;
+        }
         // Constructing URL with Params
         const response = await apiClient.get(`/blog/preview`, { params });
         return response.data.data;

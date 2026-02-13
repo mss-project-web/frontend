@@ -3,10 +3,18 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Loader2 } from "lucide-react";
+import {
+      Select,
+      SelectContent,
+      SelectItem,
+      SelectTrigger,
+      SelectValue,
+} from "@/components/ui/select";
+import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { getBlogGroups, getBlogPreviews, BlogPost } from "@/services/blog";
+import { cn } from "@/lib/utils";
 
 export default function ContentsPage() {
       const [groups, setGroups] = useState<string[]>([]);
@@ -21,9 +29,6 @@ export default function ContentsPage() {
             const fetchGroups = async () => {
                   const data = await getBlogGroups();
                   setGroups(data || []);
-                  if (data && data.length > 0) {
-                        setActiveTab(data[0]); // Set first group as active by default
-                  }
             };
             fetchGroups();
       }, []);
@@ -33,20 +38,13 @@ export default function ContentsPage() {
             const fetchBlogs = async () => {
                   setLoading(true);
                   try {
-                        const response = await getBlogPreviews(activeTab, page, 9); // Limit 9 for grid 3x3
+                        const response = await getBlogPreviews(activeTab === "all" ? undefined : activeTab, page, 9); // Limit 9 for grid 3x3
                         if (response) {
-                              // Client-side filtering if API returns everything
-                              let filteredBlogs = response.data;
-                              if (activeTab !== "all" && activeTab) {
-                                    // Verify if the API returns mixed groups. If so, filter.
-                                    // Check if any blog has a different group.
-                                    const hasOtherGroups = filteredBlogs.some(b => b.group && b.group !== activeTab);
-                                    if (hasOtherGroups) {
-                                          filteredBlogs = filteredBlogs.filter(blog => blog.group === activeTab);
-                                    }
-                              }
-                              setBlogs(filteredBlogs);
+                              setBlogs(response.data);
                               setTotalPages(response.totalPages);
+                        } else {
+                              setBlogs([]);
+                              setTotalPages(0);
                         }
                   } catch (error) {
                         console.error("Failed to fetch blogs", error);
@@ -55,9 +53,7 @@ export default function ContentsPage() {
                   }
             };
 
-            if (activeTab) {
-                  fetchBlogs();
-            }
+            fetchBlogs();
       }, [activeTab, page]);
 
       const handleTabChange = (value: string) => {
@@ -65,11 +61,23 @@ export default function ContentsPage() {
             setPage(1);
       };
 
+      const handlePageChange = (newPage: number) => {
+            if (newPage >= 1 && newPage <= totalPages) {
+                  setPage(newPage);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+      };
+
       // Function to format date
       const formatDate = (dateString: string) => {
             const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('th-TH', options);
       };
+
+      // Group logic
+      const mainGroups = groups.slice(0, 3);
+      const moreGroups = groups.slice(3);
+      const inMoreGroups = moreGroups.includes(activeTab);
 
       return (
             <div className="min-h-screen bg-gray-50 pb-20">
@@ -84,28 +92,58 @@ export default function ContentsPage() {
                   </div>
 
                   <div className="container mx-auto px-4">
-                        {/* Tabs Navigation */}
-                        <div className="mb-8 flex justify-center">
-                              {groups.length > 0 ? (
-                                    <Tabs defaultValue={groups[0]} value={activeTab} onValueChange={handleTabChange} className="w-full max-w-4xl">
-                                          <TabsList className="grid grid-flow-col auto-cols-auto w-full h-auto p-1 bg-white rounded-xl shadow-sm border">
-                                                {groups.map((group) => (
-                                                      <TabsTrigger
-                                                            key={group}
-                                                            value={group}
-                                                            className="py-3 px-6 text-base rounded-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all"
-                                                      >
-                                                            {group}
-                                                      </TabsTrigger>
-                                                ))}
-                                          </TabsList>
-                                    </Tabs>
-                              ) : (
-                                    <div className="flex justify-center p-4">
-                                          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-                                    </div>
-                              )}
+                        {/* Group Filter Navigation */}
+                        <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+                              {/* All Button */}
+                              <Button
+                                    variant={activeTab === "all" ? "default" : "outline"}
+                                    onClick={() => handleTabChange("all")}
+                                    className={cn(
+                                          "rounded-full px-6",
+                                          activeTab === "all" ? "bg-blue-600 hover:bg-blue-700 text-white" : "hover:text-blue-600 hover:border-blue-600 bg-white text-gray-600 border-gray-200"
+                                    )}
+                              >
+                                    ทั้งหมด
+                              </Button>
 
+                              {/* Main Groups (Max 3) */}
+                              {mainGroups.map((group) => (
+                                    <Button
+                                          key={group}
+                                          variant={activeTab === group ? "default" : "outline"}
+                                          onClick={() => handleTabChange(group)}
+                                          className={cn(
+                                                "rounded-full px-6",
+                                                activeTab === group ? "bg-blue-600 hover:bg-blue-700 text-white" : "hover:text-blue-600 hover:border-blue-600 bg-white text-gray-600 border-gray-200"
+                                          )}
+                                    >
+                                          {group}
+                                    </Button>
+                              ))}
+
+                              {/* More Groups Dropdown */}
+                              {moreGroups.length > 0 && (
+                                    <Select
+                                          value={inMoreGroups ? activeTab : ""}
+                                          onValueChange={handleTabChange}
+                                    >
+                                          <SelectTrigger
+                                                className={cn(
+                                                      "w-[180px] rounded-full border-gray-200 bg-white text-gray-600 hover:text-blue-600 hover:border-blue-600 transition-colors",
+                                                      inMoreGroups && "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:text-white hover:border-blue-700"
+                                                )}
+                                          >
+                                                <SelectValue placeholder="หมวดหมู่อื่นๆ" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                                {moreGroups.map((group) => (
+                                                      <SelectItem key={group} value={group}>
+                                                            {group}
+                                                      </SelectItem>
+                                                ))}
+                                          </SelectContent>
+                                    </Select>
+                              )}
                         </div>
 
                         {/* Blog Grid */}
@@ -175,10 +213,36 @@ export default function ContentsPage() {
                                           </div>
                                     )}
 
-                                    {/* Pagination controls could go here if totalPages > 1 */}
+                                    {/* Pagination Controls */}
+                                    {totalPages > 1 && (
+                                          <div className="flex justify-center items-center gap-4 mt-12">
+                                                <Button
+                                                      variant="outline"
+                                                      size="sm"
+                                                      onClick={() => handlePageChange(page - 1)}
+                                                      disabled={page === 1}
+                                                      className="rounded-full"
+                                                >
+                                                      <ChevronLeft className="w-4 h-4 mr-2" />
+                                                      ก่อนหน้า
+                                                </Button>
+                                                <span className="text-sm text-gray-600 font-medium">
+                                                      หน้า {page} จาก {totalPages}
+                                                </span>
+                                                <Button
+                                                      variant="outline"
+                                                      size="sm"
+                                                      onClick={() => handlePageChange(page + 1)}
+                                                      disabled={page === totalPages}
+                                                      className="rounded-full"
+                                                >
+                                                      ถัดไป
+                                                      <ChevronRight className="w-4 h-4 ml-2" />
+                                                </Button>
+                                          </div>
+                                    )}
                               </>
                         )}
-
                   </div>
             </div>
       );
