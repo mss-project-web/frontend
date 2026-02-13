@@ -12,7 +12,7 @@ import {
       SelectTrigger,
       SelectValue,
 } from "@/components/ui/select";
-import { Loader2, ChevronLeft, ChevronRight, Eye } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight, Eye, Search, X } from "lucide-react";
 import { getBlogGroups, getBlogPreviews, BlogPost } from "@/services/blog";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +23,17 @@ export default function ContentsPage() {
       const [loading, setLoading] = useState(true);
       const [page, setPage] = useState(1);
       const [totalPages, setTotalPages] = useState(1);
+      const [searchQuery, setSearchQuery] = useState("");
+      const [debouncedSearch, setDebouncedSearch] = useState("");
+
+      // Debounce search input
+      useEffect(() => {
+            const timer = setTimeout(() => {
+                  setDebouncedSearch(searchQuery);
+                  setPage(1);
+            }, 400);
+            return () => clearTimeout(timer);
+      }, [searchQuery]);
 
       // Fetch groups on mount
       useEffect(() => {
@@ -33,12 +44,12 @@ export default function ContentsPage() {
             fetchGroups();
       }, []);
 
-      // Fetch blogs when tab changes or page changes
+      // Fetch blogs when tab changes, page changes, or search changes
       useEffect(() => {
             const fetchBlogs = async () => {
                   setLoading(true);
                   try {
-                        const response = await getBlogPreviews(activeTab === "all" ? undefined : activeTab, page, 9); // Limit 9 for grid 3x3
+                        const response = await getBlogPreviews(activeTab === "all" ? undefined : activeTab, page, 9, debouncedSearch || undefined);
                         if (response) {
                               setBlogs(response.data);
                               setTotalPages(response.totalPages);
@@ -54,11 +65,13 @@ export default function ContentsPage() {
             };
 
             fetchBlogs();
-      }, [activeTab, page]);
+      }, [activeTab, page, debouncedSearch]);
 
       const handleTabChange = (value: string) => {
             setActiveTab(value);
             setPage(1);
+            setSearchQuery("");
+            setDebouncedSearch("");
       };
 
       const handlePageChange = (newPage: number) => {
@@ -92,6 +105,28 @@ export default function ContentsPage() {
                   </div>
 
                   <div className="container mx-auto px-4">
+                        {/* Search Bar */}
+                        <div className="mb-6 max-w-md mx-auto">
+                              <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                    <input
+                                          type="text"
+                                          placeholder="ค้นหาเนื้อหา..."
+                                          value={searchQuery}
+                                          onChange={(e) => setSearchQuery(e.target.value)}
+                                          className="w-full pl-10 pr-10 py-2.5 rounded-full border border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-gray-400"
+                                    />
+                                    {searchQuery && (
+                                          <button
+                                                onClick={() => { setSearchQuery(""); setDebouncedSearch(""); }}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                          >
+                                                <X className="w-4 h-4" />
+                                          </button>
+                                    )}
+                              </div>
+                        </div>
+
                         {/* Group Filter Navigation */}
                         <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
                               {/* All Button */}
