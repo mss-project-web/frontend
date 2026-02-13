@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Calendar, X, Link as LinkIcon, Copy } from "lucide-react";
+import { ArrowLeft, Calendar, Eye, X, Link as LinkIcon, Copy } from "lucide-react";
 import { BlogPost } from "@/services/blog";
 
 interface BlogContentProps {
@@ -110,6 +110,13 @@ export default function BlogContent({ blog }: BlogContentProps) {
                                     <Calendar className="w-4 h-4 mr-2" />
                                     {formatDate(blog.createdAt)}
                                 </span>
+
+                                {typeof blog.views === 'number' && (
+                                    <span className="flex items-center">
+                                        <Eye className="w-4 h-4 mr-2" />
+                                        {blog.views.toLocaleString()} เข้าชม
+                                    </span>
+                                )}
                             </div>
 
                             {/* Share Button (Only Copy Link) */}

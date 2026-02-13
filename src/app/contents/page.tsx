@@ -12,7 +12,7 @@ import {
       SelectTrigger,
       SelectValue,
 } from "@/components/ui/select";
-import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight, Eye } from "lucide-react";
 import { getBlogGroups, getBlogPreviews, BlogPost } from "@/services/blog";
 import { cn } from "@/lib/utils";
 
@@ -156,7 +156,7 @@ export default function ContentsPage() {
                                     {blogs.length > 0 ? (
                                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                                 {blogs.map((blog) => (
-                                                      <Link href={`/contents/${blog.slug}`} key={blog._id} className="group block h-full">
+                                                      <Link href={`/contents/${blog.slug || blog._id}`} key={blog._id} className="group block h-full">
                                                             <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-gray-200">
                                                                   {/* Background Image */}
                                                                   {blog.coverImage ? (
@@ -190,8 +190,14 @@ export default function ContentsPage() {
                                                                         </p>
 
                                                                         <div className="flex items-center justify-between">
-                                                                              <div className="flex items-center text-xs text-gray-500">
+                                                                              <div className="flex items-center gap-3 text-xs text-gray-500">
                                                                                     <span suppressHydrationWarning>{formatDate(blog.createdAt)}</span>
+                                                                                    {typeof blog.views === 'number' && (
+                                                                                          <span className="flex items-center gap-1">
+                                                                                                <Eye className="w-3 h-3" />
+                                                                                                {blog.views.toLocaleString()}
+                                                                                          </span>
+                                                                                    )}
                                                                               </div>
 
                                                                               <div className="flex flex-wrap gap-1 justify-end">

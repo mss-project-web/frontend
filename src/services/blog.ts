@@ -20,6 +20,7 @@ export interface BlogPost {
     coverImage?: string;
     content?: { type: string; data: any }[];
     createdAt: string;
+    views?: number;
 }
 
 export interface BlogPreviewResponse {
