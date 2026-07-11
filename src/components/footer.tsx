@@ -7,19 +7,28 @@ import { usePathname } from "next/navigation"
 import { navItems } from "@/data/nav-items"
 import { CONTACT } from "@/lib/constants";
 import { useSettings } from "@/lib/hooks/useSettings";
+import { useCookieConsent } from "@/context/cookie-consent-context";
+import { useState, useEffect } from "react";
 
 export default function Footer() {
-  const pathname = usePathname()
-  const { settings } = useSettings()
+  const pathname = usePathname();
+  const { settings } = useSettings();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const { setIsOpen } = useCookieConsent();
 
   // Fall back to the bundled constants until the API returns data.
   const phones = settings.contact.phones.length
     ? settings.contact.phones.map((p) => (p.label ? `${p.number} (${p.label})` : p.number))
-    : [CONTACT.phone_Amir, CONTACT.phone_Amirah]
-  const email = settings.contact.email || CONTACT.email
+    : [CONTACT.phone_Amir, CONTACT.phone_Amirah];
+  const email = settings.contact.email || CONTACT.email;
 
   // Hide footer on standalone pages
-  if (pathname === "/links") return null
+  if (pathname === "/links") return null;
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700 text-white text-sm" data-nosnippet>
@@ -71,6 +80,24 @@ export default function Footer() {
                   ข่าวสารต่างๆ
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="text-gray-300 hover:text-white transition"
+                >
+                  นโยบายความเป็นส่วนตัว
+                </Link>
+              </li>
+              {mounted && (
+                <li>
+                  <button
+                    onClick={() => setIsOpen(true)}
+                    className="text-gray-300 hover:text-white transition text-left"
+                  >
+                    ตั้งค่าคุกกี้
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 

@@ -1,4 +1,3 @@
-import type React from "react"
 import type { Metadata } from "next"
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { Kanit } from "next/font/google"
@@ -7,6 +6,10 @@ import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import RouteLoader from "@/components/RouteLoader"
 import Breadcrumb from "@/components/Breadcrumb"
+import { CookieConsentProvider } from "@/context/cookie-consent-context"
+import { GoogleAnalytics } from "@/components/google-analytics"
+import CookieBanner from "@/components/cookie-banner"
+import CookieFloatingButton from "@/components/cookie-floating-button"
 
 const kanit = Kanit({
   subsets: ["thai"],
@@ -14,6 +17,13 @@ const kanit = Kanit({
   variable: "--font-kanit",
   display: "swap",
 })
+
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void
+  }
+}
+
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://msspsuhatyai.org'),
@@ -88,7 +98,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Get API URLs from environment (more secure)
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const imageHost = process.env.NEXT_PUBLIC_IMAGE_HOST;
 
@@ -190,17 +199,16 @@ export default function RootLayout({
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-tap-highlight" content="no" />
-        
         {/* Links (canonical is set per-page via the metadata API — do not hardcode here) */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/LOGO/LOGO-MSS.png" />
         <link rel="shortcut icon" href="/favicon.ico" />
-        
+
         {/* Preconnect for critical performance only */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        
+
         {/* Conditional preconnect for production */}
         {process.env.NODE_ENV === 'production' && apiUrl && (
           <link rel="dns-prefetch" href={apiUrl} />
@@ -210,12 +218,16 @@ export default function RootLayout({
         )}
       </head>
       <body className="font-sans">
-        <RouteLoader />
-        <Navigation />
-        <Breadcrumb />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <GoogleAnalytics gaId="G-XXXXXXXXXX" />
+        <CookieConsentProvider>
+          <GoogleAnalytics gaId="G-XXXXXXXXXX" />
+          <RouteLoader />
+          <Navigation />
+          <Breadcrumb />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+          <CookieBanner />
+          <CookieFloatingButton />
+        </CookieConsentProvider>
       </body>
     </html>
   )

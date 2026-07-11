@@ -5,7 +5,7 @@ export const CONTACT = {
       facebook: "https://www.facebook.com/MSSPSU",
       instagram: "https://www.instagram.com/msspsuhatyai/",
       youtube: "https://www.youtube.com/@msspsuhatyai",
-      accountNumber: "1538507292",
+      accountNumber: "2061251769",
       accountName: "นางสาวซอฟีเราะห์ ดอเลาะ",
       bank: "ธนาคารกสิกรไทย",
 }

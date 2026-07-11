@@ -1,41 +1,290 @@
-import Link from "next/link"
-import ContentsStructuredData from "@/components/contents/ContentsStructuredData"
+"use client";
 
-export default function Contents() {
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+      Select,
+      SelectContent,
+      SelectItem,
+      SelectTrigger,
+      SelectValue,
+} from "@/components/ui/select";
+import { Loader2, ChevronLeft, ChevronRight, Eye, Search, X } from "lucide-react";
+import { getBlogGroups, getBlogPreviews, BlogPost } from "@/services/blog";
+import { cn } from "@/lib/utils";
+
+export default function ContentsPage() {
+      const [groups, setGroups] = useState<string[]>([]);
+      const [activeTab, setActiveTab] = useState<string>("all");
+      const [blogs, setBlogs] = useState<BlogPost[]>([]);
+      const [loading, setLoading] = useState(true);
+      const [page, setPage] = useState(1);
+      const [totalPages, setTotalPages] = useState(1);
+      const [searchQuery, setSearchQuery] = useState("");
+      const [debouncedSearch, setDebouncedSearch] = useState("");
+
+      // Debounce search input
+      useEffect(() => {
+            const timer = setTimeout(() => {
+                  setDebouncedSearch(searchQuery);
+                  setPage(1);
+            }, 400);
+            return () => clearTimeout(timer);
+      }, [searchQuery]);
+
+      // Fetch groups on mount
+      useEffect(() => {
+            const fetchGroups = async () => {
+                  const data = await getBlogGroups();
+                  setGroups(data || []);
+            };
+            fetchGroups();
+      }, []);
+
+      // Fetch blogs when tab changes, page changes, or search changes
+      useEffect(() => {
+            const fetchBlogs = async () => {
+                  setLoading(true);
+                  try {
+                        const response = await getBlogPreviews(activeTab === "all" ? undefined : activeTab, page, 9, debouncedSearch || undefined);
+                        if (response) {
+                              setBlogs(response.data);
+                              setTotalPages(response.totalPages);
+                        } else {
+                              setBlogs([]);
+                              setTotalPages(0);
+                        }
+                  } catch (error) {
+                        console.error("Failed to fetch blogs", error);
+                  } finally {
+                        setLoading(false);
+                  }
+            };
+
+            fetchBlogs();
+      }, [activeTab, page, debouncedSearch]);
+
+      const handleTabChange = (value: string) => {
+            setActiveTab(value);
+            setPage(1);
+            setSearchQuery("");
+            setDebouncedSearch("");
+      };
+
+      const handlePageChange = (newPage: number) => {
+            if (newPage >= 1 && newPage <= totalPages) {
+                  setPage(newPage);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+      };
+
+      // Function to format date
+      const formatDate = (dateString: string) => {
+            const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('th-TH', options);
+      };
+
+      // Group logic
+      const mainGroups = groups.slice(0, 3);
+      const moreGroups = groups.slice(3);
+      const inMoreGroups = moreGroups.includes(activeTab);
+
       return (
-            <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-                  {/* Structured Data for Contents */}
-                  <ContentsStructuredData />
-                  
-                  <div className="text-center max-w-lg px-10">
-                        <div className="pt-5 text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-500 to-sky-400 mb-4 tracking-tight">
-                              เร็วๆนี้
-                        </div>
-                        <p className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 leading-tight">
-                              อินชาอัลลอฮฺ
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                              <Link
-                                    href="/"
-                                    className="inline-flex items-center px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                              >
-                                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                    </svg>
-                                    กลับหน้าหลัก
-                              </Link>
-                        </div>
-                        <div className="mt-12 pt-8 border-t border-slate-200">
-                              <p className="text-slate-500 text-sm mb-4">
-                                    ต้องการความช่วยเหลือ?
+            <div className="min-h-screen bg-gray-50 pb-20">
+                  {/* Header Section */}
+                  <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 px-4 mb-10">
+                        <div className="container mx-auto text-center">
+                              <h1 className="text-4xl md:text-5xl font-bold mb-4">เนื้อหาวิชาการ</h1>
+                              <p className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto">
+                                    รวบรวมบทความ ข่าวสาร และสาระน่ารู้จากชมรมมุสลิม ม.อ.หาดใหญ่
                               </p>
-                              <div className="flex flex-wrap justify-center gap-6 text-sm">
-                                    <Link href="/contact" className="text-blue-600 hover:text-blue-800 transition-colors">
-                                          ติดต่อเรา
-                                    </Link>
-                              </div>
                         </div>
                   </div>
-            </main>
-      )
+
+                  <div className="container mx-auto px-4">
+                        {/* Search Bar */}
+                        <div className="mb-6 max-w-md mx-auto">
+                              <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                    <input
+                                          type="text"
+                                          placeholder="ค้นหาเนื้อหา..."
+                                          value={searchQuery}
+                                          onChange={(e) => setSearchQuery(e.target.value)}
+                                          className="w-full pl-10 pr-10 py-2.5 rounded-full border border-gray-200 bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder:text-gray-400"
+                                    />
+                                    {searchQuery && (
+                                          <button
+                                                onClick={() => { setSearchQuery(""); setDebouncedSearch(""); }}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                          >
+                                                <X className="w-4 h-4" />
+                                          </button>
+                                    )}
+                              </div>
+                        </div>
+
+                        {/* Group Filter Navigation */}
+                        <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+                              {/* All Button */}
+                              <Button
+                                    variant={activeTab === "all" ? "default" : "outline"}
+                                    onClick={() => handleTabChange("all")}
+                                    className={cn(
+                                          "rounded-full px-6",
+                                          activeTab === "all" ? "bg-blue-600 hover:bg-blue-700 text-white" : "hover:text-blue-600 hover:border-blue-600 bg-white text-gray-600 border-gray-200"
+                                    )}
+                              >
+                                    ทั้งหมด
+                              </Button>
+
+                              {/* Main Groups (Max 3) */}
+                              {mainGroups.map((group) => (
+                                    <Button
+                                          key={group}
+                                          variant={activeTab === group ? "default" : "outline"}
+                                          onClick={() => handleTabChange(group)}
+                                          className={cn(
+                                                "rounded-full px-6",
+                                                activeTab === group ? "bg-blue-600 hover:bg-blue-700 text-white" : "hover:text-blue-600 hover:border-blue-600 bg-white text-gray-600 border-gray-200"
+                                          )}
+                                    >
+                                          {group}
+                                    </Button>
+                              ))}
+
+                              {/* More Groups Dropdown */}
+                              {moreGroups.length > 0 && (
+                                    <Select
+                                          value={inMoreGroups ? activeTab : ""}
+                                          onValueChange={handleTabChange}
+                                    >
+                                          <SelectTrigger
+                                                className={cn(
+                                                      "w-[180px] rounded-full border-gray-200 bg-white text-gray-600 hover:text-blue-600 hover:border-blue-600 transition-colors",
+                                                      inMoreGroups && "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:text-white hover:border-blue-700"
+                                                )}
+                                          >
+                                                <SelectValue placeholder="หมวดหมู่อื่นๆ" />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                                {moreGroups.map((group) => (
+                                                      <SelectItem key={group} value={group}>
+                                                            {group}
+                                                      </SelectItem>
+                                                ))}
+                                          </SelectContent>
+                                    </Select>
+                              )}
+                        </div>
+
+                        {/* Blog Grid */}
+                        {loading ? (
+                              <div className="flex justify-center py-20">
+                                    <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+                              </div>
+                        ) : (
+                              <>
+                                    {blogs.length > 0 ? (
+                                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                                {blogs.map((blog) => (
+                                                      <Link href={`/contents/${blog.slug || blog._id}`} key={blog._id} className="group block h-full">
+                                                            <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-gray-200">
+                                                                  {/* Background Image */}
+                                                                  {blog.coverImage ? (
+                                                                        <Image
+                                                                              src={blog.coverImage}
+                                                                              alt={blog.title}
+                                                                              fill
+                                                                              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                                                        />
+                                                                  ) : (
+                                                                        <div className="h-full w-full bg-gray-300" />
+                                                                  )}
+
+                                                                  {/* Gradient Overlay - White from bottom */}
+                                                                  <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-white via-white/90 to-transparent" />
+
+                                                                  {/* Content Overlay */}
+                                                                  <div className="absolute inset-0 flex flex-col justify-end p-6">
+                                                                        <div className="mb-2">
+                                                                              <Badge className="bg-blue-600 hover:bg-blue-700 text-white border-none mb-2">
+                                                                                    {blog.group || "ทั่วไป"}
+                                                                              </Badge>
+                                                                        </div>
+
+                                                                        <h3 className="text-xl font-bold text-gray-900 line-clamp-2 mb-1 group-hover:text-blue-700 transition-colors">
+                                                                              {blog.title}
+                                                                        </h3>
+
+                                                                        <p className="text-sm text-gray-600 line-clamp-2 mb-2">
+                                                                              {blog.description}
+                                                                        </p>
+
+                                                                        <div className="flex items-center justify-between">
+                                                                              <div className="flex items-center gap-3 text-xs text-gray-500">
+                                                                                    <span suppressHydrationWarning>{formatDate(blog.createdAt)}</span>
+                                                                                    {typeof blog.views === 'number' && (
+                                                                                          <span className="flex items-center gap-1">
+                                                                                                <Eye className="w-3 h-3" />
+                                                                                                {blog.views.toLocaleString()}
+                                                                                          </span>
+                                                                                    )}
+                                                                              </div>
+
+                                                                              <div className="flex flex-wrap gap-1 justify-end">
+                                                                                    {blog.tags?.slice(0, 3).map(tag => (
+                                                                                          <span key={tag} className="text-[10px] bg-gray-100/80 text-gray-600 px-2 py-0.5 rounded-full backdrop-blur-sm">
+                                                                                                #{tag}
+                                                                                          </span>
+                                                                                    ))}
+                                                                              </div>
+                                                                        </div>
+                                                                  </div>
+                                                            </div>
+                                                      </Link>
+                                                ))}
+                                          </div>
+                                    ) : (
+                                          <div className="text-center py-20 text-gray-500">
+                                                <p>ไม่พบเนื้อหาในหมวดหมู่นี้</p>
+                                          </div>
+                                    )}
+
+                                    {/* Pagination Controls */}
+                                    {totalPages > 1 && (
+                                          <div className="flex justify-center items-center gap-4 mt-12">
+                                                <Button
+                                                      variant="outline"
+                                                      size="sm"
+                                                      onClick={() => handlePageChange(page - 1)}
+                                                      disabled={page === 1}
+                                                      className="rounded-full"
+                                                >
+                                                      <ChevronLeft className="w-4 h-4 mr-2" />
+                                                      ก่อนหน้า
+                                                </Button>
+                                                <span className="text-sm text-gray-600 font-medium">
+                                                      หน้า {page} จาก {totalPages}
+                                                </span>
+                                                <Button
+                                                      variant="outline"
+                                                      size="sm"
+                                                      onClick={() => handlePageChange(page + 1)}
+                                                      disabled={page === totalPages}
+                                                      className="rounded-full"
+                                                >
+                                                      ถัดไป
+                                                      <ChevronRight className="w-4 h-4 ml-2" />
+                                                </Button>
+                                          </div>
+                                    )}
+                              </>
+                        )}
+                  </div>
+            </div>
+      );
 }

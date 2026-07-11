@@ -6,13 +6,13 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: IMAGE_HOST
       ? [
-          {
-            protocol: 'https',
-            hostname: IMAGE_HOST,
-            port: '',
-            pathname: '/**',
-          },
-        ]
+        {
+          protocol: 'https',
+          hostname: IMAGE_HOST,
+          port: '',
+          pathname: '/**',
+        },
+      ]
       : [],
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
