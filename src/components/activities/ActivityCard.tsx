@@ -42,7 +42,7 @@ export function ActivityCard({ activity, isLoading }: ActivityCardProps) {
       return (
             <Link
                   key={activity._id}
-                  href={`/activities/${activity._id}`}
+                  href={`/activities/${activity.slug || activity._id}`}
                   className="block group"
                   aria-label={`ดูรายละเอียดกิจกรรม ${activity.name_th}`}
             >

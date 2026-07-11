@@ -13,6 +13,7 @@ import { AyatQuran } from "@/components/about/AyatQuran";
 import { Mission } from "@/components/about/Mission";
 import { President } from "@/components/about/President";
 import BackgroundPaths from "@/components/about/BackgroundPaths";
+import AboutStructuredData from "@/components/about/AboutStructuredData";
 
 export default function AboutPage() {
       const [expandedSection, setExpandedSection] = useState<string | null>("story")
@@ -38,6 +39,9 @@ export default function AboutPage() {
 
       return (
             <main className="relative min-h-screen font-sans">
+                  {/* Structured Data for About Page */}
+                  <AboutStructuredData />
+                  
                   {/* Hero Section (Introduction) */}
                   <section className="relative py-20 overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300">
@@ -51,14 +55,14 @@ export default function AboutPage() {
                         {/* Content aligned with HomePage's max-w-screen-xl and px-4 */}
                         <div className="relative z-10 mx-auto max-w-screen-xl px-4"> {/* Adjusted */}
                               <div className="mx-auto text-center"> {/* Removed max-w-4xl to let content fill max-w-screen-xl */}
-                                    <div className="text-6xl md:text-7xl font-bold mb-8">
+                                    <h1 className="text-6xl md:text-7xl font-bold mb-8">
                                           <span className="bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300 bg-clip-text text-transparent">
                                                 ชมรมมุสลิม ม.อ.หาดใหญ่
                                           </span>
-                                    </div>
-                                    <div className="text-2xl italic text-gray-600 leading-relaxed mb-8">
+                                    </h1>
+                                    <p className="text-2xl italic text-gray-600 leading-relaxed mb-8">
                                           หวังดีดี จากบ้านหลังเดิม
-                                    </div>
+                                    </p>
                                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                           <Button
                                                 size="lg"

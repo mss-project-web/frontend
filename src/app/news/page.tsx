@@ -13,6 +13,7 @@ import {
 import { useNewsAll } from "@/lib/hooks/news/useNewsAll";
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from "@/components/ui/button";
+import NewsStructuredData from "@/components/news/NewsStructuredData";
 
 const MONTHS = [
   { value: "01", label: "มกราคม" },
@@ -45,6 +46,9 @@ export default function NewsMainPage() {
 
   return (
     <main className="min-h-screen bg-white font-sans">
+      {/* Structured Data for News */}
+      <NewsStructuredData />
+      
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">

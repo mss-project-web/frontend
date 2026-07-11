@@ -8,16 +8,33 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
 import { navItems } from "@/data/nav-items"
-import { CONTACT } from "@/lib/constants"
-import { useClickTracking } from "@/hooks/use-click-tracking"
+import { CONTACT } from "@/lib/constants";
+import { useSettings } from "@/lib/hooks/useSettings";
+import { useClickTracking } from "@/hooks/use-click-tracking";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
-  const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const { settings } = useSettings();
   const pathname = usePathname()
   const { trackEvent } = useClickTracking()
+
+  // Site info from settings, falling back to the bundled constants.
+  const firstPhone = settings.contact.phones[0]
+  const phoneText = firstPhone ? (firstPhone.label ? `${firstPhone.number} (${firstPhone.label})` : firstPhone.number) : CONTACT.phone_Amir
+  const email = settings.contact.email || CONTACT.email
+  const facebook = settings.contact.socials.facebook || CONTACT.facebook
+  const instagram = settings.contact.socials.instagram || CONTACT.instagram
+  const youtube = settings.contact.socials.youtube || CONTACT.youtube
+  const bank = settings.donation.bankName || CONTACT.bank
+  const accountName = settings.donation.accountName || CONTACT.accountName
+  const accountNumber = settings.donation.accountNumber || CONTACT.accountNumber
+  const qrImage = settings.donation.qrImage || "/qr-promptpay-mss.jpg"
+
+  // Hide nav on standalone pages
+  if (pathname === "/links") return null
 
   const handleBackdropClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -50,8 +67,8 @@ export default function Navigation() {
   }, [showModal])
 
   const copyAccountNumber = () => {
-    trackEvent("copy_account_number")
-    navigator.clipboard.writeText(CONTACT.accountNumber).then(
+    trackEvent("copy_account_number");
+    navigator.clipboard.writeText(accountNumber).then(
       () => setIsCopied(true),
       () => console.error("Failed to copy account number")
     )
@@ -71,7 +88,7 @@ export default function Navigation() {
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4" />
-                <span className="text-xs">{CONTACT.phone_Amir}</span>
+                <span className="text-xs">{phoneText}</span>
               </div>
               <div className="flex items-center space-x-2 md:hidden">
                 <Hash className="w-4 h-4" />
@@ -88,7 +105,7 @@ export default function Navigation() {
               </div>
               <div className="hidden md:flex items-center space-x-2">
                 <Mail className="w-4 h-4" />
-                <span>{CONTACT.email}</span>
+                <span>{email}</span>
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-4">
@@ -146,7 +163,7 @@ export default function Navigation() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-8" data-nosnippet>
               {navItems.map((item) => (
                 <Link
                   key={item.href}
@@ -201,7 +218,7 @@ export default function Navigation() {
                     หวังดีดี จากบ้านหลังเดิม
                   </p>
                 </div>
-                <nav className="flex flex-col space-y-4 mt-2">
+                <nav className="flex flex-col space-y-4 mt-2" data-nosnippet>
                   {navItems.map((item) => {
                     const isActive = pathname === item.href
                     return (
@@ -252,20 +269,20 @@ export default function Navigation() {
 
             <div className="flex flex-col items-center space-y-4">
               <div className="relative w-[220px] h-[220px]">
-                <Image
-                  src="/qr-promptpay-mss.jpg"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={qrImage}
                   alt="QR พร้อมเพย์"
-                  fill
-                  className="rounded-lg shadow-md object-cover"
+                  className="w-full h-full rounded-lg shadow-md object-contain bg-white"
                 />
               </div>
               <div className="text-center space-y-1">
                 <p className="text-sm text-gray-700">
-                  ชื่อบัญชี: <span className="font-semibold">{CONTACT.accountName}</span>
+                  ชื่อบัญชี: <span className="font-semibold">{accountName}</span>
                 </p>
                 <div className="flex items-center justify-center space-x-2">
                   <p className="text-sm text-gray-700">
-                    เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">{CONTACT.accountNumber}</span>
+                    เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">{accountNumber}</span>
                   </p>
                   <button
                     onClick={copyAccountNumber}
@@ -276,7 +293,7 @@ export default function Navigation() {
                   </button>
                 </div>
                 <p className="text-sm text-gray-700">
-                  {CONTACT.bank}
+                  {bank}
                 </p>
                 <p className="text-xs text-gray-500">
                   * รองรับสแกนผ่านแอปธนาคารทุกประเภท

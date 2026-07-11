@@ -8,7 +8,9 @@ import { Facebook, Instagram } from "lucide-react"
 
 //components
 import ContactUsSection from "@/components/contect/ContactUsSection"
+import DonationSection from "@/components/contect/DonationSection"
 import FAQSection from "@/components/contect/FAQSection"
+import ContactStructuredData from "@/components/contect/ContactStructuredData"
 
 //Data
 import { socialMediaData } from "@/data/socialMediaData"
@@ -21,6 +23,9 @@ export default function ContactPage() {
 
       return (
             <main className="relative min-h-screen overflow-hidden">
+                  {/* Structured Data for Contact */}
+                  <ContactStructuredData />
+                  
                   {/* Hero Section */}
                   <section className="py-16 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
                         <div className="container mx-auto px-4">
@@ -38,12 +43,15 @@ export default function ContactPage() {
                         <ContactUsSection />
                   </section>
 
+                  {/* Donation Section */}
+                  <DonationSection />
+
                   {/* Enhanced Social Media Section */}
                   <section className="bg-white">
                         <div className="relative z-10 mx-auto max-w-screen-xl px-1 py-10">
                               <div className="container mx-auto px-1 space-y-12">
                                     <div className="text-center">
-                                          <h2 className="font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
+                                          <h2 className="text-2xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
                                                 ติดตามเราได้ที่
                                           </h2>
                                           <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">

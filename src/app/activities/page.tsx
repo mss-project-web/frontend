@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useActivities } from "@/lib/hooks/activities/useActivities";
 import { ActivityCard } from "@/components/activities/ActivityCard";
 import RoadmapModal from "@/components/activities/RoadmapModal";
+import ActivitiesStructuredData from "@/components/activities/ActivitiesStructuredData";
 
 export default function ActivitysPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,6 +71,9 @@ export default function ActivitysPage() {
 
   return (
     <main className="min-h-screen bg-gray-100 font-sans">
+      {/* Structured Data for Activities */}
+      <ActivitiesStructuredData />
+      
       <section className="py-16 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center py-6">

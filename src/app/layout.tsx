@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+
 import { Kanit } from "next/font/google"
 import "./globals.css"
 import Navigation from "@/components/navigation"
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     default: "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
     template: "%s | ชมรมมุสลิม ม.อ.หาดใหญ่"
   },
-  description: "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีๆ จากบ้านหลังเดิม กิจกรรมสำหรับนักศึกษามุสลิม ห้องละหมาด สถานที่ประกอบศาสนกิจ",
+  description: "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม ⭐ กิจกรรมสำหรับนักศึกษามุสลิม ⭐ ห้องละหมาด ⭐ สถานที่ประกอบศาสนกิจ ⭐ กิจกรรมศาสนาอิสลาม ⭐ ชุมชนมุสลิม PSU หาดใหญ่",
   keywords: [
     "ชมรมมุสลิม",
     "มหาวิทยาลัยสงขลานครินทร์",
@@ -42,7 +43,10 @@ export const metadata: Metadata = {
     "PSU Hatyai",
     "Muslim Student",
     "Prayer Room",
-    "Islamic Activities"
+    "Islamic Activities",
+    "เกี่ยวกับเรา",
+    "หน้งสือ",
+    "เพื่มเตม", 
   ],
   authors: [{ name: "ชมรมมุสลิม ม.อ.หาดใหญ่" }],
   creator: "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
@@ -167,7 +171,7 @@ export default function RootLayout({
         "about": {
           "@id": "https://msspsuhatyai.org/#organization"
         },
-        "description": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีๆ จากบ้านหลังเดิม",
+        "description": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
         "breadcrumb": {
           "@id": "https://msspsuhatyai.org/#breadcrumb"
         },
@@ -195,9 +199,7 @@ export default function RootLayout({
         <meta name="msapplication-config" content="/browserconfig.xml" />
         <meta name="msapplication-TileColor" content="#2563eb" />
         <meta name="msapplication-tap-highlight" content="no" />
-
-        {/* Links */}
-        <link rel="canonical" href="https://msspsuhatyai.org" />
+        {/* Links (canonical is set per-page via the metadata API — do not hardcode here) */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/LOGO/LOGO-MSS.png" />

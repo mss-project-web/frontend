@@ -1,8 +1,18 @@
+"use client"
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Mail, MapPin } from "lucide-react"
 import { CONTACT } from "@/lib/constants";
+import { useSettings } from "@/lib/hooks/useSettings";
 
 export default function ContactUsSection() {
+      const { settings } = useSettings();
+      const phones = settings.contact.phones.length
+            ? settings.contact.phones.map((p) => (p.label ? `${p.number} (${p.label})` : p.number))
+            : [CONTACT.phone_Amir, CONTACT.phone_Amirah];
+      const email = settings.contact.email || CONTACT.email;
+      const address = settings.contact.address || "มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่";
+
       return (
             <section className="relative z-10 mx-auto max-w-screen-xl px-4 py-10 md:py-10 bg-white">
                   <div className="container mx-auto px-4">
@@ -27,8 +37,9 @@ export default function ContactUsSection() {
                                                       </div>
                                                       <div>
                                                             <h4 className="text-xl font-semibold text-gray-900 mb-1">โทรศัพท์</h4>
-                                                            <div className="text-sm sm:text-base text-gray-700">{CONTACT.phone_Amir}</div>
-                                                            <div className="text-sm sm:text-base text-gray-700 mt-1">{CONTACT.phone_Amirah}</div>
+                                                            {phones.map((phone, i) => (
+                                                                  <div key={i} className="text-sm sm:text-base text-gray-700 mt-1">{phone}</div>
+                                                            ))}
                                                       </div>
                                                 </CardContent>
                                           </Card>
@@ -41,7 +52,7 @@ export default function ContactUsSection() {
                                                       </div>
                                                       <div>
                                                             <h4 className="text-xl font-semibold text-gray-900 mb-1">อีเมล</h4>
-                                                            <div className="text-sm sm:text-base text-gray-700">{CONTACT.email}</div>
+                                                            <div className="text-sm sm:text-base text-gray-700">{email}</div>
                                                             <div className="text-sm sm:text-base text-gray-500 mt-1">เราจะตอบกลับภายใน 24 ชั่วโมง</div>
                                                       </div>
                                                 </CardContent>
@@ -55,7 +66,7 @@ export default function ContactUsSection() {
                                                       </div>
                                                       <div>
                                                             <h3 className="text-xl font-semibold text-gray-900 mb-1">ที่อยู่</h3>
-                                                            <div className="text-sm sm:text-base text-gray-700">มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่</div>
+                                                            <div className="text-sm sm:text-base text-gray-700">{address}</div>
                                                             <div className="text-sm sm:text-base text-gray-500 mt-1">อำเภอหาดใหญ่ จังหวัดสงขลา</div>
                                                       </div>
                                                 </CardContent>

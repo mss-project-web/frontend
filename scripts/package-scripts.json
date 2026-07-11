@@ -1,0 +1,12 @@
+{
+  "name": "memory:monitor",
+  "version": "1.0.0",
+  "description": "Memory monitoring script for MSS Frontend",
+  "scripts": {
+    "memory:check": "node scripts/memory-monitor.js",
+    "memory:gc": "node --expose-gc scripts/memory-monitor.js",
+    "memory:production": "NODE_ENV=production npm run start & node scripts/memory-monitor.js",
+    "analyze": "cross-env ANALYZE=true npm run build",
+    "seo:test": "node scripts/seo-validator.js"
+  }
+}

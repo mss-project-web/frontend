@@ -3,8 +3,11 @@
 import { useState, useEffect, useMemo, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronUp } from "lucide-react";
+import HomePageStructuredData from "@/components/home/HomePageStructuredData";
+import SiteNavigationStructuredData from "@/components/SiteNavigationStructuredData";
+import { useEventListener, useDebounce, useMemoryMonitor } from "@/lib/utils/memoryOptimization";
 
-// Lazy load heavy components
+// Lazy load heavy components with proper error boundaries
 const ThreeDMarquee = lazy(() => import("../components/home/ThreeDMarquee").then(module => ({ default: module.ThreeDMarquee })));
 const AnimatedCounterPage = lazy(() => import("@/components/home/AnimatedCounter").then(module => ({ default: module.AnimatedCounterPage })));
 const NewsAndEvents = lazy(() => import("@/components/home/News").then(module => ({ default: module.NewsAndEvents })));
@@ -13,6 +16,9 @@ const JoinUsSection = lazy(() => import("../components/home/JoinUsSection").then
 const BlogHome = lazy(() => import("../components/home/BlogHome").then(module => ({ default: module.BlogHome })));
 
 export default function HomePage() {
+  // Memory monitoring (development only)
+  useMemoryMonitor('HomePage');
+  
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
   const [index, setIndex] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -25,24 +31,23 @@ export default function HomePage() {
     })), []
   );
 
-  // Memoize scroll handler
-  const handleScroll = useCallback(() => {
-    setShowScrollToTop(window.scrollY > 300);
-  }, []);
+  // Debounced scroll handler to reduce memory usage
+  const debouncedScrollHandler = useDebounce(() => {
+    if (typeof window !== 'undefined') {
+      setShowScrollToTop(window.scrollY > 300);
+    }
+  }, 100);
 
-  useEffect(() => {
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  // Use optimized event listener (only in browser)
+  useEventListener("scroll", debouncedScrollHandler);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   const WavePattern = () => (
@@ -78,45 +83,54 @@ export default function HomePage() {
 
   return (
     <main className="relative min-h-screen font-sans overflow-hidden bg-white">
+      {/* Structured Data for SEO */}
+      <HomePageStructuredData />
+      <SiteNavigationStructuredData />
+      
       {/* BG */}
       <div className="relative">
         <Suspense fallback={<div className="h-[700px] max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 animate-pulse" />}>
           <ThreeDMarquee images={images} imageWidth={20} imageHeight={35} />
         </Suspense>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={texts[index]}
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -40, scale: 1.05 }}
-            transition={{ duration: 1.5 }}
-            className="
-            absolute inset-0 flex items-center justify-center
-            text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
-            font-extrabold text-white text-center
-            shadow-black/50
-            leading-tight tracking-tight
-            z-10 px-4 md:px-8 pointer-events-none
-            drop-shadow-[0_0_6px_#000000]
-            [text-shadow:0_0_4px_#000000,0_0_2px_#000000,0_0_2px_#000000]
-          "
-          > {texts[index]}
-          </motion.div>
-        </AnimatePresence>
+        
+        {/* SEO-friendly Header Structure */}
+        <header className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 md:px-8">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={texts[index]}
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -40, scale: 1.05 }}
+              transition={{ duration: 1.5 }}
+              className="
+                text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
+                font-extrabold text-white text-center
+                shadow-black/50
+                leading-tight tracking-tight
+                pointer-events-none
+                drop-shadow-[0_0_6px_#000000]
+                [text-shadow:0_0_4px_#000000,0_0_2px_#000000,0_0_2px_#000000]
+                mb-4
+              "
+            > 
+              {texts[index]}
+            </motion.div>
+          </AnimatePresence>
+        </header>
       </div>
 
-      {/* AnimatedCounterPage */}
-      <div className="relative bg-gradient-to-r from-blue-100 via-sky-50 to-blue-200 overflow-hidden">
+      {/* Statistics Section */}
+      <section className="relative bg-gradient-to-r from-blue-100 via-sky-50 to-blue-200 overflow-hidden">
         <WavePattern />
         <div className="relative z-10 mx-auto max-w-screen-xl px-4">
           <Suspense fallback={<div className="h-64 bg-white/20 rounded-lg animate-pulse" />}>
             <AnimatedCounterPage />
           </Suspense>
         </div>
-      </div>
+      </section>
 
-      {/* NewsAndEvents */}
-      <div className="relative overflow-hidden">
+      {/* News and Events Section */}
+      <section className="relative overflow-hidden py-16">
         <div className="relative z-10 mx-auto max-w-screen-xl px-4">
           <Suspense fallback={<div className="h-96 bg-gray-100 rounded-lg animate-pulse mb-8" />}>
             <NewsAndEvents />
@@ -128,14 +142,18 @@ export default function HomePage() {
             <BlogHome />
           </Suspense>
         </div>
-      </div>
+      </section>
 
-      {/* JoinUsSection */}
-      <div className="p-0">
+      {/* Join Us Section */}
+      <section className="p-0">
+        <header className="sr-only">
+          <h2>เข้าร่วมกับเรา</h2>
+          <p>ข้อมูลการเข้าร่วมกิจกรรมและเป็นสมาชิกชมรมมุสลิม</p>
+        </header>
         <Suspense fallback={<div className="h-96 bg-blue-50 animate-pulse" />}>
           <JoinUsSection />
         </Suspense>
-      </div>
+      </section>
 
       {/* Scroll-to-Top Button */}
       <AnimatePresence>

@@ -38,10 +38,10 @@ export default function Breadcrumb() {
 
   const breadcrumbs = getBreadcrumbs();
 
-  if (pathname === '/') return null;
+  if (pathname === '/' || pathname === '/links') return null;
 
   return (
-    <nav className="bg-white py-3 px-4" aria-label="Breadcrumb">
+    <nav className="bg-white py-3 px-4" aria-label="Breadcrumb" data-nosnippet>
       <div className="max-w-7xl mx-auto">
         <ol className="flex items-center space-x-2 text-sm flex-nowrap overflow-hidden">
           {breadcrumbs.map((crumb, index) => (
