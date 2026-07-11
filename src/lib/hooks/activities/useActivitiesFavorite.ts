@@ -33,6 +33,7 @@ export function useFavoriteActivities() {
 
       const formatted: ActivitiesFavorites[] = rawData.map((activity: ActivitiesFavorites) => ({
         _id: activity._id,
+        slug: activity.slug,
         name_th: activity.name_th,
         name_eng: activity.name_eng,
         location: activity.location,

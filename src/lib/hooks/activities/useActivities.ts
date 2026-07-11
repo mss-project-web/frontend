@@ -32,6 +32,7 @@ export function useActivities() {
 
       const formattedActivities: Activity[] = activitiesFromApi.map((activity: Activity) => ({
         _id: activity._id,
+        slug: activity.slug,
         name_th: activity.name_th,
         name_eng: activity.name_eng,
         location: activity.location,
