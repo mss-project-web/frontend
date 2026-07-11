@@ -1,15 +1,19 @@
 import Link from "next/link"
+import ContentsStructuredData from "@/components/contents/ContentsStructuredData"
 
 export default function Contents() {
       return (
             <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+                  {/* Structured Data for Contents */}
+                  <ContentsStructuredData />
+                  
                   <div className="text-center max-w-lg px-10">
                         <div className="pt-5 text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-sky-500 to-sky-400 mb-4 tracking-tight">
                               เร็วๆนี้
                         </div>
-                        <div className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 leading-tight">
+                        <p className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 leading-tight">
                               อินชาอัลลอฮฺ
-                        </div>
+                        </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                               <Link
                                     href="/"

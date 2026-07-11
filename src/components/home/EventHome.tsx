@@ -45,7 +45,7 @@ export function EventHome() {
             content = activities.map((event) => (
                   <Link
                         key={event._id}
-                        href={`/activities/${event._id}`}
+                        href={`/activities/${event.slug || event._id}`}
                         className="block"
                         aria-label={`ดูรายละเอียดกิจกรรม ${event.name_th}`}
                   >

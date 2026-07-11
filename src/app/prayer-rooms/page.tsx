@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { PrayerRoomDisplay } from '@/components/prayer-rooms/PrayerRoomCard';
 import { Guidelines } from '@/components/prayer-rooms/Guidelines';
 import { PrayerTime } from '@/components/prayer-rooms/PrayerTime';
+import PrayerRoomsStructuredData from "@/components/prayer-rooms/PrayerRoomsStructuredData";
 
 export default function PrayerRoomsPage() {
   const PrayerRoomMap = dynamic(
@@ -19,6 +20,9 @@ export default function PrayerRoomsPage() {
 
   return (
     <main className="relative min-h-screen font-sans overflow-hidden bg-white">
+      {/* Structured Data for Prayer Rooms */}
+      <PrayerRoomsStructuredData />
+      
       {/* Enhanced Hero Section */}
       <section className="relative py-10 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>

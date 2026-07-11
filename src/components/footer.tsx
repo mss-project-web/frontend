@@ -1,12 +1,28 @@
+"use client"
+
 import Link from "next/link"
 import { Phone, Mail, MapPin } from "lucide-react"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { navItems } from "@/data/nav-items"
 import { CONTACT } from "@/lib/constants";
+import { useSettings } from "@/lib/hooks/useSettings";
 
 export default function Footer() {
+  const pathname = usePathname()
+  const { settings } = useSettings()
+
+  // Fall back to the bundled constants until the API returns data.
+  const phones = settings.contact.phones.length
+    ? settings.contact.phones.map((p) => (p.label ? `${p.number} (${p.label})` : p.number))
+    : [CONTACT.phone_Amir, CONTACT.phone_Amirah]
+  const email = settings.contact.email || CONTACT.email
+
+  // Hide footer on standalone pages
+  if (pathname === "/links") return null
+
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700 text-white text-sm">
+    <footer className="bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700 text-white text-sm" data-nosnippet>
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -62,13 +78,15 @@ export default function Footer() {
           <div className="space-y-4 text-center md:text-left">
             <h4 className="font-semibold text-lg text-white">ติดต่อเรา</h4>
             <ul className="space-y-3">
-              <li className="flex items-center justify-center md:justify-start gap-3">
-                <Phone className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-300">{CONTACT.phone_Amir}</span>
-              </li>
+              {phones.map((phone, i) => (
+                <li key={i} className="flex items-center justify-center md:justify-start gap-3">
+                  <Phone className="w-4 h-4 text-blue-400" />
+                  <span className="text-gray-300">{phone}</span>
+                </li>
+              ))}
               <li className="flex items-center justify-center md:justify-start gap-3">
                 <Mail className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-300">{CONTACT.email}</span>
+                <span className="text-gray-300">{email}</span>
               </li>
               <li className="flex items-start justify-center md:justify-start gap-3 text-center md:text-left">
                 <MapPin className="w-4 h-4 text-blue-400 mt-1" />

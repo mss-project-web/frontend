@@ -1,5 +1,6 @@
 export interface Activity {
       _id: string;
+      slug?: string;
       name_th: string;
       name_eng: string;
       location: string;
@@ -10,6 +11,7 @@ export interface Activity {
 
 export interface ActivityById {
       _id: string;
+      slug?: string;
       name_th: string;
       name_eng: string;
       location: string;
@@ -29,6 +31,7 @@ export interface ActivityById {
 
 export interface ActivitiesFavorites {
       _id: string;
+      slug?: string;
       name_th: string;
       name_eng: string;
       location: string;
@@ -39,6 +42,7 @@ export interface ActivitiesFavorites {
 
 export interface ActivityThisMonthResult {
       _id: string;
+      slug?: string;
       name_th: string;
       name_eng: string;
       location: string;
@@ -57,6 +61,7 @@ export interface ActivityForCalendarLink {
 
 export interface ActivityRoadmap {
       _id: string;
+      slug?: string;
       name_th: string;
       name_eng: string;
       location: string;
