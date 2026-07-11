@@ -12,12 +12,7 @@
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+
 
 body {
   background: var(--background);
