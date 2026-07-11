@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { GoogleAnalytics } from '@next/third-parties/google'
+
 import { Kanit } from "next/font/google"
 import "./globals.css"
 import Navigation from "@/components/navigation"
@@ -219,7 +219,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans">
         <CookieConsentProvider>
-          <GoogleAnalytics gaId="G-XXXXXXXXXX" />
+          <GoogleAnalytics />
           <RouteLoader />
           <Navigation />
           <Breadcrumb />

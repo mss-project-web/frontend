@@ -8,24 +8,16 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
 import { navItems } from "@/data/nav-items"
-<<<<<<< HEAD
 import { CONTACT } from "@/lib/constants";
 import { useSettings } from "@/lib/hooks/useSettings";
-=======
-import { CONTACT } from "@/lib/constants"
-import { useClickTracking } from "@/hooks/use-click-tracking"
->>>>>>> adfb53d28f5d036cf27622f309b16eeb12da2183
+import { useClickTracking } from "@/hooks/use-click-tracking";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [isCopied, setIsCopied] = useState(false)
-<<<<<<< HEAD
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { settings } = useSettings();
-=======
-  const [isSheetOpen, setIsSheetOpen] = useState(false)
->>>>>>> adfb53d28f5d036cf27622f309b16eeb12da2183
   const pathname = usePathname()
   const { trackEvent } = useClickTracking()
 
@@ -75,12 +67,8 @@ export default function Navigation() {
   }, [showModal])
 
   const copyAccountNumber = () => {
-<<<<<<< HEAD
+    trackEvent("copy_account_number");
     navigator.clipboard.writeText(accountNumber).then(
-=======
-    trackEvent("copy_account_number")
-    navigator.clipboard.writeText(CONTACT.accountNumber).then(
->>>>>>> adfb53d28f5d036cf27622f309b16eeb12da2183
       () => setIsCopied(true),
       () => console.error("Failed to copy account number")
     )
