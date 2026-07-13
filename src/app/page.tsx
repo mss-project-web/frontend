@@ -83,6 +83,11 @@ export default function HomePage() {
 
   return (
     <main className="relative min-h-screen font-sans overflow-hidden bg-white">
+      {/* SEO: single, stable H1 (visually hidden; the hero shows animated text) */}
+      <h1 className="sr-only">
+        ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ (MSS PSU Hatyai) — กิจกรรม ข่าวสาร และห้องละหมาดสำหรับนักศึกษามุสลิม
+      </h1>
+
       {/* Structured Data for SEO */}
       <HomePageStructuredData />
       <SiteNavigationStructuredData />

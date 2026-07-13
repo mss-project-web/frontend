@@ -21,7 +21,8 @@ export const metadata: Metadata = {
     title: "เกี่ยวกับชมรมมุสลิม ม.อ.หาดใหญ่",
     description: "หวังดีดี จากบ้านหลังเดิม - ประวัติและพันธกิจชมรมมุสลิม PSU หาดใหญ่",
     images: ["/LOGO/about/LOGO-MSS.jpg"]
-  }
+  },
+  alternates: { canonical: "https://msspsuhatyai.org/about" },
 };
 
 export default function AboutLayout({

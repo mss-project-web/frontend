@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ข่าวสารชมรมมุสลิม ม.อ.หาดใหญ่",
     description: "ข่าวกิจกรรม ประกาศสำคัญ และอัพเดทจากชุมชนมุสลิม PSU หาดใหญ่"
-  }
+  },
+  alternates: { canonical: "https://msspsuhatyai.org/news" },
 };
 
 export default function NewsLayout({

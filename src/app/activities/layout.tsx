@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "กิจกรรมชมรมมุสลิม ม.อ.หาดใหญ่",
     description: "กิจกรรมศาสนาอิสลาม กิจกรรมชุมชน และกิจกรรมพัฒนานักศึกษามุสลิม"
-  }
+  },
+  alternates: { canonical: "https://msspsuhatyai.org/activities" }
 };
 
 export default function ActivitiesLayout({

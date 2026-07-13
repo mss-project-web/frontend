@@ -8,6 +8,7 @@ export const metadata: Metadata = {
         title: "เนื้อหาวิชาการ ม.อ.หาดใหญ่",
         description: "เนื้อหาวิชาการและสถานที่ประกอบศาสนกิจใน มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
     },
+  alternates: { canonical: "https://msspsuhatyai.org/contents" },
 };
 
 export default function ContentsLayout({

@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ติดต่อเรา - ชมรมมุสลิม ม.อ.หาดใหญ่",
     description: "ช่องทางการติดต่อและสอบถามข้อมูลจากชมรมมุสลิม PSU หาดใหญ่"
-  }
+  },
+  alternates: { canonical: "https://msspsuhatyai.org/contact" },
 };
 
 export default function ContactLayout({

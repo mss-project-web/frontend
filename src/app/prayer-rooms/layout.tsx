@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ห้องละหมาด ม.อ.หาดใหญ่",
     description: "สถานที่ประกอบศาสนกิจสำหรับชุมชนมุสลิมใน มหาวิทยาลัยสงขลานครินทร์"
-  }
+  },
+  alternates: { canonical: "https://msspsuhatyai.org/prayer-rooms" },
 };
 
 export default function PrayerRoomsLayout({
