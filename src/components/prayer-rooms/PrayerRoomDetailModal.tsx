@@ -13,6 +13,7 @@ import {
   Youtube,
   Link as LinkIcon,
   Check,
+  Share2,
 } from "lucide-react";
 import { PrayerRoom } from "@/types/prayer";
 import { Button } from "../ui/button";
@@ -98,6 +99,23 @@ export function PrayerRoomDetailModal({
     }
   };
 
+  const handleShare = async () => {
+    const url = `${window.location.origin}/prayer-rooms/${room._id}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `ห้องละหมาด${room.name} - มหาวิทยาลัยสงขลานครินทร์`,
+          text: `ดูข้อมูลห้องละหมาด${room.name} คณะ${room.faculty} สถานที่ ${room.place}`,
+          url: url,
+        });
+      } catch (err) {
+        console.error("Error sharing:", err);
+      }
+    } else {
+      handleCopyLink();
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-[1000] backdrop-blur-sm sm:p-4"
@@ -130,13 +148,13 @@ export function PrayerRoomDetailModal({
           <div className="absolute top-3 right-4 flex items-center space-x-2">
             <button
               className="text-white/90 hover:text-white bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors flex items-center justify-center gap-1.5 text-xs font-medium"
-              onClick={handleCopyLink}
-              aria-label="คัดลอกลิงก์"
+              onClick={handleShare}
+              aria-label="แชร์หรือคัดลอกลิงก์"
             >
               {copied ? (
                 <Check className="w-4 h-4 text-green-300" />
               ) : (
-                <LinkIcon className="w-4 h-4" />
+                <Share2 className="w-4 h-4" />
               )}
             </button>
             <button
