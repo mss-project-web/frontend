@@ -9,9 +9,10 @@ import {
   Suspense,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronUp } from "lucide-react";
+import { MapPin, ChevronUp } from "lucide-react";
 import HomePageStructuredData from "@/components/home/HomePageStructuredData";
 import SiteNavigationStructuredData from "@/components/SiteNavigationStructuredData";
+import { FullScreenMapModal } from "@/components/prayer-rooms/FullScreenMapModal";
 import {
   useEventListener,
   useDebounce,
@@ -53,6 +54,7 @@ export default function HomePage() {
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
   const [index, setIndex] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const [isMapOpen, setIsMapOpen] = useState(false);
 
   // Memoize images array to prevent recreation on every render
   const images = useMemo(
@@ -162,6 +164,8 @@ export default function HomePage() {
         </header>
       </div>
 
+      {/* Hero Header End */}
+
       {/* Statistics Section */}
       <section className="relative bg-gradient-to-r from-blue-100 via-sky-50 to-blue-200 overflow-hidden">
         <WavePattern />
@@ -214,16 +218,39 @@ export default function HomePage() {
         </Suspense>
       </section>
 
+      {/* Map Widget — White Card */}
+      <div className={`fixed ${showScrollToTop ? 'bottom-[80px]' : 'bottom-5'} right-4 md:right-6 z-50 transition-all duration-300`}>
+        <button
+          onClick={() => setIsMapOpen(true)}
+          aria-label="ค้นหาห้องละหมาดใกล้ฉัน"
+          className="group flex items-center gap-3 bg-white text-slate-800 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.22)] border border-slate-100 hover:border-blue-200 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-blue-400
+            px-3 py-2.5 md:px-4 md:py-3"
+        >
+          {/* Icon Badge */}
+          <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-blue-600 text-white shrink-0 group-hover:bg-blue-700 transition-colors duration-200">
+            <MapPin size={18} strokeWidth={2.5} />
+          </span>
+
+          {/* Text */}
+          <span className="flex flex-col items-start leading-tight">
+            <span className="text-[10px] font-medium text-slate-400 hidden md:block">ค้นหาสถานที่</span>
+            <span className="text-xs md:text-sm font-bold text-slate-800">หาห้องละหมาดใกล้ฉัน</span>
+          </span>
+        </button>
+      </div>
+
       {/* Scroll-to-Top Button */}
       {showScrollToTop && (
         <button
-          className="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 z-50 transition-all duration-300"
+          className="fixed bottom-6 right-4 md:right-6 bg-slate-800 text-white p-3 rounded-full shadow-lg hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-opacity-75 z-50 transition-all duration-300"
           onClick={scrollToTop}
           aria-label="Scroll to top"
         >
           <ChevronUp size={24} />
         </button>
       )}
+
+      <FullScreenMapModal isOpen={isMapOpen} onClose={() => setIsMapOpen(false)} />
     </main>
   );
 }
