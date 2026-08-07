@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
 import { ExternalLink, Clock, Sun, Moon, Sunrise, Sunset } from 'lucide-react';
-import { usePrayerTimes } from '@/lib/hooks/prayer/usePrayerTimes';
+import { usePrayerTimes } from '@/hooks/prayer/usePrayerTimes';
 import { Prayer } from '@/types/prayer';
 import { Button } from '@/components/ui/button';
 import { Compass } from 'lucide-react';

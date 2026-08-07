@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "ห้องละหมาด", "Prayer Room", "เวลาละหมาด", "สถานที่ประกอบศาสนกิจ", 
     "มุสลิม ม.อ.หาดใหญ่", "Prayer Time", "มัสยิด", "Mosque", "Islamic Prayer",
     "ห้องละหมาด PSU", "ห้องละหมาดมหาวิทยาลัย", "ศาลาการประกอบพิธี",
-    "Qibla", "กิบลัต", "วุฎู", "Wudu", "สงขลา", "หาดใหญ่"
+    "Qibla", "กิบลัต", "วุฎู", "Wudu", "สงขลา", "หาดใหญ่", "หาห้องละหมาดใกล้ฉัน"
   ],
   openGraph: {
     title: "ห้องละหมาด ม.อ.หาดใหญ่ - สถานที่ประกอบศาสนกิจ",
@@ -24,8 +24,15 @@ export const metadata: Metadata = {
 
 export default function PrayerRoomsLayout({
   children,
+  modal
 }: {
   children: React.ReactNode
+  modal: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      {children}
+      {modal}
+    </>
+  )
 }
