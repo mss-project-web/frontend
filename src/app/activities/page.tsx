@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { useActivities } from "@/lib/hooks/activities/useActivities";
+import { useActivities } from "@/hooks/activities/useActivities";
 import { ActivityCard } from "@/components/activities/ActivityCard";
 import RoadmapModal from "@/components/activities/RoadmapModal";
 import ActivitiesStructuredData from "@/components/activities/ActivitiesStructuredData";
@@ -35,7 +35,10 @@ export default function ActivitysPage() {
 
   const totalPages = Math.ceil(sortedEvents.length / eventsPerPage);
   const startIndex = (currentPage - 1) * eventsPerPage;
-  const paginatedEvents = sortedEvents.slice(startIndex, startIndex + eventsPerPage);
+  const paginatedEvents = sortedEvents.slice(
+    startIndex,
+    startIndex + eventsPerPage,
+  );
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
@@ -68,20 +71,18 @@ export default function ActivitysPage() {
 
   const showSkeleton = !!(loading || error);
 
-
   return (
     <main className="min-h-screen bg-gray-100 font-sans">
       {/* Structured Data for Activities */}
       <ActivitiesStructuredData />
-      
+
       <section className="py-16 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center py-6">
-            <h1 className="text-4xl md:text-5xl font-bold">
-              กิจกรรม
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-bold">กิจกรรม</h1>
             <p className="text-lg md:text-xl opacity-90">
-              ร่วมสร้างประสบการณ์ใหม่ๆ ผ่านกิจกรรมที่ออกแบบมาเพื่อพัฒนาศักยภาพและสร้างความสัมพันธ์
+              ร่วมสร้างประสบการณ์ใหม่ๆ
+              ผ่านกิจกรรมที่ออกแบบมาเพื่อพัฒนาศักยภาพและสร้างความสัมพันธ์
             </p>
             <Button
               onClick={() => setIsModalOpen(true)}
@@ -107,16 +108,24 @@ export default function ActivitysPage() {
               กิจกรรมทั้งหมด
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
               {showSkeleton ? (
                 Array(eventsPerPage)
                   .fill(0)
-                  .map((_, index) => <ActivityCard key={index} isLoading={true} />)
+                  .map((_, index) => (
+                    <ActivityCard key={index} isLoading={true} />
+                  ))
               ) : paginatedEvents.length === 0 ? (
-                <p className="col-span-full text-center text-gray-500 mt-8">ไม่พบกิจกรรม</p>
+                <p className="col-span-full text-center text-gray-500 mt-8">
+                  ไม่พบกิจกรรม
+                </p>
               ) : (
                 paginatedEvents.map((event) => (
-                  <ActivityCard key={event._id} activity={event} isLoading={false} />
+                  <ActivityCard
+                    key={event._id}
+                    activity={event}
+                    isLoading={false}
+                  />
                 ))
               )}
             </div>
@@ -139,16 +148,17 @@ export default function ActivitysPage() {
                       totalPages <= 4 ||
                       Math.abs(currentPage - page) <= 1 ||
                       page === 1 ||
-                      page === totalPages
+                      page === totalPages,
                   )
                   .map((page) => (
                     <Button
                       key={page}
                       onClick={() => goToPage(page)}
-                      className={`${currentPage === page
-                        ? "bg-blue-600 text-white"
-                        : "bg-white text-blue-800 hover:bg-blue-100"
-                        } border border-blue-200 min-w-[40px] rounded-md px-4 py-2`}
+                      className={`${
+                        currentPage === page
+                          ? "bg-blue-600 text-white"
+                          : "bg-white text-blue-800 hover:bg-blue-100"
+                      } border border-blue-200 min-w-[40px] rounded-md px-4 py-2`}
                       aria-label={`ไปหน้าที่ ${page}`}
                     >
                       {page}

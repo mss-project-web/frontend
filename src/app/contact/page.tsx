@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Facebook, Instagram } from "lucide-react"
 
 //components
-import ContactUsSection from "@/components/contect/ContactUsSection"
-import DonationSection from "@/components/contect/DonationSection"
-import FAQSection from "@/components/contect/FAQSection"
-import ContactStructuredData from "@/components/contect/ContactStructuredData"
+import ContactUsSection from "@/components/contact/ContactUsSection"
+import DonationSection from "@/components/contact/DonationSection"
+import FAQSection from "@/components/contact/FAQSection"
+import ContactStructuredData from "@/components/contact/ContactStructuredData"
 
 //Data
 import { socialMediaData } from "@/data/socialMediaData"

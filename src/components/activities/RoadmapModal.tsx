@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Calendar, X } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { RoadmapModalProps, RoadmapMonth } from "@/types/activities";
-import { useAllActivitiesRoadmap } from "@/lib/hooks/activities/useActivitiesRoadmap";
+import { useAllActivitiesRoadmap } from "@/hooks/activities/useActivitiesRoadmap";
 
 export default function RoadmapModal({ isModalOpen, handleCloseModal }: RoadmapModalProps) {
   const { activityRoadmap, loading, error } = useAllActivitiesRoadmap();

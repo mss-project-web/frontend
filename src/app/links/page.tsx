@@ -5,7 +5,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Check, Copy, Heart, Phone, Home, ChevronRight, Share2, MapPin, Download } from "lucide-react";
 import { CONTACT } from "@/lib/constants";
-import { useSettings } from "@/lib/hooks/useSettings";
+import { useSettings } from "@/hooks/useSettings";
 
 interface SocialLink {
  id: string;

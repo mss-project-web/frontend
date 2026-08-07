@@ -10,8 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useNewsAll } from "@/lib/hooks/news/useNewsAll";
-import { Skeleton } from '@/components/ui/skeleton';
+import { useNewsAll } from "@/hooks/news/useNewsAll";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import NewsStructuredData from "@/components/news/NewsStructuredData";
 
@@ -48,7 +48,7 @@ export default function NewsMainPage() {
     <main className="min-h-screen bg-white font-sans">
       {/* Structured Data for News */}
       <NewsStructuredData />
-      
+
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -72,20 +72,32 @@ export default function NewsMainPage() {
 
       {/* News Section with adjusted padding */}
       <section className="py-16 bg-white relative z-10 mx-auto max-w-screen-xl px-4">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold text-blue-800 relative after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-16 after:h-1 after:bg-blue-500 mb-4 md:mb-0">
               ข่าวสารกิจกรรม
             </h2>
             <div className="flex space-x-4">
-              <Select onValueChange={handleMonthChange} value={selectedMonth || "all"}>
+              <Select
+                onValueChange={handleMonthChange}
+                value={selectedMonth || "all"}
+              >
                 <SelectTrigger className="w-[180px] bg-white text-black border border-gray-300 shadow-sm dark:bg-white dark:text-black">
                   <SelectValue placeholder="เลือกเดือน" />
                 </SelectTrigger>
                 <SelectContent className="bg-white text-black dark:bg-white dark:text-black">
-                  <SelectItem value="all" className="text-black dark:text-black">ทั้งหมด</SelectItem>
+                  <SelectItem
+                    value="all"
+                    className="text-black dark:text-black"
+                  >
+                    ทั้งหมด
+                  </SelectItem>
                   {MONTHS.map((month) => (
-                    <SelectItem key={month.value} value={month.value} className="text-black dark:text-black">
+                    <SelectItem
+                      key={month.value}
+                      value={month.value}
+                      className="text-black dark:text-black"
+                    >
                       {month.label}
                     </SelectItem>
                   ))}
@@ -98,29 +110,35 @@ export default function NewsMainPage() {
                 </SelectTrigger>
                 <SelectContent className="bg-white text-black dark:bg-white dark:text-black">
                   {availableYears.map((year) => (
-                    <SelectItem key={year} value={year.toString()} className="text-black dark:text-black">
+                    <SelectItem
+                      key={year}
+                      value={year.toString()}
+                      className="text-black dark:text-black"
+                    >
                       {year}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-
           </div>
 
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={`grid gap-3 sm:gap-4 md:gap-6 ${
+            loading ? 'grid-cols-2 lg:grid-cols-3' :
+            paginatedNews.length === 1 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' :
+            'grid-cols-2 lg:grid-cols-3'
+          }`}>
             {loading ? (
               Array.from({ length: 3 }).map((_, i) => (
                 <Card
                   key={i}
-                  className="h-full overflow-hidden shadow-lg rounded-2xl border-none"
+                  className="h-full overflow-hidden shadow-lg rounded-2xl border-none flex flex-col"
                 >
-                  <Skeleton className="relative w-full h-52 rounded-b-none bg-gray-200" />
-                  <CardContent className="p-6 bg-white space-y-4">
-                    <Skeleton className="h-6 w-full bg-gray-200" />
-                    <Skeleton className="h-4 w-3/4 bg-gray-200" />
-                    <Skeleton className="h-4 w-1/2 bg-gray-200" />
-                    <Skeleton className="h-4 w-[100px] bg-gray-200" />
+                  <Skeleton className="relative w-full aspect-[4/3] rounded-b-none bg-gray-200 shrink-0" />
+                  <CardContent className="p-4 md:p-6 bg-white space-y-3 md:space-y-4 flex-grow">
+                    <Skeleton className="h-5 md:h-6 w-full bg-gray-200" />
+                    <Skeleton className="h-3 md:h-4 w-3/4 bg-gray-200" />
+                    <Skeleton className="h-3 md:h-4 w-1/2 bg-gray-200" />
                   </CardContent>
                 </Card>
               ))
@@ -132,33 +150,34 @@ export default function NewsMainPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Card className="h-full overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl border-none group transform hover:-translate-y-2">
-                    <div className="relative w-full h-52 overflow-hidden">
+                  <Card className="h-full overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl border-none group transform hover:-translate-y-2 flex flex-col">
+                    <div className="relative w-full aspect-[4/3] overflow-hidden shrink-0">
                       <Image
                         src={item.images?.[0] || "/fallback.jpg"}
                         alt={item.name}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                      <p className="absolute bottom-4 left-4 text-xs text-white font-medium bg-blue-600 px-3 py-1 rounded-full shadow-md">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                      <p className="absolute bottom-3 left-3 text-[10px] md:text-xs text-white font-medium bg-blue-600/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1 rounded-full shadow-md z-10">
                         {new Date(item.date).toLocaleDateString("th-TH", {
                           day: "numeric",
-                          month: "long",
+                          month: "short",
                           year: "numeric",
                         })}
                       </p>
                     </div>
-                    <CardContent className="p-6 bg-white">
-                      <h4 className="font-bold text-xl text-blue-900 mb-2 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors">
+                    <CardContent className="p-4 md:p-6 bg-white flex-grow flex flex-col">
+                      <h4 className="font-bold text-[14px] md:text-xl text-blue-900 mb-1.5 md:mb-2 line-clamp-2 leading-snug md:leading-tight group-hover:text-blue-600 transition-colors">
                         {item.name}
                       </h4>
-                      <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                      <p className="text-[12px] md:text-sm text-gray-600 mb-3 md:mb-4 line-clamp-2 md:line-clamp-3 leading-relaxed flex-grow">
                         {item.description}
                       </p>
-                      <div className="text-blue-500 font-semibold flex items-center group-hover:underline transition-colors">
+                      <div className="text-blue-500 font-semibold text-[12px] md:text-sm flex items-center group-hover:underline transition-colors mt-auto">
                         อ่านต่อ
-                        <ChevronRight className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
+                        <ChevronRight className="w-3 h-3 md:w-4 md:h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
                       </div>
                     </CardContent>
                   </Card>
@@ -190,7 +209,7 @@ export default function NewsMainPage() {
                     totalPages <= 7 ||
                     Math.abs(currentPage - page) <= 1 ||
                     page === 1 ||
-                    page === totalPages
+                    page === totalPages,
                 )
                 .reduce((acc: (number | "ellipsis")[], page, idx, arr) => {
                   if (idx > 0 && page - arr[idx - 1]! > 1) {
@@ -211,15 +230,16 @@ export default function NewsMainPage() {
                     <Button
                       key={item}
                       onClick={() => goToPage(item as number)}
-                      className={`${currentPage === item
-                        ? "bg-blue-600 text-white shadow-lg"
-                        : "bg-white text-blue-800 hover:bg-blue-100"
-                        } border border-blue-200 min-w-[40px] h-10 rounded-full font-semibold transition-all duration-200`}
+                      className={`${
+                        currentPage === item
+                          ? "bg-blue-600 text-white shadow-lg"
+                          : "bg-white text-blue-800 hover:bg-blue-100"
+                      } border border-blue-200 min-w-[40px] h-10 rounded-full font-semibold transition-all duration-200`}
                       aria-label={`ไปหน้าที่ ${item}`}
                     >
                       {item}
                     </Button>
-                  )
+                  ),
                 )}
 
               <Button
