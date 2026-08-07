@@ -15,7 +15,6 @@ import SiteNavigationStructuredData from "@/components/SiteNavigationStructuredD
 import {
   useEventListener,
   useDebounce,
-  useMemoryMonitor,
 } from "@/utils/memoryOptimization";
 
 // Lazy load heavy components with proper error boundaries
@@ -51,9 +50,6 @@ const BlogHome = lazy(() =>
 );
 
 export default function HomePage() {
-  // Memory monitoring (development only)
-  useMemoryMonitor("HomePage");
-
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
   const [index, setIndex] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -219,21 +215,15 @@ export default function HomePage() {
       </section>
 
       {/* Scroll-to-Top Button */}
-      <AnimatePresence>
-        {showScrollToTop && (
-          <motion.button
-            className="animate-bounce fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 z-50"
-            onClick={scrollToTop}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            aria-label="Scroll to top"
-          >
-            <ChevronUp size={24} />
-          </motion.button>
-        )}
-      </AnimatePresence>
+      {showScrollToTop && (
+        <button
+          className="fixed bottom-8 right-8 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 z-50 transition-all duration-300"
+          onClick={scrollToTop}
+          aria-label="Scroll to top"
+        >
+          <ChevronUp size={24} />
+        </button>
+      )}
     </main>
   );
 }
