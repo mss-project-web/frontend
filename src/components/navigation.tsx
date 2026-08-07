@@ -1,83 +1,66 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from "react"
-import Link from "next/link"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
-import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
-import { navItems } from "@/data/nav-items"
+import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
+import {
+  Menu,
+  Phone,
+  Mail,
+  Facebook,
+  Instagram,
+  Youtube,
+  Copy,
+  Check,
+  Hash,
+} from "lucide-react";
+import { navItems } from "@/data/nav-items";
 import { CONTACT } from "@/lib/constants";
 import { useSettings } from "@/hooks/useSettings";
+import { DonationModal } from "@/components/donation-modal";
 import { useClickTracking } from "@/hooks/use-click-tracking";
 
 export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [isCopied, setIsCopied] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { settings } = useSettings();
-  const pathname = usePathname()
-  const { trackEvent } = useClickTracking()
+  const pathname = usePathname();
+  const { trackEvent } = useClickTracking();
 
   // Site info from settings, falling back to the bundled constants.
-  const firstPhone = settings.contact.phones[0]
-  const phoneText = firstPhone ? (firstPhone.label ? `${firstPhone.number} (${firstPhone.label})` : firstPhone.number) : CONTACT.phone_Amir
-  const email = settings.contact.email || CONTACT.email
-  const facebook = settings.contact.socials.facebook || CONTACT.facebook
-  const instagram = settings.contact.socials.instagram || CONTACT.instagram
-  const youtube = settings.contact.socials.youtube || CONTACT.youtube
-  const bank = settings.donation.bankName || CONTACT.bank
-  const accountName = settings.donation.accountName || CONTACT.accountName
-  const accountNumber = settings.donation.accountNumber || CONTACT.accountNumber
-  const qrImage = settings.donation.qrImage || "/qr-promptpay-mss.jpg"
+  const firstPhone = settings.contact.phones[0];
+  const phoneText = firstPhone
+    ? firstPhone.label
+      ? `${firstPhone.number} (${firstPhone.label})`
+      : firstPhone.number
+    : CONTACT.phone_Amir;
+  const email = settings.contact.email || CONTACT.email;
+  const facebook = settings.contact.socials.facebook || CONTACT.facebook;
+  const instagram = settings.contact.socials.instagram || CONTACT.instagram;
+  const youtube = settings.contact.socials.youtube || CONTACT.youtube;
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Hide nav on standalone pages
-  if (pathname === "/links") return null
-
-  const handleBackdropClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      setShowModal(false)
-    }
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    if (isCopied) {
-      const timer = setTimeout(() => setIsCopied(false), 2000)
-      return () => clearTimeout(timer)
-    }
-  }, [isCopied])
-
-  useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = "unset"
-    }
-    return () => {
-      document.body.style.overflow = "unset"
-    }
-  }, [showModal])
-
-  const copyAccountNumber = () => {
-    trackEvent("copy_account_number");
-    navigator.clipboard.writeText(accountNumber).then(
-      () => setIsCopied(true),
-      () => console.error("Failed to copy account number")
-    )
-  }
+  if (pathname === "/links") return null;
 
   const handleSupportClick = () => {
-    trackEvent("click_support_button", { location: "desktop_header" })
-    setShowModal(true)
-  }
+    trackEvent("click_support_button", { location: "desktop_header" });
+    setShowModal(true);
+  };
 
   return (
     <>
@@ -94,9 +77,11 @@ export default function Navigation() {
                 <Hash className="w-4 h-4" />
                 <button
                   onClick={() => {
-                    trackEvent("click_support_button", { location: "mobile_topbar" })
-                    setShowModal(true)
-                    setIsSheetOpen(false)
+                    trackEvent("click_support_button", {
+                      location: "mobile_topbar",
+                    });
+                    setShowModal(true);
+                    setIsSheetOpen(false);
                   }}
                   className="text-xs text-white hover:text-blue-200 transition"
                 >
@@ -115,7 +100,9 @@ export default function Navigation() {
                   href={CONTACT.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("social_click", { platform: "facebook" })}
+                  onClick={() =>
+                    trackEvent("social_click", { platform: "facebook" })
+                  }
                 >
                   <Facebook className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
@@ -123,7 +110,9 @@ export default function Navigation() {
                   href={CONTACT.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("social_click", { platform: "instagram" })}
+                  onClick={() =>
+                    trackEvent("social_click", { platform: "instagram" })
+                  }
                 >
                   <Instagram className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
@@ -131,7 +120,9 @@ export default function Navigation() {
                   href={CONTACT.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("social_click", { platform: "youtube" })}
+                  onClick={() =>
+                    trackEvent("social_click", { platform: "youtube" })
+                  }
                 >
                   <Youtube className="w-4 h-4 hover:text-blue-200 transition" />
                 </a>
@@ -143,15 +134,20 @@ export default function Navigation() {
 
       {/* Main Navigation */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-blue-200"
-          : "bg-white border-b border-gray-100"
-          }`}
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-blue-200"
+            : "bg-white border-b border-gray-100"
+        }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
-            <Link href="/" className="inline-block group" onClick={() => trackEvent("nav_click", { item: "logo" })}>
+            <Link
+              href="/"
+              className="inline-block group"
+              onClick={() => trackEvent("nav_click", { item: "logo" })}
+            >
               <div className="w-32 h-12 relative group-hover:scale-105 transition-transform duration-300">
                 <Image
                   src="/LOGO/LOGO-MSS.png"
@@ -169,8 +165,9 @@ export default function Navigation() {
                   key={item.href}
                   href={item.href}
                   onClick={() => trackEvent("nav_click", { item: item.label })}
-                  className={`relative text-xs sm:text-xs lg:text-base font-medium transition-colors duration-300 hover:text-blue-600 ${pathname === item.href ? "text-blue-600" : "text-gray-700"
-                    }`}
+                  className={`relative text-xs sm:text-xs lg:text-base font-medium transition-colors duration-300 hover:text-blue-600 ${
+                    pathname === item.href ? "text-blue-600" : "text-gray-700"
+                  }`}
                 >
                   {item.label}
                   {pathname === item.href && (
@@ -220,18 +217,21 @@ export default function Navigation() {
                 </div>
                 <nav className="flex flex-col space-y-4 mt-2" data-nosnippet>
                   {navItems.map((item) => {
-                    const isActive = pathname === item.href
+                    const isActive = pathname === item.href;
                     return (
-                      <SheetClose asChild key={item.href}><Link
-                        href={item.href}
-                        className={`block px-2 py-1 rounded-md text-lg font-semibold transition-colors duration-300 ${isActive
-                          ? "bg-blue-600 text-white shadow-md"
-                          : "text-gray-700 hover:bg-blue-100 hover:text-blue-600"
+                      <SheetClose asChild key={item.href}>
+                        <Link
+                          href={item.href}
+                          className={`block px-2 py-1 rounded-md text-lg font-semibold transition-colors duration-300 ${
+                            isActive
+                              ? "bg-blue-600 text-white shadow-md"
+                              : "text-gray-700 hover:bg-blue-100 hover:text-blue-600"
                           }`}
-                      >
-                        {item.label}
-                      </Link></SheetClose>
-                    )
+                        >
+                          {item.label}
+                        </Link>
+                      </SheetClose>
+                    );
                   })}
                 </nav>
                 <Button
@@ -250,59 +250,7 @@ export default function Navigation() {
       </header>
 
       {/* Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4"
-          onClick={handleBackdropClick}>
-          <div className="modal-content bg-white rounded-xl shadow-xl max-w-sm w-full p-6 relative animate-fade-in-up"
-            onClick={(e) => e.stopPropagation()}>
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-3 right-3 text-black hover:text-gray-600 transition text-xl"
-              aria-label="Close"
-            >
-              ✕
-            </button>
-
-            <div className="text-xl font-semibold text-center text-blue-800 mb-4">
-              สนับสนุนการทำงานของชมรม
-            </div>
-
-            <div className="flex flex-col items-center space-y-4">
-              <div className="relative w-[220px] h-[220px]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={qrImage}
-                  alt="QR พร้อมเพย์"
-                  className="w-full h-full rounded-lg shadow-md object-contain bg-white"
-                />
-              </div>
-              <div className="text-center space-y-1">
-                <p className="text-sm text-gray-700">
-                  ชื่อบัญชี: <span className="font-semibold">{accountName}</span>
-                </p>
-                <div className="flex items-center justify-center space-x-2">
-                  <p className="text-sm text-gray-700">
-                    เลขบัญชี: <span className="font-semibold text-blue-800 tracking-wider">{accountNumber}</span>
-                  </p>
-                  <button
-                    onClick={copyAccountNumber}
-                    className="text-blue-600 hover:text-blue-800 transition"
-                    aria-label="คัดลอกเลขบัญชี"
-                  >
-                    {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  </button>
-                </div>
-                <p className="text-sm text-gray-700">
-                  {bank}
-                </p>
-                <p className="text-xs text-gray-500">
-                  * รองรับสแกนผ่านแอปธนาคารทุกประเภท
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <DonationModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>
-  )
+  );
 }

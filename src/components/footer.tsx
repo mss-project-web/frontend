@@ -82,10 +82,26 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/privacy-policy"
+                  href="/links"
+                  className="text-gray-300 hover:text-white transition"
+                >
+                  รวมช่องทางการติดต่อ
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy"
                   className="text-gray-300 hover:text-white transition"
                 >
                   นโยบายความเป็นส่วนตัว
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms"
+                  className="text-gray-300 hover:text-white transition"
+                >
+                  เงื่อนไขการให้บริการ
                 </Link>
               </li>
               {mounted && (
