@@ -42,7 +42,7 @@ export function CookieSettingsModal({
 
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[600px] border-white/20 bg-white/90 backdrop-blur-2xl shadow-2xl p-0 overflow-hidden gap-0 dark:bg-gray-900/90 dark:border-white/10">
+            <DialogContent className="max-sm:!top-auto max-sm:!bottom-0 max-sm:!translate-y-0 max-sm:!translate-x-0 max-sm:!left-0 max-sm:w-full max-sm:!rounded-b-none max-sm:!rounded-t-2xl max-sm:data-[state=open]:!slide-in-from-bottom-full max-sm:data-[state=closed]:!slide-out-to-bottom-full max-sm:!zoom-in-100 max-sm:!zoom-out-100 sm:max-w-[600px] border-white/20 bg-white/90 backdrop-blur-2xl shadow-2xl p-0 overflow-hidden gap-0 m-0">
                 {/* Header with Gradient */}
                 <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white">
                     <DialogTitle className="text-2xl font-bold flex items-center gap-2">
@@ -54,34 +54,34 @@ export function CookieSettingsModal({
                     </DialogDescription>
                 </div>
 
-                <div className="p-6 space-y-4 max-h-[60vh] overflow-y-auto bg-gray-50/50 dark:bg-transparent">
+                <div className="p-6 space-y-4 max-h-[60vh] overflow-y-auto bg-gray-50/50">
                     {/* Privacy Policy Link */}
-                    <div className="flex items-center justify-between p-4 bg-blue-50 border border-blue-100 rounded-xl mb-4 dark:bg-blue-900/20 dark:border-blue-800">
-                        <div className="text-sm text-blue-900 dark:text-blue-100">
+                    <div className="flex items-center justify-between p-4 bg-blue-50 border border-blue-100 rounded-xl mb-4">
+                        <div className="text-sm text-blue-900">
                             <strong>ต้องการข้อมูลเพิ่มเติม?</strong> อ่านรายละเอียดเกี่ยวกับวิธีการเก็บรวบรวมและใช้ข้อมูลของคุณ
                         </div>
                         <Link
                             href="/privacy"
                             target="_blank"
-                            className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline flex items-center gap-1 whitespace-nowrap dark:text-blue-400"
+                            className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline flex items-center gap-1 whitespace-nowrap"
                         >
                             นโยบายความเป็นส่วนตัว <ExternalLink className="w-3 h-3" />
                         </Link>
                     </div>
 
                     {/* Essential Cookies - Always On */}
-                    <div className="group flex flex-col sm:flex-row items-start gap-4 p-4 rounded-xl bg-white border border-gray-100 transition-all hover:shadow-md dark:bg-gray-800 dark:border-gray-700">
-                        <div className="p-3 rounded-full bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400">
+                    <div className="group flex flex-col sm:flex-row items-start gap-4 p-4 rounded-xl bg-white border border-gray-100 transition-all hover:shadow-md">
+                        <div className="p-3 rounded-full bg-gray-100 text-gray-500">
                             <Lock className="h-5 w-5" />
                         </div>
                         <div className="flex-1 space-y-1">
                             <div className="flex items-center justify-between">
-                                <Label htmlFor="essential" className="text-base font-bold text-gray-900 dark:text-white">
+                                <Label htmlFor="essential" className="text-base font-bold text-gray-900">
                                     คุกกี้ที่จำเป็น (Strictly Necessary)
                                 </Label>
                                 <Switch id="essential" checked disabled aria-label="Essential Cookies Always On" />
                             </div>
-                            <p className="text-sm text-gray-500 leading-relaxed dark:text-gray-400">
+                            <p className="text-sm text-gray-500 leading-relaxed">
                                 จำเป็นสำหรับการทำงานพื้นฐานของเว็บไซต์ ไม่สามารถปิดการใช้งานได้
                             </p>
                         </div>
@@ -91,20 +91,20 @@ export function CookieSettingsModal({
                     <div className={cn(
                         "group flex flex-col sm:flex-row items-start gap-4 p-4 rounded-xl border transition-all hover:shadow-md",
                         preferences.analytics
-                            ? "bg-indigo-50/50 border-indigo-100 dark:bg-indigo-900/10 dark:border-indigo-800"
-                            : "bg-white border-gray-100 dark:bg-gray-800 dark:border-gray-700"
+                            ? "bg-indigo-50/50 border-indigo-100"
+                            : "bg-white border-gray-100"
                     )}>
                         <div className={cn(
                             "p-3 rounded-full transition-colors",
                             preferences.analytics
-                                ? "bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-400"
-                                : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
+                                ? "bg-indigo-100 text-indigo-600"
+                                : "bg-gray-100 text-gray-500"
                         )}>
                             <BarChart3 className="h-5 w-5" />
                         </div>
                         <div className="flex-1 space-y-1">
                             <div className="flex items-center justify-between">
-                                <Label htmlFor="analytics" className="text-base font-bold text-gray-900 dark:text-white cursor-pointer">
+                                <Label htmlFor="analytics" className="text-base font-bold text-gray-900 cursor-pointer">
                                     คุกกี้เพื่อการวิเคราะห์ (Analytics)
                                 </Label>
                                 <Switch
@@ -115,7 +115,7 @@ export function CookieSettingsModal({
                                     }
                                 />
                             </div>
-                            <p className="text-sm text-gray-500 leading-relaxed dark:text-gray-400">
+                            <p className="text-sm text-gray-500 leading-relaxed">
                                 ช่วยให้เราเข้าใจพฤติกรรมการใช้งานเพื่อปรับปรุงเว็บไซต์ให้ดียิ่งขึ้น (Google Analytics)
                             </p>
                         </div>
@@ -125,20 +125,20 @@ export function CookieSettingsModal({
                     <div className={cn(
                         "group flex flex-col sm:flex-row items-start gap-4 p-4 rounded-xl border transition-all hover:shadow-md",
                         preferences.marketing
-                            ? "bg-rose-50/50 border-rose-100 dark:bg-rose-900/10 dark:border-rose-800"
-                            : "bg-white border-gray-100 dark:bg-gray-800 dark:border-gray-700"
+                            ? "bg-rose-50/50 border-rose-100"
+                            : "bg-white border-gray-100"
                     )}>
                         <div className={cn(
                             "p-3 rounded-full transition-colors",
                             preferences.marketing
-                                ? "bg-rose-100 text-rose-600 dark:bg-rose-900 dark:text-rose-400"
-                                : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
+                                ? "bg-rose-100 text-rose-600"
+                                : "bg-gray-100 text-gray-500"
                         )}>
                             <Megaphone className="h-5 w-5" />
                         </div>
                         <div className="flex-1 space-y-1">
                             <div className="flex items-center justify-between">
-                                <Label htmlFor="marketing" className="text-base font-bold text-gray-900 dark:text-white cursor-pointer">
+                                <Label htmlFor="marketing" className="text-base font-bold text-gray-900 cursor-pointer">
                                     คุกกี้เพื่อการตลาด (Marketing)
                                 </Label>
                                 <Switch
@@ -149,19 +149,19 @@ export function CookieSettingsModal({
                                     }
                                 />
                             </div>
-                            <p className="text-sm text-gray-500 leading-relaxed dark:text-gray-400">
+                            <p className="text-sm text-gray-500 leading-relaxed">
                                 ใช้เพื่อนำเสนอเนื้อหาที่เหมาะสมกับความสนใจของคุณ (ยังไม่เปิดใช้งานในขณะนี้)
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <DialogFooter className="bg-gray-50/80 p-6 border-t border-gray-100 dark:bg-gray-900/80 dark:border-gray-800 backdrop-blur-sm">
+                <DialogFooter className="bg-gray-50/80 p-6 border-t border-gray-100 backdrop-blur-sm">
                     <div className="flex w-full flex-col sm:flex-row gap-3">
                         <Button
                             variant="outline"
                             onClick={() => onOpenChange(false)}
-                            className="w-full sm:w-1/3 border-gray-200 hover:bg-gray-50 text-gray-700 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+                            className="w-full sm:w-1/3 border-gray-200 hover:bg-gray-50 text-gray-700"
                         >
                             ยกเลิก
                         </Button>

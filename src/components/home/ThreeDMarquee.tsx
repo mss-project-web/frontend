@@ -41,7 +41,7 @@ const ThreeDMarqueeComponent: React.FC<ThreeDMarqueeProps> = ({
 return (
       <section
       className={
-        'mx-auto block h-[700px] overflow-hidden rounded-none max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 shadow-2xl shadow-blue-200/50 dark:shadow-blue-900/50 border border-blue-200/30 dark:border-blue-800/30 ' +
+        'mx-auto block h-[700px] overflow-hidden rounded-none max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 shadow-2xl shadow-blue-200/50 border border-blue-200/30 ' +
         className
       }
     >
@@ -126,7 +126,7 @@ const lineStyles: React.CSSProperties = {
     "[mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),linear-gradient(black,black)]",
     "[mask-composite:exclude]",
     "z-30",
-    "dark:bg-black",
+    "",
     extraStyles,
   ].join(" ");
 
@@ -162,7 +162,7 @@ const VerticalGridLine = ({
     "[mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),linear-gradient(black,black)]",
     "[mask-composite:exclude]",
     "z-30",
-    "dark:bg-black",
+    "",
     extraStyles,
   ].join(" ");
 

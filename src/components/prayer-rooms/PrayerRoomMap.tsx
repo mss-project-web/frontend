@@ -178,11 +178,43 @@ export default function PrayerRoomMapPage() {
           )}
 
           {showSkeleton ? (
-            <div className="relative w-full h-full flex flex-col items-center justify-center bg-gray-100">
-              <Loader2 className="animate-spin w-10 h-10 mb-4 text-blue-600" />
-              <p className="text-lg font-bold text-gray-600">
-                กำลังโหลดแผนที่...
-              </p>
+            <div className="relative w-full h-full bg-blue-50/30 overflow-hidden">
+              {/* Map grid background pattern */}
+              <div className="absolute inset-0 opacity-50" style={{ backgroundImage: 'radial-gradient(#94a3b8 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+              
+              {/* Skeleton pulse effect over the map */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-slate-200/40 via-white/20 to-slate-200/40 animate-pulse"></div>
+              
+              {/* Fake UI elements for Map */}
+              <div className="absolute top-4 right-4 flex flex-col gap-2">
+                <Skeleton className="w-10 h-10 rounded-xl bg-white/80 shadow-sm" />
+                <Skeleton className="w-10 h-10 rounded-xl bg-white/80 shadow-sm" />
+              </div>
+              
+              <div className="absolute bottom-6 left-4 right-4 md:w-80">
+                 <Skeleton className="w-full h-16 rounded-2xl bg-white/90 shadow-md" />
+              </div>
+              
+              {/* Fake pins */}
+              <div className="absolute top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2">
+                 <MapPin className="w-10 h-10 text-blue-300 animate-pulse drop-shadow-md fill-blue-100" />
+              </div>
+              <div className="absolute top-[60%] left-[60%] -translate-x-1/2 -translate-y-1/2">
+                 <MapPin className="w-12 h-12 text-blue-300 animate-pulse drop-shadow-md opacity-70 fill-blue-100/50" />
+              </div>
+              <div className="absolute top-[35%] left-[75%] -translate-x-1/2 -translate-y-1/2">
+                 <MapPin className="w-8 h-8 text-blue-200 animate-pulse drop-shadow-md opacity-50 fill-blue-50/50" />
+              </div>
+              
+              {/* Center loading indicator */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-xl flex flex-col items-center border border-white shadow-blue-900/5">
+                   <Loader2 className="animate-spin w-8 h-8 mb-3 text-blue-600" />
+                   <p className="text-sm font-bold text-slate-700">
+                     กำลังเตรียมแผนที่...
+                   </p>
+                </div>
+              </div>
             </div>
           ) : (
             <>

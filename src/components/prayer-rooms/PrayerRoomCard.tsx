@@ -178,17 +178,17 @@ export function PrayerRoomDisplay() {
           value={selectedFaculty}
           disabled={showSkeleton}
         >
-          <SelectTrigger className="w-full sm:w-64 bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-white dark:text-black">
+          <SelectTrigger className="w-full sm:w-64 bg-white text-black border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
             {showSkeleton ? (
               <Skeleton className="h-6 w-3/4" />
             ) : (
               <SelectValue placeholder="เลือกคณะ" />
             )}
           </SelectTrigger>
-          <SelectContent className="bg-white text-black border-blue-200 z-50 dark:bg-white dark:text-black">
+          <SelectContent className="bg-white text-black border-blue-200 z-50">
             <SelectItem
               value="ทั้งหมด"
-              className="hover:bg-blue-50 text-black dark:text-black"
+              className="hover:bg-blue-50 text-black"
             >
               ทั้งหมด
             </SelectItem>
@@ -196,7 +196,7 @@ export function PrayerRoomDisplay() {
               <SelectItem
                 key={faculty}
                 value={faculty}
-                className="hover:bg-blue-50 text-black dark:text-black"
+                className="hover:bg-blue-50 text-black"
               >
                 {faculty}
               </SelectItem>

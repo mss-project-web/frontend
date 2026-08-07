@@ -19,7 +19,7 @@ function FloatingPathsStory({ position }: { position: number }) {
 
   return (
     <div className="absolute inset-0 pointer-events-none">
-      <svg className="w-full h-full text-blue-500 dark:text-blue-300" viewBox="0 0 400 200" fill="none">
+      <svg className="w-full h-full text-blue-500" viewBox="0 0 400 200" fill="none">
         <title>Story Section Background Paths</title>
         {paths.map((path) => (
           <motion.path

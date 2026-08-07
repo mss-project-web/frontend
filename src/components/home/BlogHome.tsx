@@ -15,13 +15,13 @@ function BlogCardSkeleton() {
             <div className="relative aspect-[4/3]">
                 <Skeleton className="w-full h-full bg-gray-200" />
             </div>
-            <div className="p-5">
-                <Skeleton className="h-3 w-16 mb-3 bg-gray-200 rounded-full" />
-                <Skeleton className="h-5 w-full mb-2 bg-gray-200" />
-                <Skeleton className="h-4 w-3/4 bg-gray-200" />
-                <div className="flex items-center justify-between mt-4">
-                    <Skeleton className="h-3 w-24 bg-gray-200" />
-                    <Skeleton className="h-3 w-12 bg-gray-200" />
+            <div className="p-3 md:p-5">
+                <Skeleton className="h-3 w-16 mb-2 md:mb-3 bg-gray-200 rounded-full" />
+                <Skeleton className="h-4 md:h-5 w-full mb-2 bg-gray-200" />
+                <Skeleton className="h-3 md:h-4 w-3/4 bg-gray-200" />
+                <div className="flex items-center justify-between mt-3 md:mt-4">
+                    <Skeleton className="h-2 md:h-3 w-24 bg-gray-200" />
+                    <Skeleton className="h-2 md:h-3 w-12 bg-gray-200" />
                 </div>
             </div>
         </div>
@@ -71,7 +71,11 @@ export function BlogHome() {
                 </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className={`grid gap-3 sm:gap-4 md:gap-6 ${
+                loading ? 'grid-cols-2 lg:grid-cols-4' :
+                blogs.length === 1 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' :
+                'grid-cols-2 lg:grid-cols-4'
+            }`}>
                 {loading ? (
                     Array.from({ length: 4 }).map((_, index) => (
                         <BlogCardSkeleton key={index} />
@@ -110,26 +114,26 @@ export function BlogHome() {
                                     </div>
 
                                     {/* Content */}
-                                    <div className="p-5 flex flex-col flex-1">
+                                    <div className="p-3 md:p-5 flex flex-col flex-1">
                                         {blog.group && (
-                                            <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 border-none text-xs w-fit mb-2">
+                                            <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200 border-none text-[10px] md:text-xs w-fit mb-1.5 md:mb-2 px-1.5 md:px-2.5 py-0 md:py-0.5">
                                                 {blog.group}
                                             </Badge>
                                         )}
 
-                                        <h3 className="font-semibold text-gray-800 line-clamp-2 mb-1 group-hover:text-blue-700 transition-colors text-sm leading-snug">
+                                        <h3 className="font-semibold text-gray-800 line-clamp-2 mb-1 group-hover:text-blue-700 transition-colors text-[13px] md:text-base leading-tight md:leading-snug">
                                             {blog.title}
                                         </h3>
 
-                                        <p className="text-xs text-gray-500 line-clamp-2 mb-3 flex-1">
+                                        <p className="text-[11px] md:text-xs text-gray-500 line-clamp-2 mb-2 md:mb-3 flex-1">
                                             {blog.description}
                                         </p>
 
-                                        <div className="flex items-center justify-between text-xs text-gray-400 mt-auto">
+                                        <div className="flex items-center justify-between text-[10px] md:text-xs text-gray-400 mt-auto">
                                             <span suppressHydrationWarning>{formatDate(blog.createdAt)}</span>
                                             {typeof blog.views === "number" && (
                                                 <span className="flex items-center gap-1">
-                                                    <Eye className="w-3 h-3" />
+                                                    <Eye className="w-3 h-3 md:w-3.5 md:h-3.5" />
                                                     {blog.views.toLocaleString()}
                                                 </span>
                                             )}

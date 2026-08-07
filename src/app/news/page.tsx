@@ -82,13 +82,13 @@ export default function NewsMainPage() {
                 onValueChange={handleMonthChange}
                 value={selectedMonth || "all"}
               >
-                <SelectTrigger className="w-[180px] bg-white text-black border border-gray-300 shadow-sm dark:bg-white dark:text-black">
+                <SelectTrigger className="w-[180px] bg-white text-black border border-gray-300 shadow-sm">
                   <SelectValue placeholder="เลือกเดือน" />
                 </SelectTrigger>
-                <SelectContent className="bg-white text-black dark:bg-white dark:text-black">
+                <SelectContent className="bg-white text-black">
                   <SelectItem
                     value="all"
-                    className="text-black dark:text-black"
+                    className="text-black"
                   >
                     ทั้งหมด
                   </SelectItem>
@@ -96,7 +96,7 @@ export default function NewsMainPage() {
                     <SelectItem
                       key={month.value}
                       value={month.value}
-                      className="text-black dark:text-black"
+                      className="text-black"
                     >
                       {month.label}
                     </SelectItem>
@@ -105,15 +105,15 @@ export default function NewsMainPage() {
               </Select>
 
               <Select onValueChange={handleYearChange} value={selectedYear}>
-                <SelectTrigger className="w-[120px] bg-white text-black border border-gray-300 shadow-sm dark:bg-white dark:text-black">
+                <SelectTrigger className="w-[120px] bg-white text-black border border-gray-300 shadow-sm">
                   <SelectValue placeholder="เลือกปี" />
                 </SelectTrigger>
-                <SelectContent className="bg-white text-black dark:bg-white dark:text-black">
+                <SelectContent className="bg-white text-black">
                   {availableYears.map((year) => (
                     <SelectItem
                       key={year}
                       value={year.toString()}
-                      className="text-black dark:text-black"
+                      className="text-black"
                     >
                       {year}
                     </SelectItem>

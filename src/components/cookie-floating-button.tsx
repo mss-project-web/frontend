@@ -28,10 +28,10 @@ export default function CookieFloatingButton() {
                             variant="outline"
                             size="icon"
                             onClick={() => setShowSettings(true)}
-                            className="h-12 w-12 rounded-full border-2 border-blue-600 bg-white shadow-xl hover:bg-blue-50 hover:scale-110 transition-transform duration-200 dark:bg-gray-800 dark:border-blue-400"
+                            className="h-12 w-12 rounded-full border-2 border-blue-600 bg-white shadow-xl hover:bg-blue-50 hover:scale-110 transition-transform duration-200"
                             title="การตั้งค่าคุกกี้"
                         >
-                            <Cookie className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                            <Cookie className="h-6 w-6 text-blue-600" />
                             <span className="sr-only">การตั้งค่าคุกกี้</span>
                         </Button>
                     </motion.div>
