@@ -1,40 +1,45 @@
-import Link from "next/link"
+import Link from "next/link";
+import Image from "next/image";
+import { Home, Map } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      <div className="text-center max-w-lg px-6">
-        <div className="text-8xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-400 mb-4 tracking-tight">
-          404
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-white px-4 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-200/50 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-300/30 rounded-full blur-3xl"></div>
+
+      <div className="relative z-10 flex flex-col items-center">
+        <div className="relative">
+          <h1 className="text-[120px] md:text-[180px] font-extrabold text-blue-900/10 mb-0 leading-none select-none">
+            404
+          </h1>
         </div>
-        <div className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 leading-tight">
-          ไม่พบหน้าที่คุณต้องการ
-        </div>
-        <p className="text-slate-600 text-lg mb-8 leading-relaxed max-w-md mx-auto">
-          ขออภัยในความไม่สะดวก หน้าที่คุณกำลังค้นหาอาจถูกย้าย
+
+        <p className="text-gray-600 mb-10 max-w-md text-center mt-6 text-sm md:text-base leading-relaxed">
+          หน้าเว็บที่คุณกำลังพยายามเข้าถึงอาจถูกลบไปแล้ว, เปลี่ยนชื่อ,
+          หรือใช้งานไม่ได้ชั่วคราว กรุณาตรวจสอบ URL อีกครั้ง
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link
-            href="/"
-            className="inline-flex items-center px-8 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            กลับหน้าหลัก
+
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+          <Link href="/" className="w-full sm:w-auto">
+            <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all px-8 py-6 h-auto text-base font-semibold">
+              <Home className="w-5 h-5 mr-2" />
+              กลับสู่หน้าหลัก
+            </Button>
           </Link>
-        </div>
-        <div className="mt-12 pt-8 border-t border-slate-200">
-          <p className="text-slate-500 text-sm mb-4">
-            ต้องการความช่วยเหลือ?
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm">
-            <Link href="/contact" className="text-blue-600 hover:text-blue-800 transition-colors">
-              ติดต่อเรา
-            </Link>
-          </div>
+          <Link href="/prayer-rooms" className="w-full sm:w-auto">
+            <Button
+              variant="outline"
+              className="w-full border-2 border-blue-600 text-blue-700 hover:bg-blue-50 hover:border-blue-700 rounded-xl px-8 py-6 h-auto text-base font-semibold transition-all hover:-translate-y-0.5"
+            >
+              <Map className="w-5 h-5 mr-2" />
+              ค้นหาห้องละหมาด
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }
