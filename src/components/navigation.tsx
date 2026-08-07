@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/s
 import { Menu, Phone, Mail, Facebook, Instagram, Youtube, Copy, Check, Hash } from "lucide-react"
 import { navItems } from "@/data/nav-items"
 import { CONTACT } from "@/lib/constants";
-import { useSettings } from "@/lib/hooks/useSettings";
+import { useSettings } from "@/hooks/useSettings";
 import { useClickTracking } from "@/hooks/use-click-tracking";
 
 export default function Navigation() {

@@ -6,7 +6,7 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { navItems } from "@/data/nav-items"
 import { CONTACT } from "@/lib/constants";
-import { useSettings } from "@/lib/hooks/useSettings";
+import { useSettings } from "@/hooks/useSettings";
 import { useCookieConsent } from "@/context/cookie-consent-context";
 import { useState, useEffect } from "react";
 

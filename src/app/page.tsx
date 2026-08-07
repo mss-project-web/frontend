@@ -1,39 +1,76 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback, lazy, Suspense } from "react";
+import {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  lazy,
+  Suspense,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronUp } from "lucide-react";
 import HomePageStructuredData from "@/components/home/HomePageStructuredData";
 import SiteNavigationStructuredData from "@/components/SiteNavigationStructuredData";
-import { useEventListener, useDebounce, useMemoryMonitor } from "@/lib/utils/memoryOptimization";
+import {
+  useEventListener,
+  useDebounce,
+  useMemoryMonitor,
+} from "@/utils/memoryOptimization";
 
 // Lazy load heavy components with proper error boundaries
-const ThreeDMarquee = lazy(() => import("../components/home/ThreeDMarquee").then(module => ({ default: module.ThreeDMarquee })));
-const AnimatedCounterPage = lazy(() => import("@/components/home/AnimatedCounter").then(module => ({ default: module.AnimatedCounterPage })));
-const NewsAndEvents = lazy(() => import("@/components/home/News").then(module => ({ default: module.NewsAndEvents })));
-const EventHome = lazy(() => import("@/components/home/EventHome").then(module => ({ default: module.EventHome })));
-const JoinUsSection = lazy(() => import("../components/home/JoinUsSection").then(module => ({ default: module.JoinUsSection })));
-const BlogHome = lazy(() => import("../components/home/BlogHome").then(module => ({ default: module.BlogHome })));
+const ThreeDMarquee = lazy(() =>
+  import("../components/home/ThreeDMarquee").then((module) => ({
+    default: module.ThreeDMarquee,
+  })),
+);
+const AnimatedCounterPage = lazy(() =>
+  import("@/components/home/AnimatedCounter").then((module) => ({
+    default: module.AnimatedCounterPage,
+  })),
+);
+const NewsAndEvents = lazy(() =>
+  import("@/components/home/News").then((module) => ({
+    default: module.NewsAndEvents,
+  })),
+);
+const EventHome = lazy(() =>
+  import("@/components/home/EventHome").then((module) => ({
+    default: module.EventHome,
+  })),
+);
+const JoinUsSection = lazy(() =>
+  import("../components/home/JoinUsSection").then((module) => ({
+    default: module.JoinUsSection,
+  })),
+);
+const BlogHome = lazy(() =>
+  import("../components/home/BlogHome").then((module) => ({
+    default: module.BlogHome,
+  })),
+);
 
 export default function HomePage() {
   // Memory monitoring (development only)
-  useMemoryMonitor('HomePage');
-  
+  useMemoryMonitor("HomePage");
+
   const texts = ["ชมรมมุสลิม ม.อ.หาดใหญ่", "หวังดีดี จากบ้านหลังเดิม"];
   const [index, setIndex] = useState(0);
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   // Memoize images array to prevent recreation on every render
-  const images = useMemo(() =>
-    Array.from({ length: 32 }, (_, i) => ({
-      src: `/Image/${i + 1}.webp`,
-      alt: `Image ${i + 1}`,
-    })), []
+  const images = useMemo(
+    () =>
+      Array.from({ length: 32 }, (_, i) => ({
+        src: `/Image/${i + 1}.webp`,
+        alt: `Image ${i + 1}`,
+      })),
+    [],
   );
 
   // Debounced scroll handler to reduce memory usage
   const debouncedScrollHandler = useDebounce(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setShowScrollToTop(window.scrollY > 300);
     }
   }, 100);
@@ -42,7 +79,7 @@ export default function HomePage() {
   useEventListener("scroll", debouncedScrollHandler);
 
   const scrollToTop = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -83,16 +120,26 @@ export default function HomePage() {
 
   return (
     <main className="relative min-h-screen font-sans overflow-hidden bg-white">
+      {/* SEO: single, stable H1 (visually hidden; the hero shows animated text) */}
+      <h1 className="sr-only">
+        ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ (MSS PSU Hatyai) —
+        กิจกรรม ข่าวสาร และห้องละหมาดสำหรับนักศึกษามุสลิม
+      </h1>
+
       {/* Structured Data for SEO */}
       <HomePageStructuredData />
       <SiteNavigationStructuredData />
-      
+
       {/* BG */}
       <div className="relative">
-        <Suspense fallback={<div className="h-[700px] max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 animate-pulse" />}>
+        <Suspense
+          fallback={
+            <div className="h-[700px] max-sm:h-[500px] bg-gradient-to-br from-blue-50 via-sky-100 to-blue-200 animate-pulse" />
+          }
+        >
           <ThreeDMarquee images={images} imageWidth={20} imageHeight={35} />
         </Suspense>
-        
+
         {/* SEO-friendly Header Structure */}
         <header className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4 md:px-8">
           <AnimatePresence mode="wait">
@@ -112,7 +159,7 @@ export default function HomePage() {
                 [text-shadow:0_0_4px_#000000,0_0_2px_#000000,0_0_2px_#000000]
                 mb-4
               "
-            > 
+            >
               {texts[index]}
             </motion.div>
           </AnimatePresence>
@@ -123,7 +170,11 @@ export default function HomePage() {
       <section className="relative bg-gradient-to-r from-blue-100 via-sky-50 to-blue-200 overflow-hidden">
         <WavePattern />
         <div className="relative z-10 mx-auto max-w-screen-xl px-4">
-          <Suspense fallback={<div className="h-64 bg-white/20 rounded-lg animate-pulse" />}>
+          <Suspense
+            fallback={
+              <div className="h-64 bg-white/20 rounded-lg animate-pulse" />
+            }
+          >
             <AnimatedCounterPage />
           </Suspense>
         </div>
@@ -132,13 +183,25 @@ export default function HomePage() {
       {/* News and Events Section */}
       <section className="relative overflow-hidden py-16">
         <div className="relative z-10 mx-auto max-w-screen-xl px-4">
-          <Suspense fallback={<div className="h-96 bg-gray-100 rounded-lg animate-pulse mb-8" />}>
+          <Suspense
+            fallback={
+              <div className="h-96 bg-gray-100 rounded-lg animate-pulse mb-8" />
+            }
+          >
             <NewsAndEvents />
           </Suspense>
-          <Suspense fallback={<div className="h-64 bg-gray-100 rounded-lg animate-pulse" />}>
+          <Suspense
+            fallback={
+              <div className="h-64 bg-gray-100 rounded-lg animate-pulse" />
+            }
+          >
             <EventHome />
           </Suspense>
-          <Suspense fallback={<div className="h-96 bg-gray-100 rounded-lg animate-pulse my-8" />}>
+          <Suspense
+            fallback={
+              <div className="h-96 bg-gray-100 rounded-lg animate-pulse my-8" />
+            }
+          >
             <BlogHome />
           </Suspense>
         </div>
