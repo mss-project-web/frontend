@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { HeartHandshake, Copy, Check, Landmark, QrCode } from "lucide-react"
-import { useSettings } from "@/lib/hooks/useSettings"
+import { useSettings } from "@/hooks/useSettings"
 import { CONTACT } from "@/lib/constants"
 
 export default function DonationSection() {

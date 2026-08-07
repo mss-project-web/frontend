@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Phone, Mail, MapPin } from "lucide-react"
 import { CONTACT } from "@/lib/constants";
-import { useSettings } from "@/lib/hooks/useSettings";
+import { useSettings } from "@/hooks/useSettings";
 
 export default function ContactUsSection() {
       const { settings } = useSettings();
