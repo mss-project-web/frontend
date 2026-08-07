@@ -9,6 +9,7 @@ import { PrayerRoomDisplay } from "@/components/prayer-rooms/PrayerRoomCard";
 import { Guidelines } from "@/components/prayer-rooms/Guidelines";
 import { PrayerTime } from "@/components/prayer-rooms/PrayerTime";
 import PrayerRoomsStructuredData from "@/components/prayer-rooms/PrayerRoomsStructuredData";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function PrayerRoomsPage() {
   const PrayerRoomMap = dynamic(
@@ -18,12 +19,16 @@ export default function PrayerRoomsPage() {
       ),
     {
       ssr: false,
+      loading: () => (
+        <Skeleton className="w-full h-[500px] md:h-[600px] rounded-2xl bg-gray-200 animate-pulse flex items-center justify-center">
+          <span className="text-gray-400 font-medium">กำลังโหลดแผนที่...</span>
+        </Skeleton>
+      ),
     },
   );
 
   return (
     <main className="relative min-h-screen font-sans overflow-hidden bg-white">
-
       {/* Structured Data for Prayer Rooms */}
       <PrayerRoomsStructuredData />
 
