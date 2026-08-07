@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState, useEffect, useCallback } from 'react';
-import { ExternalLink, Clock, Sun, Moon, Sunrise, Sunset } from 'lucide-react';
-import { usePrayerTimes } from '@/hooks/prayer/usePrayerTimes';
-import { Prayer } from '@/types/prayer';
-import { Button } from '@/components/ui/button';
-import { Compass } from 'lucide-react';
+import Link from "next/link";
+import { useState, useEffect, useCallback } from "react";
+import { ExternalLink, Clock, Sun, Moon, Sunrise, Sunset } from "lucide-react";
+import { usePrayerTimes } from "@/hooks/prayer/usePrayerTimes";
+import { Prayer } from "@/types/prayer";
+import { Button } from "@/components/ui/button";
+import { Compass } from "lucide-react";
 
 export function PrayerTime() {
   const [prayers, setPrayers] = useState<Prayer[]>([]);
-  const [date, setDate] = useState<string>('');
+  const [date, setDate] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [nextPrayer, setNextPrayer] = useState<{
     name: string;
@@ -19,18 +19,21 @@ export function PrayerTime() {
   } | null>(null);
   const [isPrayerModalOpen, setIsPrayerModalOpen] = useState(false);
 
-  const handleBackdropClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      setIsPrayerModalOpen(false);
-    }
-  }, []);
+  const handleBackdropClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (event.target === event.currentTarget) {
+        setIsPrayerModalOpen(false);
+      }
+    },
+    [],
+  );
 
   const calculateNextPrayer = useCallback((prayerTimes: Prayer[]) => {
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
 
     for (const prayer of prayerTimes) {
-      const [hours, minutes] = prayer.time.split(':').map(Number);
+      const [hours, minutes] = prayer.time.split(":").map(Number);
       const prayerTime = hours * 60 + minutes;
 
       if (prayerTime > currentTime) {
@@ -68,11 +71,11 @@ export function PrayerTime() {
 
       if (times) {
         const prayerData: Prayer[] = [
-          { name: 'ฟัจร์', time: times.Fajr, icon: prayerIcons.Fajr },
-          { name: 'ซุฮร์', time: times.Dhuhr, icon: prayerIcons.Dhuhr },
-          { name: 'อัศร์', time: times.Asr, icon: prayerIcons.Asr },
-          { name: 'มัฆริบ', time: times.Maghrib, icon: prayerIcons.Maghrib },
-          { name: 'อิชา', time: times.Isha, icon: prayerIcons.Isha },
+          { name: "ฟัจร์", time: times.Fajr, icon: prayerIcons.Fajr },
+          { name: "ซุฮร์", time: times.Dhuhr, icon: prayerIcons.Dhuhr },
+          { name: "อัศร์", time: times.Asr, icon: prayerIcons.Asr },
+          { name: "มัฆริบ", time: times.Maghrib, icon: prayerIcons.Maghrib },
+          { name: "อิชา", time: times.Isha, icon: prayerIcons.Isha },
         ];
         setPrayers(prayerData);
         setDate(times.thaiDate);
@@ -87,12 +90,12 @@ export function PrayerTime() {
 
   useEffect(() => {
     if (isPrayerModalOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isPrayerModalOpen]);
 
@@ -106,7 +109,9 @@ export function PrayerTime() {
                 <Clock size={18} />
                 <span className="font-medium">
                   ละหมาดต่อไป: {nextPrayer.name} เวลา {nextPrayer.time}
-                  <span className="ml-2 text-green-100">({nextPrayer.remaining})</span>
+                  <span className="ml-2 text-green-100">
+                    ({nextPrayer.remaining})
+                  </span>
                 </span>
               </div>
               <Button
@@ -122,15 +127,19 @@ export function PrayerTime() {
 
       {/* Compact Section */}
       <section className="py-4">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Box ซ้าย */}
             <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-4 sm:p-8 text-white shadow-xl">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div>
-                  <h2 className="text-xl sm:text-3xl font-bold mb-1 sm:mb-2">เวลาละหมาดวันนี้</h2>
+                  <h2 className="text-xl sm:text-3xl font-bold mb-1 sm:mb-2">
+                    เวลาละหมาดวันนี้
+                  </h2>
                   <p className="text-blue-100 text-sm sm:text-base">{date}</p>
-                  <p className="text-blue-100 text-sm sm:text-base">• หาดใหญ่, สงขลา</p>
+                  <p className="text-blue-100 text-sm sm:text-base">
+                    • หาดใหญ่, สงขลา
+                  </p>
                 </div>
                 <Button
                   onClick={() => setIsPrayerModalOpen(true)}
@@ -147,16 +156,26 @@ export function PrayerTime() {
             <div className="bg-gradient-to-r from-sky-500 to-sky-600 rounded-2xl p-4 sm:p-8 text-white shadow-xl">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div>
-                  <h2 className="text-xl sm:text-3xl font-bold mb-1 sm:mb-2">กิบลัตละหมาด</h2>
-                  <p className="text-blue-100 text-sm sm:text-base">หาทิศกิบลัตได้เสมอ</p>
-                  <p className="text-blue-100 text-sm sm:text-base">โดย Google Qibla Finder</p>
+                  <h2 className="text-xl sm:text-3xl font-bold mb-1 sm:mb-2">
+                    กิบลัตละหมาด
+                  </h2>
+                  <p className="text-blue-100 text-sm sm:text-base">
+                    หาทิศกิบลัตได้เสมอ
+                  </p>
+                  <p className="text-blue-100 text-sm sm:text-base">
+                    โดย Google Qibla Finder
+                  </p>
                 </div>
                 <Button
                   asChild
                   className="bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg px-3 py-2 sm:rounded-xl sm:px-6 sm:py-3 font-medium transition-all duration-200 flex items-center space-x-1 sm:space-x-2 text-sm sm:text-base"
                   aria-label="ไปยัง Google Qibla Finder"
                 >
-                  <Link href="https://qiblafinder.withgoogle.com/" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://qiblafinder.withgoogle.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Compass size={20} />
                     <span>ค้นหากิบลัต</span>
                   </Link>
@@ -169,14 +188,20 @@ export function PrayerTime() {
 
       {/* Modal */}
       {isPrayerModalOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={handleBackdropClick} >
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl"
-            onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={handleBackdropClick}
+        >
+          <div
+            className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-t-2xl">
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-2xl font-bold mb-2">เวลาละหมาดประจำวัน</div>
+                  <div className="text-2xl font-bold mb-2">
+                    เวลาละหมาดประจำวัน
+                  </div>
                   <p className="text-blue-100">{date}</p>
                   <p className="text-blue-100">• หาดใหญ่, สงขลา</p>
                 </div>
@@ -202,15 +227,19 @@ export function PrayerTime() {
                       className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
                     >
                       <div className="flex items-center space-x-4">
-                        <div className="p-2 bg-white rounded-lg shadow-sm">{prayer.icon}</div>
+                        <div className="p-2 bg-white rounded-lg shadow-sm">
+                          {prayer.icon}
+                        </div>
                         <div>
-                          <h3 className="font-semibold text-gray-800">{prayer.name}</h3>
+                          <h3 className="font-semibold text-gray-800">
+                            {prayer.name}
+                          </h3>
                           <p className="text-sm text-gray-600">เวลาละหมาด</p>
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="text-2xl font-bold text-blue-600">
-                          {prayer.time.split(' ')[0]}
+                          {prayer.time.split(" ")[0]}
                         </div>
                       </div>
                     </div>
