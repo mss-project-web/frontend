@@ -48,8 +48,8 @@ export default function ContactPage() {
 
                   {/* Enhanced Social Media Section */}
                   <section className="bg-white">
-                        <div className="relative z-10 mx-auto max-w-screen-xl px-1 py-10">
-                              <div className="container mx-auto px-1 space-y-12">
+                        <div className="relative z-10 mx-auto max-w-screen-xl px-4 py-10">
+                              <div className="container mx-auto px-4 space-y-12">
                                     <div className="text-center">
                                           <h2 className="text-2xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
                                                 ติดตามเราได้ที่

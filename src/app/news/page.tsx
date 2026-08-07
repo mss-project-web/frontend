@@ -72,7 +72,7 @@ export default function NewsMainPage() {
 
       {/* News Section with adjusted padding */}
       <section className="py-16 bg-white relative z-10 mx-auto max-w-screen-xl px-4">
-        <div className="container mx-auto sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold text-blue-800 relative after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-16 after:h-1 after:bg-blue-500 mb-4 md:mb-0">
               ข่าวสารกิจกรรม
