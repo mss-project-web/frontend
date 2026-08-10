@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -18,8 +19,6 @@ import {
   Facebook,
   Instagram,
   Youtube,
-  Copy,
-  Check,
   Hash,
 } from "lucide-react";
 import { navItems } from "@/data/nav-items";
@@ -150,8 +149,8 @@ export default function Navigation() {
             >
               <div className="w-32 h-12 relative group-hover:scale-105 transition-transform duration-300">
                 <Image
-                  src="/LOGO/LOGO-MSS.png"
-                  alt="logo-MSS"
+                  src={siteConfig.logo_mss}
+                  alt={siteConfig.logoAlt}
                   fill
                   sizes="(max-width: 768px) 120px, (max-width: 1200px) 200px, 250px"
                 />
@@ -202,10 +201,10 @@ export default function Navigation() {
                 <div className="flex flex-col items-center">
                   <div className="w-32 h-16 relative">
                     <Image
-                      src="/LOGO/LOGO-MSS.png"
+                      src={siteConfig.logo_mss}
                       fill
                       sizes="(max-width: 768px) 100vw, 200px"
-                      alt="logo"
+                      alt={siteConfig.logoAlt}
                       className="object-contain"
                       priority
                     />

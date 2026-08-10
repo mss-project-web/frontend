@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { siteConfig } from "@/config/site";
 
 export default function NewsStructuredData() {
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function NewsStructuredData() {
         "url": "https://msspsuhatyai.org",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://msspsuhatyai.org/LOGO/LOGO-MSS.png"
+          "url": `${siteConfig.url}${siteConfig.logo}`
         }
       },
       "potentialAction": {

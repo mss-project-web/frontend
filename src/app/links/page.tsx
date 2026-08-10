@@ -1,23 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
-import {
-  Check,
-  Copy,
-  Heart,
-  Phone,
-  Home,
-  ChevronRight,
-  Share2,
-  MapPin,
-  Download,
-  X,
-} from "lucide-react";
+import { Heart, Home, ChevronRight, Share2 } from "lucide-react";
 import { CONTACT } from "@/lib/constants";
 import { useSettings } from "@/hooks/useSettings";
 import { DonationModal } from "@/components/donation-modal";
+import { siteConfig } from "@/config/site";
 
 interface SocialLink {
   id: string;
@@ -55,26 +45,6 @@ const YoutubeIcon = () => (
   </svg>
 );
 
-const LineIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-    <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.105.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.070 9.436-6.975C23.176 14.393 24 12.458 24 10.314" />
-  </svg>
-);
-
-const WebIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    className="w-5 h-5"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    <path d="M2 12h20" />
-  </svg>
-);
-
 const MailIcon = () => (
   <svg
     viewBox="0 0 24 24"
@@ -104,15 +74,6 @@ const itemVariants: Variants = {
 
 export default function LinksPage() {
   const { settings } = useSettings();
-  const firstPhone = settings.contact.phones[0];
-  const phoneText = firstPhone
-    ? firstPhone.label
-      ? `${firstPhone.number} (${firstPhone.label})`
-      : firstPhone.number
-    : CONTACT.phone_Amir;
-  const phoneNumberOnly = firstPhone
-    ? firstPhone.number.replace(/-/g, "")
-    : CONTACT.phone_Amir.split(" ")[0].replace(/-/g, "");
   const email = settings.contact.email || CONTACT.email;
   const facebook =
     settings.contact.socials.facebook || "https://www.facebook.com/MSSPSU";
@@ -123,8 +84,6 @@ export default function LinksPage() {
     settings.contact.socials.tiktok || "https://www.tiktok.com/@msspsuhatyai";
   const youtube =
     settings.contact.socials.youtube || "https://www.youtube.com/@msspsuhatyai";
-  const line =
-    settings.contact.socials.line || "https://line.me/R/ti/p/@mss-psu";
 
   const [showDonateModal, setShowDonateModal] = useState(false);
   const [shareSupported, setShareSupported] = useState(false);
@@ -167,23 +126,6 @@ export default function LinksPage() {
     }
   };
 
-  // Download vCard Function
-  const handleSaveContact = () => {
-    trackClick("vcard", "Save Contact");
-    const phone = CONTACT.phone_Amir.split(" ")[0].replace(/-/g, "");
-    const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:ชมรมมุสลิม ม.อ.หาดใหญ่\nORG:มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่;\nTEL;TYPE=CELL:${phone}\nEMAIL:${email}\nURL:https://msspsuhatyai.org\nEND:VCARD`;
-
-    const blob = new Blob([vcard], { type: "text/vcard" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "mss-psu-hatyai.vcf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
-
   const links: SocialLink[] = [
     {
       id: "donate",
@@ -202,8 +144,8 @@ export default function LinksPage() {
       sublabel: "ชมรมมุสลิม ม.อ.หาดใหญ่",
       href: facebook,
       icon: <FacebookIcon />,
-      iconBg: "bg-[#1877F2]/10 ",
-      iconColor: "text-[#1877F2] ",
+      iconBg: "bg-slate-100 ",
+      iconColor: "text-slate-700 ",
     },
     {
       id: "instagram",
@@ -211,8 +153,8 @@ export default function LinksPage() {
       sublabel: "@msspsuhatyai",
       href: instagram,
       icon: <InstagramIcon />,
-      iconBg: "bg-[#C13584]/10 ",
-      iconColor: "text-[#C13584] ",
+      iconBg: "bg-slate-100 ",
+      iconColor: "text-slate-700 ",
     },
     {
       id: "tiktok",
@@ -220,8 +162,8 @@ export default function LinksPage() {
       sublabel: "@msspsuhatyai",
       href: tiktok,
       icon: <TiktokIcon />,
-      iconBg: "bg-gray-200 ",
-      iconColor: "text-gray-900 ",
+      iconBg: "bg-slate-100 ",
+      iconColor: "text-slate-700 ",
     },
     {
       id: "youtube",
@@ -229,26 +171,8 @@ export default function LinksPage() {
       sublabel: "ชมรมมุสลิม ม.อ.หาดใหญ่",
       href: youtube,
       icon: <YoutubeIcon />,
-      iconBg: "bg-[#FF0000]/10 ",
-      iconColor: "text-[#FF0000] ",
-    },
-    {
-      id: "line",
-      label: "LINE Official",
-      sublabel: "@mss-psu",
-      href: line,
-      icon: <LineIcon />,
-      iconBg: "bg-[#00B900]/10 ",
-      iconColor: "text-[#00B900] ",
-    },
-    {
-      id: "phone",
-      label: "ติดต่อด่วน (โทร)",
-      sublabel: phoneText,
-      href: `tel:${CONTACT.phone_Amir.split(" ")[0].replace(/-/g, "")}`,
-      icon: <Phone className="w-5 h-5" />,
-      iconBg: "bg-emerald-100 ",
-      iconColor: "text-emerald-600 ",
+      iconBg: "bg-slate-100 ",
+      iconColor: "text-slate-700 ",
     },
     {
       id: "email",
@@ -256,8 +180,8 @@ export default function LinksPage() {
       sublabel: email,
       href: `mailto:${email}`,
       icon: <MailIcon />,
-      iconBg: "bg-indigo-100 ",
-      iconColor: "text-indigo-600 ",
+      iconBg: "bg-slate-100 ",
+      iconColor: "text-slate-700 ",
     },
   ];
 
@@ -284,8 +208,8 @@ export default function LinksPage() {
           <div className="relative mb-5">
             <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center p-2 shadow-sm border border-gray-200">
               <Image
-                src="/LOGO/LOGO-MSS.png"
-                alt="โลโก้ชมรมมุสลิม ม.อ.หาดใหญ่"
+                src={siteConfig.logo}
+                alt={siteConfig.logoAlt}
                 width={80}
                 height={80}
                 className="object-contain"

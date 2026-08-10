@@ -1,3 +1,5 @@
+import { siteConfig } from "@/config/site";
+
 export default function GoogleVerification() {
   return (
     <head>
@@ -21,7 +23,7 @@ export default function GoogleVerification() {
             "name": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
             "alternateName": "MSS PSU Hatyai",
             "url": "https://msspsuhatyai.org",
-            "logo": "https://msspsuhatyai.org/LOGO/LOGO-MSS.png",
+            "logo": `${siteConfig.url}${siteConfig.logo}`,
             "description": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
             "address": {
               "@type": "PostalAddress",

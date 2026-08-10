@@ -1,4 +1,5 @@
 import { WithContext, WebSite, Organization, BreadcrumbList, Article, Event } from 'schema-dts';
+import { siteConfig } from "@/config/site";
 
 interface StructuredDataProps {
   type: 'website' | 'organization' | 'breadcrumb' | 'article' | 'event';
@@ -41,7 +42,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         "name": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
         "alternateName": ["ชมรมมุสลิม ม.อ.หาดใหญ่", "MSS PSU Hatyai"] as any,
         "url": "https://msspsuhatyai.org",
-        "logo": "https://msspsuhatyai.org/LOGO/LOGO-MSS.png",
+        "logo": `${siteConfig.url}${siteConfig.logo}`,
         "description": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม กิจกรรมสำหรับนักศึกษามุสลิม ห้องละหมาด สถานที่ประกอบศาสนกิจ",
         "contactPoint": {
           "@type": "ContactPoint",
@@ -102,7 +103,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             "name": "ชมรมมุสลิม ม.อ.หาดใหญ่",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://msspsuhatyai.org/LOGO/LOGO-MSS.png"
+              "url": `${siteConfig.url}${siteConfig.logo}`
             }
           },
           "datePublished": data.datePublished,

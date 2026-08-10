@@ -1,37 +1,38 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
-import { Kanit } from "next/font/google"
-import "./globals.css"
-import Navigation from "@/components/navigation"
-import Footer from "@/components/footer"
-import RouteLoader from "@/components/RouteLoader"
-import Breadcrumb from "@/components/Breadcrumb"
-import { CookieConsentProvider } from "@/context/cookie-consent-context"
-import { GoogleAnalytics } from "@/components/google-analytics"
-import CookieBanner from "@/components/cookie-banner"
-import CookieFloatingButton from "@/components/cookie-floating-button"
+import { Kanit } from "next/font/google";
+import "./globals.css";
+import { siteConfig } from "@/config/site";
+import Navigation from "@/components/navigation";
+import Footer from "@/components/footer";
+import RouteLoader from "@/components/RouteLoader";
+import Breadcrumb from "@/components/Breadcrumb";
+import { CookieConsentProvider } from "@/context/cookie-consent-context";
+import { GoogleAnalytics } from "@/components/google-analytics";
+import CookieBanner from "@/components/cookie-banner";
+import CookieFloatingButton from "@/components/cookie-floating-button";
 
 const kanit = Kanit({
   subsets: ["thai"],
   weight: ["400", "500", "700"],
   variable: "--font-kanit",
   display: "swap",
-})
+});
 
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void
+    gtag: (...args: any[]) => void;
   }
 }
 
-
 export const metadata: Metadata = {
-  metadataBase: new URL('https://msspsuhatyai.org'),
+  metadataBase: new URL("https://msspsuhatyai.org"),
   title: {
-    default: "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
-    template: "%s | ชมรมมุสลิม ม.อ.หาดใหญ่"
+    default: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
+    template: "%s | ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
   },
-  description: "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม ⭐ กิจกรรมสำหรับนักศึกษามุสลิม ⭐ ห้องละหมาด ⭐ สถานที่ประกอบศาสนกิจ ⭐ กิจกรรมศาสนาอิสลาม ⭐ ชุมชนมุสลิม PSU หาดใหญ่",
+  description:
+    "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม ⭐ กิจกรรมสำหรับนักศึกษามุสลิม ⭐ ห้องละหมาด ⭐ สถานที่ประกอบศาสนกิจ ⭐ กิจกรรมศาสนาอิสลาม ⭐ ชุมชนมุสลิม PSU หาดใหญ่",
   keywords: [
     "ชมรมมุสลิม",
     "มหาวิทยาลัยสงขลานครินทร์",
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     "Islamic Activities",
     "เกี่ยวกับเรา",
     "หน้งสือ",
-    "เพื่มเตม", 
+    "เพื่มเตม",
   ],
   authors: [{ name: "ชมรมมุสลิม ม.อ.หาดใหญ่" }],
   creator: "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
@@ -57,46 +58,47 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   openGraph: {
-    type: 'website',
-    locale: 'th_TH',
-    url: 'https://msspsuhatyai.org',
-    title: 'ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่',
-    description: 'ชมรมมุสลิม ม.อ.หาดใหญ่ - หวังดีดี จากบ้านหลังเดิม กิจกรรมสำหรับนักศึกษามุสลิม ห้องละหมาด สถานที่ประกอบศาสนกิจ',
+    type: "website",
+    locale: "th_TH",
+    url: "https://msspsuhatyai.org",
+    title: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
+    description:
+      "ชมรมมุสลิม ม.อ.หาดใหญ่ - หวังดีดี จากบ้านหลังเดิม กิจกรรมสำหรับนักศึกษามุสลิม ห้องละหมาด สถานที่ประกอบศาสนกิจ",
     images: [
       {
-        url: '/LOGO/LOGO-MSS.png',
+        url: siteConfig.logo,
         width: 1200,
         height: 630,
-        alt: 'โลโก้ชมรมมุสลิม ม.อ.หาดใหญ่',
+        alt: siteConfig.logoAlt,
       },
     ],
-    siteName: 'ชมรมมุสลิม ม.อ.หาดใหญ่',
+    siteName: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่',
-    description: 'ชมรมมุสลิม ม.อ.หาดใหญ่ - หวังดีดี จากบ้านหลังเดิม',
-    images: ['/LOGO/LOGO-MSS.png'],
+    card: "summary_large_image",
+    title: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
+    description: "ชมรมมุสลิม ม.อ.หาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
+    images: [siteConfig.logo],
   },
   alternates: {
-    canonical: 'https://msspsuhatyai.org',
+    canonical: "https://msspsuhatyai.org",
     languages: {
-      'th-TH': 'https://msspsuhatyai.org',
-      'en-US': 'https://msspsuhatyai.org/en',
+      "th-TH": "https://msspsuhatyai.org",
+      "en-US": "https://msspsuhatyai.org/en",
     },
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const imageHost = process.env.NEXT_PUBLIC_IMAGE_HOST;
@@ -107,77 +109,82 @@ export default function RootLayout({
       {
         "@type": "Organization",
         "@id": "https://msspsuhatyai.org/#organization",
-        "name": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
-        "alternateName": "ชมรมมุสลิม ม.อ.หาดใหญ่",
-        "url": "https://msspsuhatyai.org",
-        "logo": {
+        name: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
+        alternateName: "MSS PSU Hatyai",
+        url: "https://msspsuhatyai.org",
+        logo: {
           "@type": "ImageObject",
-          "url": "https://msspsuhatyai.org/LOGO/LOGO-MSS.png",
-          "width": 512,
-          "height": 512
+          url: `${siteConfig.url}${siteConfig.logo}`,
+          width: 512,
+          height: 512,
         },
-        "description": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
-        "address": {
+        description:
+          "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
+        address: {
           "@type": "PostalAddress",
-          "streetAddress": "มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
-          "addressLocality": "หาดใหญ่",
-          "addressRegion": "สงขลา",
-          "postalCode": "90110",
-          "addressCountry": "TH"
+          streetAddress: "มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
+          addressLocality: "หาดใหญ่",
+          addressRegion: "สงขลา",
+          postalCode: "90110",
+          addressCountry: "TH",
         },
-        "contactPoint": {
+        contactPoint: {
           "@type": "ContactPoint",
-          "contactType": "customer service",
-          "availableLanguage": ["th", "en"]
+          contactType: "customer service",
+          availableLanguage: ["th", "en"],
         },
-        "sameAs": [
+        sameAs: [
           "https://www.facebook.com/msspsuhatyai",
-          "https://www.instagram.com/msspsuhatyai"
+          "https://www.instagram.com/msspsuhatyai",
         ],
-        "member": {
+        member: {
           "@type": "Organization",
-          "name": "มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่"
-        }
+          name: "มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
+        },
       },
       {
         "@type": "WebSite",
         "@id": "https://msspsuhatyai.org/#website",
-        "url": "https://msspsuhatyai.org",
-        "name": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
-        "description": "เว็บไซต์ชมรมมุสลิม ม.อ.หาดใหญ่ - ข้อมูลกิจกรรม ห้องละหมาด และข่าวสาร",
-        "publisher": {
-          "@id": "https://msspsuhatyai.org/#organization"
+        url: "https://msspsuhatyai.org",
+        name: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
+        alternateName: "MSS PSU Hatyai",
+        description:
+          "เว็บไซต์ชมรมมุสลิม ม.อ.หาดใหญ่ - ข้อมูลกิจกรรม ห้องละหมาด และข่าวสาร",
+        publisher: {
+          "@id": "https://msspsuhatyai.org/#organization",
         },
-        "potentialAction": [
+        potentialAction: [
           {
             "@type": "SearchAction",
-            "target": {
+            target: {
               "@type": "EntryPoint",
-              "urlTemplate": "https://msspsuhatyai.org/search?q={search_term_string}"
+              urlTemplate:
+                "https://msspsuhatyai.org/search?q={search_term_string}",
             },
-            "query-input": "required name=search_term_string"
-          }
+            "query-input": "required name=search_term_string",
+          },
         ],
-        "inLanguage": "th-TH"
+        inLanguage: "th-TH",
       },
       {
         "@type": "WebPage",
         "@id": "https://msspsuhatyai.org/#webpage",
-        "url": "https://msspsuhatyai.org",
-        "name": "หน้าแรก - ชมรมมุสลิม ม.อ.หาดใหญ่",
-        "isPartOf": {
-          "@id": "https://msspsuhatyai.org/#website"
+        url: "https://msspsuhatyai.org",
+        name: "หน้าแรก - ชมรมมุสลิม ม.อ.หาดใหญ่",
+        isPartOf: {
+          "@id": "https://msspsuhatyai.org/#website",
         },
-        "about": {
-          "@id": "https://msspsuhatyai.org/#organization"
+        about: {
+          "@id": "https://msspsuhatyai.org/#organization",
         },
-        "description": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
-        "breadcrumb": {
-          "@id": "https://msspsuhatyai.org/#breadcrumb"
+        description:
+          "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
+        breadcrumb: {
+          "@id": "https://msspsuhatyai.org/#breadcrumb",
         },
-        "inLanguage": "th-TH"
-      }
-    ]
+        inLanguage: "th-TH",
+      },
+    ],
   };
 
   return (
@@ -190,10 +197,16 @@ export default function RootLayout({
         {/* SEO Meta Tags */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#2563eb" />
-        <meta name="application-name" content="ชมรมมุสลิม ม.อ.หาดใหญ่" />
+        <meta
+          name="application-name"
+          content="ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai"
+        />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="ชมรมมุสลิม ม.อ.หาดใหญ่" />
+        <meta
+          name="apple-mobile-web-app-title"
+          content="ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai"
+        />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
@@ -202,18 +215,22 @@ export default function RootLayout({
         {/* Links (canonical is set per-page via the metadata API — do not hardcode here) */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/LOGO/LOGO-MSS.png" />
+        <link rel="apple-touch-icon" href={siteConfig.logo} />
         <link rel="shortcut icon" href="/favicon.ico" />
 
         {/* Preconnect for critical performance only */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
 
         {/* Conditional preconnect for production */}
-        {process.env.NODE_ENV === 'production' && apiUrl && (
+        {process.env.NODE_ENV === "production" && apiUrl && (
           <link rel="dns-prefetch" href={apiUrl} />
         )}
-        {process.env.NODE_ENV === 'production' && imageHost && (
+        {process.env.NODE_ENV === "production" && imageHost && (
           <link rel="dns-prefetch" href={`https://${imageHost}`} />
         )}
       </head>
@@ -230,5 +247,5 @@ export default function RootLayout({
         </CookieConsentProvider>
       </body>
     </html>
-  )
+  );
 }

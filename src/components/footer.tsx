@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Phone, Mail, MapPin } from "lucide-react"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { navItems } from "@/data/nav-items"
+import Link from "next/link";
+import { Phone, Mail, MapPin } from "lucide-react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { navItems } from "@/data/nav-items";
 import { CONTACT } from "@/lib/constants";
 import { useSettings } from "@/hooks/useSettings";
 import { useCookieConsent } from "@/context/cookie-consent-context";
@@ -23,7 +23,9 @@ export default function Footer() {
 
   // Fall back to the bundled constants until the API returns data.
   const phones = settings.contact.phones.length
-    ? settings.contact.phones.map((p) => (p.label ? `${p.number} (${p.label})` : p.number))
+    ? settings.contact.phones.map((p) =>
+        p.label ? `${p.number} (${p.label})` : p.number,
+      )
     : [CONTACT.phone_Amir, CONTACT.phone_Amirah];
   const email = settings.contact.email || CONTACT.email;
 
@@ -31,7 +33,10 @@ export default function Footer() {
   if (pathname === "/links") return null;
 
   return (
-    <footer className="bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700 text-white text-sm" data-nosnippet>
+    <footer
+      className="bg-gradient-to-br from-gray-900 via-blue-900 to-blue-700 text-white text-sm"
+      data-nosnippet
+    >
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -122,7 +127,10 @@ export default function Footer() {
             <h4 className="font-semibold text-lg text-white">ติดต่อเรา</h4>
             <ul className="space-y-3">
               {phones.map((phone, i) => (
-                <li key={i} className="flex items-center justify-center md:justify-start gap-3">
+                <li
+                  key={i}
+                  className="flex items-center justify-center md:justify-start gap-3"
+                >
                   <Phone className="w-4 h-4 text-blue-400" />
                   <span className="text-gray-300">{phone}</span>
                 </li>
@@ -146,12 +154,11 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="container mx-auto px-4 py-4">
-          <div className="text-gray-400 text-center text-sm sm:text-base">
+          <div className="text-gray-400 text-center text-xs sm:text-base">
             © 2025 ชมรมมุสลิม ม.อ.หาดใหญ่ MSS PSU Hatyai. สงวนลิขสิทธิ์.
           </div>
         </div>
       </div>
     </footer>
-
-  )
+  );
 }

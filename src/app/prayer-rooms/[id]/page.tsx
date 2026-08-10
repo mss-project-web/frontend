@@ -14,6 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { siteConfig } from "@/config/site";
 
 export async function generateMetadata({
   params,
@@ -31,7 +32,7 @@ export async function generateMetadata({
   const imageUrl =
     room.images && room.images.length > 0
       ? room.images[0]
-      : "https://mss-project-web.vercel.app/LOGO/LOGO-MSS.png"; // Fallback image
+      : `${siteConfig.url}${siteConfig.logo}`; // Fallback image
 
   return {
     title,

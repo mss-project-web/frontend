@@ -3,6 +3,8 @@
  * Schema.org markup สำหรับหน้าหลัก
  */
 
+import { siteConfig } from "@/config/site";
+
 export default function HomePageStructuredData() {
   const websiteStructuredData = {
     "@context": "https://schema.org",
@@ -13,7 +15,7 @@ export default function HomePageStructuredData() {
     "url": "https://mss-hadyai.ac.th",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://mss-hadyai.ac.th/LOGO/LOGO-MSS.png",
+      "url": `${siteConfig.url}${siteConfig.logo}`,
       "width": 300,
       "height": 300
     },
@@ -31,7 +33,7 @@ export default function HomePageStructuredData() {
       "name": "ชมรมมุสลิม มหาวิทยาลัยอัสสัมชัญ วิทยาเขตหาดใหญ่",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://mss-hadyai.ac.th/LOGO/LOGO-MSS.png"
+        "url": `${siteConfig.url}${siteConfig.logo}`
       }
     }
   };
@@ -45,7 +47,7 @@ export default function HomePageStructuredData() {
     "url": "https://mss-hadyai.ac.th",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://mss-hadyai.ac.th/LOGO/LOGO-MSS.png",
+      "url": `${siteConfig.url}${siteConfig.logo}`,
       "width": 300,
       "height": 300
     },

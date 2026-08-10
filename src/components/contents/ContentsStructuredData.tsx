@@ -3,6 +3,8 @@
  * Schema.org markup สำหรับหน้าเนื้อหาที่กำลังพัฒนา
  */
 
+import { siteConfig } from "@/config/site";
+
 export default function ContentsStructuredData() {
   const structuredData = {
     "@context": "https://schema.org",
@@ -20,7 +22,7 @@ export default function ContentsStructuredData() {
         "name": "ชมรมมุสลิม มหาวิทยาลัยอัสสัมชัญ วิทยาเขตหาดใหญ่",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://mss-hadyai.ac.th/LOGO/LOGO-MSS.png",
+          "url": `${siteConfig.url}${siteConfig.logo}`,
           "width": 300,
           "height": 300
         }
