@@ -351,10 +351,13 @@ export default function LinksPage() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.4 }}
         >
-          <p className="text-sm text-gray-400 font-medium">
-            © {new Date().getFullYear()} ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์
-            วิทยาเขตหาดใหญ่
-          </p>
+          <div className="border-t border-white/10">
+            <div className="container mx-auto px-4 py-4">
+              <div className="text-gray-400 text-center text-xs sm:text-base">
+                © 2025 ชมรมมุสลิม ม.อ.หาดใหญ่ MSS PSU Hatyai. สงวนลิขสิทธิ์.
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
 
