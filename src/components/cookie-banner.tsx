@@ -4,73 +4,64 @@ import Link from "next/link"
 import { useState } from "react"
 import { useCookieConsent } from "@/context/cookie-consent-context"
 import { CookieSettingsModal } from "./cookie-settings-modal"
-import { Button } from "./ui/button"
-import { Cookie } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function CookieBanner() {
     const { isOpen, acceptAll, rejectAll, saveConsent } = useCookieConsent()
     const [showSettings, setShowSettings] = useState(false)
 
-    // Don't render anything if the banner shouldn't be open
-    if (!isOpen) return null
-
     return (
         <>
             <AnimatePresence>
-                {isOpen && (
+                {isOpen && !showSettings && (
                     <motion.div
-                        initial={{ y: 100, opacity: 0 }}
+                        initial={{ y: "100%", opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: 100, opacity: 0 }}
+                        exit={{ y: "100%", opacity: 0 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6"
+                        className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-[1000px] z-[200] rounded-2xl shadow-[0_2px_5px_rgba(37,99,235,0.45)]"
+                        role="dialog"
+                        aria-label="Cookie consent"
+                        aria-modal="false"
                     >
-                        <div className="mx-auto max-w-7xl rounded-2xl border border-white/20 bg-white/80 p-6 shadow-2xl backdrop-blur-xl md:flex md:items-center md:justify-between md:gap-8">
-                            <div className="flex items-start gap-4 md:items-center">
-                                <div className="hidden md:flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">
-                                    <Cookie className="h-6 w-6" />
-                                </div>
-                                <div className="space-y-2">
-                                    <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                        <Cookie className="h-5 w-5 md:hidden text-blue-600" />
-                                        เว็บไซต์นี้ใช้คุกกี้
+                        <div className="bg-white rounded-xl border border-neutral-200/80 shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-4 sm:p-5 lg:p-6">
+                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 lg:gap-8">
+                                
+                                {/* Content */}
+                                <div className="flex-1">
+                                    <h3 className="text-lg font-bold text-neutral-900 tracking-tight">
+                                        เราใช้คุกกี้เพื่อพัฒนาประสบการณ์การใช้งาน
                                     </h3>
-                                    <p className="text-sm text-gray-600 leading-relaxed max-w-3xl">
-                                        เราใช้คุกกี้เพื่อเพิ่มประสิทธิภาพและประสบการณ์ที่ดีในการใช้งานเว็บไซต์
-                                        คุณสามารถเลือกตั้งค่าความยินยอมการใช้คุกกี้ได้ โดยคลิก "การตั้งค่าคุกกี้"
-                                        <Link href="/privacy" className="text-blue-500 hover:text-blue-600 underline ml-1">
-                                            อ่านนโยบายความเป็นส่วนตัว
+                                    <p className="mt-1.5 text-sm text-neutral-600 leading-relaxed">
+                                        ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ ใช้คุกกี้และเทคโนโลยีที่คล้ายคลึงกันเพื่อวิเคราะห์การใช้งานและปรับปรุงบริการ คุณสามารถยอมรับหรือปฏิเสธได้ตามต้องการ โดยสามารถศึกษารายละเอียดเพิ่มเติมที่
+                                        <Link href="/privacy" className="text-blue-700 font-semibold hover:text-blue-800 hover:underline transition-all ml-1">
+                                            นโยบายความเป็นส่วนตัว
                                         </Link>
-                                        <br className="hidden md:block" />
-                                        <span className="text-xs text-gray-400 mt-1 block">
-                                            ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)
-                                        </span>
                                     </p>
                                 </div>
-                            </div>
 
-                            <div className="mt-6 flex flex-col gap-3 md:mt-0 md:flex-row md:items-center">
-                                <Button
-                                    variant="outline"
-                                    onClick={() => setShowSettings(true)}
-                                    className="w-full md:w-auto border-gray-300 hover:bg-gray-100"
-                                >
-                                    ตั้งค่าคุกกี้
-                                </Button>
-                                <Button
-                                    variant="secondary"
-                                    onClick={rejectAll}
-                                    className="w-full md:w-auto bg-gray-200 text-gray-800 hover:bg-gray-300"
-                                >
-                                    ปฏิเสธทั้งหมด
-                                </Button>
-                                <Button
-                                    onClick={acceptAll}
-                                    className="w-full md:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20 hover:from-blue-700 hover:to-indigo-700 hover:shadow-blue-500/30 transition-all duration-300"
-                                >
-                                    ยอมรับทั้งหมด
-                                </Button>
+                                {/* Action Buttons */}
+                                <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
+                                    <button
+                                        onClick={() => setShowSettings(true)}
+                                        className="cursor-pointer flex-1 sm:flex-none min-w-[120px] rounded-lg border border-neutral-200 bg-white px-5 py-2.5 text-[13px] font-semibold text-neutral-700 transition-all hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-200"
+                                    >
+                                        ตั้งค่าคุกกี้
+                                    </button>
+                                    <button
+                                        onClick={rejectAll}
+                                        className="cursor-pointer flex-1 sm:flex-none min-w-[120px] rounded-lg border border-neutral-200 bg-white px-5 py-2.5 text-[13px] font-semibold text-neutral-700 transition-all hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-200"
+                                    >
+                                        ปฏิเสธ
+                                    </button>
+                                    <button
+                                        onClick={acceptAll}
+                                        className="cursor-pointer flex-1 sm:flex-none w-full sm:w-auto min-w-[120px] rounded-lg bg-blue-900 px-5 py-2.5 text-[13px] font-semibold text-white shadow-sm transition-all hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:ring-offset-2"
+                                    >
+                                        ยอมรับทั้งหมด
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     </motion.div>
