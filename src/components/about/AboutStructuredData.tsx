@@ -1,16 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
+
 
 export default function AboutStructuredData() {
-  useEffect(() => {
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "AboutPage",
       "mainEntity": {
         "@type": "Organization",
         "name": "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
-        "alternateName": "ชมรมมุสลิม ม.อ.หาดใหญ่",
+        "alternateName": [
+          "ชมรมมุสลิม ม.อ.หาดใหญ่",
+          "MSSPSUHATYAI",
+          "MSS PSU HATYAI",
+          "Muslim Student Society PSU HATYAI",
+          "Muslim Student Club of Prince of Songkla University, Hat Yai Campus"
+        ],
         "url": "https://msspsuhatyai.org",
         "description": "ประวัติความเป็นมา วิสัยทัศน์ พันธกิจ และเป้าหมายของชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่",
         "foundingDate": "1988",
@@ -42,20 +47,10 @@ export default function AboutStructuredData() {
       }
     };
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(structuredData);
-    document.head.appendChild(script);
-
-    return () => {
-      const scripts = document.head.querySelectorAll('script[type="application/ld+json"]');
-      scripts.forEach(script => {
-        if (script.textContent?.includes('AboutPage')) {
-          script.remove();
-        }
-      });
-    };
-  }, []);
-
-  return null;
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  );
 }

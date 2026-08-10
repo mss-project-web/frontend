@@ -13,9 +13,9 @@ export default function FAQSection() {
             <section className="py-10 bg-gray-50">
                   <div className="container mx-auto px-4">
                         <div className="text-center mb-10">
-                              <h2 className="font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
+                              <h1 className="text-3xl font-extrabold text-blue-800 border-b-2 border-gray-300 inline-block pb-1 mb-4">
                                     คำถามที่พบบ่อย
-                              </h2>
+                              </h1>
                                     <p className="text-xl text-gray-600">คำตอบสำหรับคำถามที่ได้รับบ่อยๆ</p>
                         </div>
                         <div className="max-w-3xl mx-auto space-y-4">

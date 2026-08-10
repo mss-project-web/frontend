@@ -33,10 +33,10 @@ export default function DonationSection() {
             <section className="bg-gradient-to-br from-blue-50 to-white py-14">
                   <div className="container mx-auto px-4 max-w-screen-xl">
                         <div className="text-center mb-8">
-                              <div className="inline-flex items-center gap-2 text-2xl font-extrabold text-blue-800 border-b-2 border-gray-300 pb-1">
+                              <h1 className="inline-flex items-center gap-2 text-3xl font-extrabold text-blue-800 border-b-2 border-gray-300 pb-1">
                                     <HeartHandshake className="w-7 h-7 text-emerald-500" />
                                     ร่วมบริจาค / สนับสนุน
-                              </div>
+                              </h1>
                               <p className="text-gray-600 mt-4 max-w-2xl mx-auto">{note}</p>
                         </div>
 

@@ -127,7 +127,7 @@ export default function AboutPage() {
                                                                               ก่อนที่จะก่อตั้งชมรมมุสลิมฯ อย่างเป็นทางการนั้น มีการรวมกลุ่มกันมาก่อน มีลักษณะเป็นการรวมกลุ่มเล็กๆ
                                                                               ต่อมามีการยื่นคำร้องขอจัดตั้งชมรมมุสลิมอย่างเป็นทางการเป็นครั้งแรก โดยใช้ชื่อ
                                                                               “ชมรมมุสลิมมหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่”
-                                                                              (Muslim Student Club of Prince of Songkla University, Hat Yai Campus)
+                                                                              (Muslim Student Club of Prince of Songkla University, Hat Yai Campus) ซึ่งปัจจุบันรู้จักในชื่อ Muslim Student Society PSU HATYAI (MSSPSUHATYAI)
                                                                               และใช้ “อัล กะอ์บะฮ์” เป็นตราสัญลักษณ์ของชมรม (ภาพที่ 3)
                                                                               ทั้งนี้เพื่อแสดงถึงจุดยืนในฐานะมุสลิม การรวมตัวกัน และความเป็นอันหนึ่งอันเดียวกันของอิสลาม
                                                                         </p>

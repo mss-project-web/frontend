@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://msspsuhatyai.org"),
   title: {
     default: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
-    template: "%s | ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
+    template: "%s | ชมรมมุสลิม ม.อ.หาดใหญ่",
   },
   description:
     "ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ - หวังดีดี จากบ้านหลังเดิม ⭐ กิจกรรมสำหรับนักศึกษามุสลิม ⭐ ห้องละหมาด ⭐ สถานที่ประกอบศาสนกิจ ⭐ กิจกรรมศาสนาอิสลาม ⭐ ชุมชนมุสลิม PSU หาดใหญ่",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "th_TH",
     url: "https://msspsuhatyai.org",
-    title: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
+    title: "ชมรมมุสลิม ม.อ.หาดใหญ่",
     description:
       "ชมรมมุสลิม ม.อ.หาดใหญ่ - หวังดีดี จากบ้านหลังเดิม กิจกรรมสำหรับนักศึกษามุสลิม ห้องละหมาด สถานที่ประกอบศาสนกิจ",
     images: [
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ชมรมมุสลิม ม.อ.หาดใหญ่ | MSS PSU Hatyai",
+    title: "ชมรมมุสลิม ม.อ.หาดใหญ่",
     description: "ชมรมมุสลิม ม.อ.หาดใหญ่ - หวังดีดี จากบ้านหลังเดิม",
     images: [siteConfig.logo],
   },
