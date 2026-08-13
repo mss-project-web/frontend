@@ -50,9 +50,11 @@ export default function Footer() {
                 sizes="(max-width: 768px) 120px, (max-width: 1200px) 200px, 250px"
               />
             </div>
-            <div className="w-20 border-t-2 border-blue-400 mx-auto md:mx-0" />
-            <p className="text-gray-300 italic tracking-wide">
-              หวังดีดี จากบ้านหลังเดิม
+            <div className="w-20 border-t-2 border-white-400 mx-auto md:mx-0" />
+            <p className="text-gray-300">
+              ชมรมมุสลิม มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตหาดใหญ่ (ม.อ. หาดใหญ่)
+              <br /> Muslim Student Society PSU HATYAI (MSSPSUHATYAI)
+              <br /> <i className="text-italic">"หวังดีดี จากบ้านหลังเดิม"</i>
             </p>
           </div>
 
