@@ -14,6 +14,17 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { BlogPost } from "@/services/blog";
+import DOMPurify from "isomorphic-dompurify";
+
+const sanitizeHTML = (html: string) => {
+  if (!html) return "";
+  // การตั้งค่า Default ของ DOMPurify จะอนุญาต HTML ที่ปลอดภัยทั้งหมด (พวกตัวหนา, สี, ตาราง, ลิงก์)
+  // แต่เราจะเพิ่มให้รองรับ iframe (เผื่อแอดมินฝัง YouTube) ไปด้วย
+  return DOMPurify.sanitize(html, {
+    ADD_TAGS: ["iframe"],
+    ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling"],
+  });
+};
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString("th-TH", {
@@ -45,7 +56,7 @@ const RenderBlock = ({ block }: { block: any }) => {
     case "html":
       const pText =
         typeof block.data === "string" ? block.data : block.data.text || "";
-      return <div dangerouslySetInnerHTML={{ __html: pText }} />;
+      return <div dangerouslySetInnerHTML={{ __html: sanitizeHTML(pText) }} />;
 
     case "header":
       const level = block.data.level || 2;
@@ -57,22 +68,22 @@ const RenderBlock = ({ block }: { block: any }) => {
           {level === 2 ? (
             <h2
               className="text-2xl md:text-3xl font-bold mt-12 mb-6 text-slate-900 tracking-tight"
-              dangerouslySetInnerHTML={{ __html: text }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(text) }}
             />
           ) : level === 3 ? (
             <h3
               className="text-xl md:text-2xl font-bold mt-10 mb-4 text-slate-800 tracking-tight"
-              dangerouslySetInnerHTML={{ __html: text }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(text) }}
             />
           ) : level === 4 ? (
             <h4
               className="text-lg md:text-xl font-bold mt-8 mb-4 text-slate-800"
-              dangerouslySetInnerHTML={{ __html: text }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(text) }}
             />
           ) : (
             <h1
               className="text-3xl font-bold mt-12 mb-6 text-slate-900"
-              dangerouslySetInnerHTML={{ __html: text }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(text) }}
             />
           )}
         </div>
@@ -96,7 +107,7 @@ const RenderBlock = ({ block }: { block: any }) => {
           {block.data.caption && (
             <figcaption
               className="text-center text-sm text-slate-500 mt-4 font-medium"
-              dangerouslySetInnerHTML={{ __html: block.data.caption }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(block.data.caption) }}
             />
           )}
         </figure>
@@ -115,7 +126,7 @@ const RenderBlock = ({ block }: { block: any }) => {
               <li
                 key={idx}
                 className="text-[17px] text-slate-700 leading-relaxed pl-2"
-                dangerouslySetInnerHTML={{ __html: item || "" }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHTML(item || "") }}
               />
             ))}
           </ListTag>
@@ -131,13 +142,13 @@ const RenderBlock = ({ block }: { block: any }) => {
           <p
             className="text-xl md:text-2xl text-slate-800 font-medium leading-snug italic"
             dangerouslySetInnerHTML={{
-              __html: quoteText ? `"${quoteText}"` : "",
+              __html: quoteText ? sanitizeHTML(`"${quoteText}"`) : "",
             }}
           />
           {quoteCaption && (
             <footer className="text-base text-slate-500 mt-4 font-medium flex items-center gap-2">
               <span className="w-6 h-[1px] bg-slate-300"></span>
-              <span dangerouslySetInnerHTML={{ __html: quoteCaption }} />
+              <span dangerouslySetInnerHTML={{ __html: sanitizeHTML(quoteCaption) }} />
             </footer>
           )}
         </blockquote>

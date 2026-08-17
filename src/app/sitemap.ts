@@ -3,17 +3,43 @@ import { API_URL } from '@/config'
 
 const baseUrl = 'https://msspsuhatyai.org'
 
-// Regenerate the sitemap hourly so new activities get discovered.
+// Regenerate the sitemap hourly so new activities/blogs get discovered.
 export const revalidate = 3600
 
 type ActivityListItem = { _id: string; slug?: string; updatedAt?: string }
+type BlogListItem = { _id: string; slug: string; createdAt?: string }
+type PrayerRoomListItem = { _id: string; updatedAt?: string }
 
 async function getActivities(): Promise<ActivityListItem[]> {
   try {
     const res = await fetch(`${API_URL}/activities`, { next: { revalidate: 3600 } })
     if (!res.ok) return []
     const json = await res.json()
-    // activities list is double-wrapped: data.data is the array
+    const list = json?.data?.data ?? json?.data ?? []
+    return Array.isArray(list) ? list : []
+  } catch {
+    return []
+  }
+}
+
+async function getBlogs(): Promise<BlogListItem[]> {
+  try {
+    // Fetch a large limit for sitemap
+    const res = await fetch(`${API_URL}/blog/preview?limit=1000`, { next: { revalidate: 3600 } })
+    if (!res.ok) return []
+    const json = await res.json()
+    const list = json?.data?.data ?? json?.data ?? []
+    return Array.isArray(list) ? list : []
+  } catch {
+    return []
+  }
+}
+
+async function getPrayerRooms(): Promise<PrayerRoomListItem[]> {
+  try {
+    const res = await fetch(`${API_URL}/prayer-rooms`, { next: { revalidate: 3600 } })
+    if (!res.ok) return []
+    const json = await res.json()
     const list = json?.data?.data ?? json?.data ?? []
     return Array.isArray(list) ? list : []
   } catch {
@@ -34,7 +60,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/contact`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
   ]
 
-  const activities = await getActivities()
+  const [activities, blogs, prayerRooms] = await Promise.all([
+    getActivities(),
+    getBlogs(),
+    getPrayerRooms()
+  ]);
+
   const activityPages: MetadataRoute.Sitemap = activities.map((a) => ({
     url: `${baseUrl}/activities/${a.slug || a._id}`,
     lastModified: a.updatedAt ? new Date(a.updatedAt) : now,
@@ -42,5 +73,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticPages, ...activityPages]
+  const blogPages: MetadataRoute.Sitemap = blogs.map((b) => ({
+    url: `${baseUrl}/contents/${b.slug || b._id}`,
+    lastModified: b.createdAt ? new Date(b.createdAt) : now,
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }))
+
+  const prayerRoomPages: MetadataRoute.Sitemap = prayerRooms.map((p) => ({
+    url: `${baseUrl}/prayer-rooms/${p._id}`,
+    lastModified: p.updatedAt ? new Date(p.updatedAt) : now,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
+
+  return [...staticPages, ...activityPages, ...blogPages, ...prayerRoomPages]
 }

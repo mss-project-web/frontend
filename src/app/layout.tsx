@@ -87,7 +87,7 @@ export const metadata: Metadata = {
     images: [siteConfig.logo],
   },
   alternates: {
-    canonical: "https://msspsuhatyai.org",
+    canonical: "/",
     languages: {
       "th-TH": "https://msspsuhatyai.org",
       "en-US": "https://msspsuhatyai.org/en",
