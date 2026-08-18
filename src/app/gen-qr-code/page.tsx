@@ -14,13 +14,14 @@ export default function GenQRCodePage() {
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Hero Section */}
         <div className="text-center space-y-3">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-gray-900">
             สร้าง <span className="text-[#1588c9]">QR Code</span> ของคุณเอง
           </h1>
-          <p className="text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm md:text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
             ปรับแต่งสี รูปแบบ ใส่โลโก้ รองรับ URL สามารถคัดลอก QR Code
             ไปวางได้ทันที
-            <br />
+          </p>
+          <p className="text-sm md:text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
             รองรับดาวน์โหลดเป็น PNG, JPG, SVG หรือ PDF
           </p>
         </div>
