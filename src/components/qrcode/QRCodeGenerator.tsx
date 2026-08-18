@@ -137,7 +137,9 @@ function buildQRData(
   }
 }
 
-const getPNGBlob = async (qrCodeInstance: QRCodeStyling | null): Promise<Blob | null> => {
+const getPNGBlob = async (
+  qrCodeInstance: QRCodeStyling | null,
+): Promise<Blob | null> => {
   if (!qrCodeInstance) return null;
 
   const rawData = await qrCodeInstance.getRawData("png");
@@ -656,15 +658,21 @@ export default function QRCodeGenerator() {
                         onChange={setBackgroundColor}
                         disabled={isBgTransparent}
                       />
-                      <label className="flex items-center gap-2 mt-1 cursor-pointer">
+                      <label
+                        className={`flex items-center gap-2 mt-2 p-2.5 rounded-lg border cursor-pointer transition-all duration-200 ${
+                          isBgTransparent
+                            ? "bg-blue-50 border-blue-300 text-blue-700 shadow-sm"
+                            : "bg-gray-50 border-gray-200 text-gray-600 hover:bg-gray-100"
+                        }`}
+                      >
                         <input
                           type="checkbox"
                           checked={isBgTransparent}
                           onChange={(e) => setIsBgTransparent(e.target.checked)}
-                          className="accent-[#1588c9]"
+                          className="w-4 h-4 accent-blue-600 cursor-pointer rounded"
                         />
-                        <span className="text-xs text-gray-600">
-                          Transparent
+                        <span className="text-sm font-semibold">
+                          Transparent (พื้นหลังโปร่งใส)
                         </span>
                       </label>
                     </div>
