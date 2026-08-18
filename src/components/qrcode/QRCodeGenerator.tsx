@@ -137,11 +137,10 @@ function buildQRData(
   }
 }
 
-const qrCode = useRef<any>(null);
-const getPNGBlob = async (): Promise<Blob | null> => {
-  if (!qrCode.current) return null;
+const getPNGBlob = async (qrCodeInstance: QRCodeStyling | null): Promise<Blob | null> => {
+  if (!qrCodeInstance) return null;
 
-  const rawData = await qrCode.current.getRawData("png");
+  const rawData = await qrCodeInstance.getRawData("png");
 
   if (!rawData) return null;
 
@@ -149,7 +148,7 @@ const getPNGBlob = async (): Promise<Blob | null> => {
     return rawData;
   }
 
-  return new Blob([rawData], { type: "image/png" });
+  return new Blob([rawData as unknown as BlobPart], { type: "image/png" });
 };
 
 export default function QRCodeGenerator() {
@@ -280,7 +279,7 @@ export default function QRCodeGenerator() {
     if (!qrCode.current) return;
 
     try {
-      const blob = await getPNGBlob();
+      const blob = await getPNGBlob(qrCode.current);
 
       if (!blob) return;
 
@@ -304,7 +303,7 @@ export default function QRCodeGenerator() {
   const handleDownload = async (ext: string) => {
     if (!qrCode.current) return;
     if (ext === "pdf") {
-      const blob = await getPNGBlob();
+      const blob = await getPNGBlob(qrCode.current);
 
       if (!blob) return;
 
